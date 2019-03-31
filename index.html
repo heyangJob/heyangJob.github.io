@@ -341,6 +341,384 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/31/设计模式《解释器模式》/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="何阳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何阳">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/31/设计模式《解释器模式》/" class="post-title-link" itemprop="url">设计模式《解释器模式》</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-31 21:39:30 / 修改时间：21:52:47" itemprop="dateCreated datePublished" datetime="2019-03-31T21:39:30+08:00">2019-03-31</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h4><p>&emsp;&emsp;看到这个模式，第一反应是我没见过。在看看定义，太抽象了，所以放到后面写。首先我们先看看上一节<a href="https://www.jianshu.com/p/eb36739c23fb" target="_blank" rel="noopener">命令模式</a>，继续学学这节的解释器模式。</p>
+<h4 id="示例地址"><a href="#示例地址" class="headerlink" title="示例地址"></a>示例地址</h4><p>&emsp;&emsp;<a href="https://github.com/heyangJob/Design-Pattern/tree/master/Expression" target="_blank" rel="noopener">Demo</a>（simple2 感觉不是很好的说明解释器模式）</p>
+<h4 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h4><p><img src="https://note.youdao.com/yws/api/personal/file/WEBa31a1243c00381643b646b7f2b4db510?method=download&amp;shareKey=6cc4b43b26fbb0360a53eeb6feb8c59a" alt="image"></p>
+<h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>&emsp;&emsp;定义一个语言的文法，并且建立一个解释器来解释该语言中的句子，这里的“语言”是指使用规定格式和语法的代码。</p>
+<h4 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h4><p>&emsp;&emsp;1. 如果某个简单的语言需要解释执行而且可以将该语言中的语句表叔为一个抽象语法树时可以考虑使用解释器模式。<br>&emsp;&emsp;2. 在某些特定的领域出现不断重复的问题时，可以将该领域的问题转化为一种语法规则下的语句，然后构建解释器来解释该语句。</p>
+<h4 id="解释器模式中的概念词"><a href="#解释器模式中的概念词" class="headerlink" title="解释器模式中的概念词"></a>解释器模式中的概念词</h4><h5 id="文法规则："><a href="#文法规则：" class="headerlink" title="文法规则："></a>文法规则：</h5><p>&emsp;&emsp;一种简单的语言定义。例如表达”1+ 2 + 3 – 4 + 1”. </p>
+<blockquote>
+<p>expression = value | operation<br>operation =  ‘+’  |  ‘-‘<br>value = an integer //一个整数值  </p>
+</blockquote>
+<p>其中整个语句为表达式。表达式有 单一的表达式、复合的表达式（多个单一的表达式组合而成，通过非终结符操作），”+” | “-“为非终结符。value 为终结符。</p>
+<h5 id="抽象语法树"><a href="#抽象语法树" class="headerlink" title="抽象语法树"></a>抽象语法树</h5><p>&emsp;&emsp;例如表达”1+ 2 + 3 – 4 + 1”.从下往上看。<br><img src="https://note.youdao.com/yws/api/personal/file/WEB1ede12af31c161333655811d92a2f1c5?method=download&amp;shareKey=eb338bc6f2db00ec063bbaa87953bdd7" alt="image"></p>
+<h5 id="终结符表达式："><a href="#终结符表达式：" class="headerlink" title="终结符表达式："></a>终结符表达式：</h5><p>&emsp;&emsp;比如有一个简单的公式R=R1+R2，在里面R1和R2就是终结符，对应的解析R1和R2的解释器就是终结符表达式。</p>
+<h5 id="非终结符表达式"><a href="#非终结符表达式" class="headerlink" title="非终结符表达式"></a>非终结符表达式</h5><p>&emsp;&emsp;比如公式R=R1+R2中，+就是非终结符，解析+的解释器就是一个非终结符表达式。</p>
+<h5 id="Context（环境类）"><a href="#Context（环境类）" class="headerlink" title="Context（环境类）"></a>Context（环境类）</h5><p>&emsp;&emsp;环境类又称为上下文类，它用于存储解释器之外的一些全局信息，通常它临时存储了需要解释的语句。</p>
+<h4 id="解释器模式简单示例"><a href="#解释器模式简单示例" class="headerlink" title="解释器模式简单示例"></a>解释器模式简单示例</h4><p>&emsp;&emsp;也许上面的你没看懂，下面我们通过代码来展示上面“1+ 2 + 3 – 4 + 1”的含义。</p>
+<h6 id="1-抽象解析类"><a href="#1-抽象解析类" class="headerlink" title="1. 抽象解析类"></a>1. 抽象解析类</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 抽象解析类</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/8/14  下午5:13.</span><br><span class="line"> */</span><br><span class="line">public abstract class AbstractExpression &#123;</span><br><span class="line">    public abstract int interpret();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="2-数字的实现（终结符表达式）"><a href="#2-数字的实现（终结符表达式）" class="headerlink" title="2. 数字的实现（终结符表达式）"></a>2. 数字的实现（终结符表达式）</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 数字解释器</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/8/14  下午5:16.</span><br><span class="line"> */</span><br><span class="line">public class NumExpression extends AbstractExpression &#123;</span><br><span class="line">    private int num;</span><br><span class="line"></span><br><span class="line">    public NumExpression(int num) &#123;</span><br><span class="line">        this.num = num;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public int interpret() &#123;</span><br><span class="line">        return num;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="3-操作符的实现（非终结符表达式）"><a href="#3-操作符的实现（非终结符表达式）" class="headerlink" title="3. 操作符的实现（非终结符表达式）"></a>3. 操作符的实现（非终结符表达式）</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 运算符号抽象解释器</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/8/15  上午11:47.</span><br><span class="line"> */</span><br><span class="line">public class OperationExpression extends AbstractExpression &#123;</span><br><span class="line">    //声明两个成员变量存储运算符号两边的数字解释器</span><br><span class="line">    protected AbstractExpression exp1, exp2;</span><br><span class="line"></span><br><span class="line">    public OperationExpression(AbstractExpression exp1, AbstractExpression exp2) &#123;</span><br><span class="line">        this.exp1 = exp1;</span><br><span class="line">        this.exp2 = exp2;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public int interpret() &#123;</span><br><span class="line">        return 0;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="4-加法运算抽象解释器"><a href="#4-加法运算抽象解释器" class="headerlink" title="4. 加法运算抽象解释器"></a>4. 加法运算抽象解释器</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 加法运算抽象解释器</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/8/15  下午11:10.</span><br><span class="line"> */</span><br><span class="line">public class AddExpression extends OperationExpression &#123;</span><br><span class="line">    public AddExpression(AbstractExpression exp1, AbstractExpression exp2) &#123;</span><br><span class="line">        super(exp1, exp2);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public int interpret() &#123;</span><br><span class="line">        return exp1.interpret() + exp2.interpret();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="5-减法运算抽象解释器"><a href="#5-减法运算抽象解释器" class="headerlink" title="5. 减法运算抽象解释器"></a>5. 减法运算抽象解释器</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 减法运算抽象解释器</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/8/15  下午11:10.</span><br><span class="line"> */</span><br><span class="line">public class SubExpression extends OperationExpression &#123;</span><br><span class="line">    public SubExpression(AbstractExpression exp1, AbstractExpression exp2) &#123;</span><br><span class="line">        super(exp1, exp2);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public int interpret() &#123;</span><br><span class="line">        return exp1.interpret() - exp2.interpret();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="6-处理与解释相关的一些业务"><a href="#6-处理与解释相关的一些业务" class="headerlink" title="6. 处理与解释相关的一些业务"></a>6. 处理与解释相关的一些业务</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 处理与解释相关的一些业务</span><br><span class="line"> * </span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> </span><br><span class="line"> * @created 2018/8/15  下午11:12.</span><br><span class="line"> * </span><br><span class="line"> */</span><br><span class="line">public class Calculator &#123;</span><br><span class="line">    //声明一个Stack栈存储并操作所有相关的解释器</span><br><span class="line">    private Stack&lt;AbstractExpression&gt; expressions = new Stack&lt;AbstractExpression&gt;();</span><br><span class="line"></span><br><span class="line">    public Calculator(String expression) &#123;</span><br><span class="line">        //声明两个ArithmeticExpressioin类型的临时变量，存储运算符左右两边的数字解释器</span><br><span class="line">        AbstractExpression exp1, exp2;</span><br><span class="line"></span><br><span class="line">        String[] elements = expression.split(&quot; &quot;);</span><br><span class="line"></span><br><span class="line">        for (int i = 0; i &lt; elements.length; i++) &#123;</span><br><span class="line">            switch (elements[i].charAt(0)) &#123;</span><br><span class="line">                case &apos;+&apos;:</span><br><span class="line">                    //将栈中的解释器弹出作为运算符号左边的解释器</span><br><span class="line">                    exp1 = expressions.pop();</span><br><span class="line">                    //同时将运算符号数组角标下一个元素构成</span><br><span class="line">                    exp2 = new NumExpression(Integer.valueOf(elements[++i]));</span><br><span class="line">                    //通过上面两个数字解释器构造加法运算解释器</span><br><span class="line">                    expressions.push(new AddExpression(exp1, exp2));</span><br><span class="line">                    break;</span><br><span class="line">                case &apos;–&apos;:</span><br><span class="line">                    //将栈中的解释器弹出作为运算符号左边的解释器</span><br><span class="line">                    exp1 = expressions.pop();</span><br><span class="line">                    //同时将运算符号数组角标下一个元素构成</span><br><span class="line">                    exp2 = new NumExpression(Integer.valueOf(elements[++i]));</span><br><span class="line">                    //通过上面两个数字解释器构造加法运算解释器</span><br><span class="line">                    expressions.push(new SubExpression(exp1, exp2));</span><br><span class="line">                    break;</span><br><span class="line">                default://如果为数字</span><br><span class="line">                    /**</span><br><span class="line">                     * 如果不是运算符则数字</span><br><span class="line">                     * 则是数字，直接构造数字解释器并压入栈</span><br><span class="line">                     */</span><br><span class="line">                    expressions.push(new NumExpression(Integer.valueOf(elements[i])));</span><br><span class="line">                    break;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 计算</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    public int calculate() &#123;</span><br><span class="line">        return expressions.pop().interpret();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="7-Client"><a href="#7-Client" class="headerlink" title="7. Client"></a>7. Client</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Calculator calculator = new Calculator(&quot;1 + 2 + 3 – 4 + 1&quot;);</span><br><span class="line">System.out.println(calculator.calculate());</span><br></pre></td></tr></table></figure>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><h5 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h5><p>&emsp;&emsp;1. 灵活的扩展性，当我们想对文法规则进行扩展时，只需要增加相应的非终结符号解释器，并在构建抽象语法树时，使用到新增的解释器对象进行具体的解释即可，非常方便。</p>
+<h5 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h5><p>&emsp;&emsp; 1. 过于复杂的语法，构建其抽象语法树会显得异常繁琐，甚至有可能出现需要构建多棵抽象语法树的情况，因此，对于复杂的文法并不推荐使用解释器模式。<br>&emsp;&emsp;2. 对于每一条文法都可以对应至少一个解释器，其会生成大量的类，导致后期维护困难。<br>&emsp;&emsp;3. 由于使用了大量的循环和递归，效率是个不容忽视的问题，特别是用于解析复杂、冗长的语法时，效率是难以忍受的。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/31/设计模式《访问者模式》/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="何阳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何阳">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/31/设计模式《访问者模式》/" class="post-title-link" itemprop="url">设计模式《访问者模式》</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-31 21:36:13 / 修改时间：21:37:39" itemprop="dateCreated datePublished" datetime="2019-03-31T21:36:13+08:00">2019-03-31</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/设计模式/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h4><p>&emsp;&emsp;23设计模式这是最后一篇了，到此就结尾了，先回顾一下上一篇所讲的<a href="https://www.jianshu.com/p/6b91dcf8e18e" target="_blank" rel="noopener">解释器模式</a>，然后看看今天的访问者模式。</p>
+<h4 id="示例地址"><a href="#示例地址" class="headerlink" title="示例地址"></a>示例地址</h4><p>&emsp;&emsp;<a href="https://github.com/heyangJob/Design-Pattern/tree/master/Visitor" target="_blank" rel="noopener">Demo</a></p>
+<h4 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h4><p><img src="https://note.youdao.com/yws/api/personal/file/WEB6f2a7507d17f45ee9162ed1b59ac393b?method=download&amp;shareKey=8cb41d025a905cd071c580b90281f19e" alt="image"></p>
+<h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>&emsp;&emsp;封装一些作用于某些数据结构的各元素的操作，它可以在不改变这个数据结构的前提下定义作用于这些元素的新的操作。</p>
+<h4 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h4><p>&emsp;&emsp;1. 对象结构比较稳定，但经常需要在此对象结构上定义新的操作。<br>&emsp;&emsp;2. 需要对一个对象结构中的对象进行很多不同的并且不相关的操作，而需要避免这些操作“污染”这些对象的类，也不希望在增加新操作时修改这些类。</p>
+<h4 id="访问者模式中的角色"><a href="#访问者模式中的角色" class="headerlink" title="访问者模式中的角色"></a>访问者模式中的角色</h4><p>&emsp;&emsp;1. Vistor（抽象访问者）：抽象访问者为对象结构中每一个具体元素类ConcreteElement声明一个访问操作，从这个操作的名称或参数类型可以清楚知道需要访问的具体元素的类型，具体访问者需要实现这些操作方法，定义对这些元素的访问操作。<br>&emsp;&emsp;2. ConcreteVisitor（具体访问者）：具体访问者实现了每个由抽象访问者声明的操作，每一个操作用于访问对象结构中一种类型的元素。<br>&emsp;&emsp;3. Element（抽象元素）：抽象元素一般是抽象类或者接口，它定义一个accept()方法，该方法通常以一个抽象访问者作为参数。<br>&emsp;&emsp;4. ConcreteElement（具体元素）：具体元素实现了accept()方法，在accept()方法中调用访问者的访问方法以便完成对一个元素的操作。<br>&emsp;&emsp;5. ObjectStructure（对象结构）：对象结构是一个元素的集合，它用于存放元素对象，并且提供了遍历其内部元素的方法。它可以结合组合模式来实现，也可以是一个简单的集合对象，如一个List对象或一个Set对象。</p>
+<h4 id="访问者模式示例"><a href="#访问者模式示例" class="headerlink" title="访问者模式示例"></a>访问者模式示例</h4><h6 id="1-Visitor抽象类"><a href="#1-Visitor抽象类" class="headerlink" title="1. Visitor抽象类"></a>1. Visitor抽象类</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/8/20  上午10:35.</span><br><span class="line"> */</span><br><span class="line">public interface Visitor &#123;</span><br><span class="line">    void visit(ConcreteElementA elementA);</span><br><span class="line">    void visit(ConcreteElementB elementB);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="2-Visitor实现类ConcreteVisitorA"><a href="#2-Visitor实现类ConcreteVisitorA" class="headerlink" title="2. Visitor实现类ConcreteVisitorA"></a>2. Visitor实现类ConcreteVisitorA</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/8/20  上午10:36.</span><br><span class="line"> */</span><br><span class="line">public class ConcreteVisitorA implements Visitor &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void visit(ConcreteElementA elementA) &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void visit(ConcreteElementB elementB) &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="3-Visitor实现类ConcreteVisitorB"><a href="#3-Visitor实现类ConcreteVisitorB" class="headerlink" title="3. Visitor实现类ConcreteVisitorB"></a>3. Visitor实现类ConcreteVisitorB</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/8/20  上午10:36.</span><br><span class="line"> */</span><br><span class="line">public class ConcreteVisitorB implements Visitor &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void visit(ConcreteElementA elementA) &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void visit(ConcreteElementB elementB) &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="4-Element接口"><a href="#4-Element接口" class="headerlink" title="4. Element接口"></a>4. Element接口</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/8/20  上午10:37.</span><br><span class="line"> */</span><br><span class="line">public interface Element &#123;</span><br><span class="line">    void accept(Visitor visitor);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="5-Element实现类ConcreteElementA"><a href="#5-Element实现类ConcreteElementA" class="headerlink" title="5. Element实现类ConcreteElementA"></a>5. Element实现类ConcreteElementA</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/8/20  上午10:37.</span><br><span class="line"> */</span><br><span class="line">public class ConcreteElementA implements Element &#123;</span><br><span class="line">    public void accept(Visitor visitor) &#123;</span><br><span class="line">        System.out.println(visitor.getClass().getCanonicalName() + &quot;=====访问&quot; +&quot;ConcreteElementA&quot;);</span><br><span class="line">        visitor.visit(this);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="6-Element实现类ConcreteElementB"><a href="#6-Element实现类ConcreteElementB" class="headerlink" title="6. Element实现类ConcreteElementB"></a>6. Element实现类ConcreteElementB</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/8/20  上午10:37.</span><br><span class="line"> */</span><br><span class="line">public class ConcreteElementB implements Element &#123;</span><br><span class="line">    public void accept(Visitor visitor) &#123;</span><br><span class="line">        System.out.println(visitor.getClass().getCanonicalName() + &quot;=======访问&quot;+ &quot;ConcreteElementB&quot;);</span><br><span class="line">        visitor.visit(this);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="7-ObjectStructure"><a href="#7-ObjectStructure" class="headerlink" title="7. ObjectStructure"></a>7. ObjectStructure</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/8/20  上午10:39.</span><br><span class="line"> */</span><br><span class="line">public class ObjectStructure &#123;</span><br><span class="line">    private List&lt;Element&gt; mElements = new ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    public void addElement(Element e) &#123;</span><br><span class="line">        mElements.add(e);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void removeElement(Element e) &#123;</span><br><span class="line">        mElements.remove(e);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void accpet(Visitor visitor) &#123;</span><br><span class="line">        for (Element e : mElements) &#123;</span><br><span class="line">            e.accept(visitor);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="8-Client"><a href="#8-Client" class="headerlink" title="8. Client"></a>8. Client</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ObjectStructure os = new ObjectStructure();</span><br><span class="line">os.addElement(new ConcreteElementA());</span><br><span class="line">os.addElement(new ConcreteElementB());</span><br><span class="line">//创建一个访问者</span><br><span class="line">Visitor visitor = new ConcreteVisitorA();</span><br><span class="line">os.accpet(visitor);</span><br></pre></td></tr></table></figure>
+<h4 id="访问者模式中的伪动态双分派"><a href="#访问者模式中的伪动态双分派" class="headerlink" title="访问者模式中的伪动态双分派"></a>访问者模式中的伪动态双分派</h4><ul>
+<li><h5 id="静态分派"><a href="#静态分派" class="headerlink" title="静态分派"></a>静态分派</h5></li>
+</ul>
+<p>&emsp;&emsp;静态分派就是按照变量的静态类型进行分派，从而确定方法的执行版本，静态分派在编译时期就可以确定方法的版本。静态分派最典型的应用就是方法重载。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public class StaticDispatch &#123;</span><br><span class="line"></span><br><span class="line">    public void test(String string)&#123;</span><br><span class="line">        System.out.println(&quot;this is string&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void test(Integer integer)&#123;</span><br><span class="line">        System.out.println(&quot;this is integer&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void staticDispatch(String[] args) &#123;</span><br><span class="line">        String s1 =&quot;aaaaa&quot;;</span><br><span class="line">        Integer a = 1;</span><br><span class="line">        StaticDispatch staticDispatch = new StaticDispatch();</span><br><span class="line">        staticDispatch.test(a);</span><br><span class="line">        staticDispatch.test(s1);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><h5 id="动态分派"><a href="#动态分派" class="headerlink" title="动态分派"></a>动态分派</h5></li>
+</ul>
+<p>&emsp;&emsp;与静态相反，它不是在编译期确定的方法版本，而是在运行时才能确定。而动态分派最典型的应用就是多态的特性。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public interface Animal&#123;</span><br><span class="line">    void test();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Dog implements Animal&#123;</span><br><span class="line">    public void test()&#123;</span><br><span class="line">        System.out.println(&quot;dog&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Cat implements Animal&#123;</span><br><span class="line">    public void test()&#123;</span><br><span class="line">        System.out.println(&quot;cat&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class DynamicDispatch &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Animal dog = new Dog();</span><br><span class="line">        Animal cat = new Cat();</span><br><span class="line">        dog.test();</span><br><span class="line">        cat.test();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>伪动态双分派  </li>
+</ul>
+<p>&emsp;&emsp;访问者模式中使用的是伪动态双分派，所谓的动态双分派就是在运行时依据两个实际类型去判断一个方法的运行行为，而访问者模式实现的手段是进行了两次动态单分派来达到这个效果。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public void accpet(Visitor visitor) &#123;</span><br><span class="line">       for (Element e : mElements) &#123;</span><br><span class="line">           e.accept(visitor);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="访问者模式实际运用"><a href="#访问者模式实际运用" class="headerlink" title="访问者模式实际运用"></a>访问者模式实际运用</h4><h6 id="1-Visitor"><a href="#1-Visitor" class="headerlink" title="1. Visitor"></a>1. Visitor</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Visitor</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/8/20  下午12:46.</span><br><span class="line"> */</span><br><span class="line">public interface AccountBookViewer &#123;</span><br><span class="line"></span><br><span class="line">    //查看消费的单子</span><br><span class="line">    void view(ConsumeBill bill);</span><br><span class="line"></span><br><span class="line">    //查看收入的单子</span><br><span class="line">    void view(IncomeBill bill);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="2-老板"><a href="#2-老板" class="headerlink" title="2. 老板"></a>2. 老板</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> *  visitor 老板</span><br><span class="line"> * </span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> </span><br><span class="line"> * @created 2018/8/20  下午12:47.</span><br><span class="line"> * </span><br><span class="line"> */</span><br><span class="line">public class Boss implements AccountBookViewer &#123;</span><br><span class="line"></span><br><span class="line">    private double totalIncome;</span><br><span class="line"></span><br><span class="line">    private double totalConsume;</span><br><span class="line"></span><br><span class="line">    //老板只关注一共花了多少钱以及一共收入多少钱，其余并不关心</span><br><span class="line">    public void view(ConsumeBill bill) &#123;</span><br><span class="line">        totalConsume += bill.getAmount();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void view(IncomeBill bill) &#123;</span><br><span class="line">        totalIncome += bill.getAmount();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public double getTotalIncome() &#123;</span><br><span class="line">        System.out.println(&quot;老板查看一共收入多少，数目是：&quot; + totalIncome);</span><br><span class="line">        return totalIncome;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public double getTotalConsume() &#123;</span><br><span class="line">        System.out.println(&quot;老板查看一共花费多少，数目是：&quot; + totalConsume);</span><br><span class="line">        return totalConsume;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="3-会计"><a href="#3-会计" class="headerlink" title="3. 会计"></a>3. 会计</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * visitor 会计</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/8/20  下午12:47.</span><br><span class="line"> */</span><br><span class="line">public class CPA implements AccountBookViewer &#123;</span><br><span class="line"></span><br><span class="line">    //注会在看账本时，如果是支出，则如果支出是工资，则需要看应该交的税交了没</span><br><span class="line">    public void view(ConsumeBill bill) &#123;</span><br><span class="line">        if (bill.getItem().equals(&quot;工资&quot;)) &#123;</span><br><span class="line">            System.out.println(&quot;注会查看工资是否交个人所得税。&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //如果是收入，则所有的收入都要交税</span><br><span class="line">    public void view(IncomeBill bill) &#123;</span><br><span class="line">        System.out.println(&quot;注会查看收入交税了没。&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="4-Element"><a href="#4-Element" class="headerlink" title="4. Element"></a>4. Element</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Element</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/8/20  下午12:49.</span><br><span class="line"> */</span><br><span class="line">public interface Bill &#123;</span><br><span class="line">    void accept(AccountBookViewer viewer);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="5-消费"><a href="#5-消费" class="headerlink" title="5. 消费"></a>5. 消费</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 消费</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/8/20  下午12:50.</span><br><span class="line"> */</span><br><span class="line">public class ConsumeBill implements Bill &#123;</span><br><span class="line"></span><br><span class="line">    private double amount;</span><br><span class="line"></span><br><span class="line">    private String item;</span><br><span class="line"></span><br><span class="line">    public ConsumeBill(double amount, String item) &#123;</span><br><span class="line">        super();</span><br><span class="line">        this.amount = amount;</span><br><span class="line">        this.item = item;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void accept(AccountBookViewer viewer) &#123;</span><br><span class="line">        viewer.view(this);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public double getAmount() &#123;</span><br><span class="line">        return amount;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getItem() &#123;</span><br><span class="line">        return item;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="6-收入的单子"><a href="#6-收入的单子" class="headerlink" title="6. 收入的单子"></a>6. 收入的单子</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 收入的单子</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/8/20  下午12:51.</span><br><span class="line"> */</span><br><span class="line">public class IncomeBill  implements  Bill&#123;</span><br><span class="line"></span><br><span class="line">    private double amount;</span><br><span class="line"></span><br><span class="line">    private String item;</span><br><span class="line"></span><br><span class="line">    public IncomeBill(double amount, String item) &#123;</span><br><span class="line">        super();</span><br><span class="line">        this.amount = amount;</span><br><span class="line">        this.item = item;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void accept(AccountBookViewer viewer) &#123;</span><br><span class="line">        viewer.view(this);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public double getAmount() &#123;</span><br><span class="line">        return amount;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getItem() &#123;</span><br><span class="line">        return item;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="7-账簿"><a href="#7-账簿" class="headerlink" title="7. 账簿"></a>7. 账簿</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * ObjectStruture</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/8/20  下午12:52.</span><br><span class="line"> */</span><br><span class="line">public class AccountBook &#123;</span><br><span class="line"></span><br><span class="line">    //单子列表</span><br><span class="line">    private List&lt;Bill&gt; billList = new ArrayList&lt;Bill&gt;();</span><br><span class="line"></span><br><span class="line">    //添加单子</span><br><span class="line">    public void addBill(Bill bill) &#123;</span><br><span class="line">        billList.add(bill);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //供账本的查看者查看账本</span><br><span class="line">    public void show(AccountBookViewer viewer) &#123;</span><br><span class="line">        for (Bill bill : billList) &#123;</span><br><span class="line">            bill.accept(viewer);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="8-Client-1"><a href="#8-Client-1" class="headerlink" title="8. Client"></a>8. Client</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">AccountBook accountBook = new AccountBook();</span><br><span class="line">//添加收入</span><br><span class="line">accountBook.addBill(new IncomeBill(10000, &quot;卖商品&quot;));</span><br><span class="line">//添加支出</span><br><span class="line">accountBook.addBill(new ConsumeBill(1000, &quot;工资&quot;));</span><br><span class="line"></span><br><span class="line">AccountBookViewer boss = new Boss();</span><br><span class="line">AccountBookViewer cpa = new CPA();</span><br><span class="line"></span><br><span class="line">//两个访问者分别访问账本</span><br><span class="line">accountBook.show(cpa);</span><br><span class="line">accountBook.show(boss);</span><br><span class="line"></span><br><span class="line">((Boss) boss).getTotalConsume();</span><br><span class="line">((Boss) boss).getTotalIncome();</span><br></pre></td></tr></table></figure>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
+<li><h5 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h5></li>
+</ul>
+<ol>
+<li>使得对象结构和作用于结构上的操作解耦，使得操作集合可以独立变化。<br>添加新的操作或者说访问者会非常容易，无须修改源代码，符合“开闭原则”。</li>
+<li>将有关元素对象的操作集中到一个访问者对象中，而不是分散在一个个的元素类中。类的职责更加清晰，有利于对象结构中元素对象的复用，相同的对象结构可以供多个不同的访问者访问。</li>
+<li>使得类层次结构不改变的情况下，可以针对各个层次做出不同的操作，而不影响类层次结构的完整性。</li>
+<li>可以跨越类层次结构，访问不同层次的元素类，做出相应的操作。</li>
+</ol>
+<ul>
+<li><h5 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h5></li>
+</ul>
+<ol>
+<li>增加新的元素会非常困难。在访问者模式中，每增加一个新的元素类都意味着要在抽象访问者角色中增加一个新的抽象操作，并在每一个具体访问者类中增加相应的具体操作，这违背了“开闭原则”的要求。</li>
+<li>实现起来比较复杂，会增加系统的复杂性。</li>
+<li>破坏封装，如果将访问行为放在各个元素中，则可以不暴露元素的内部结构和状态，但使用访问者模式的时候，为了让访问者能获取到所关心的信息，元素类不得不暴露出一些内部的状态和结构。</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/31/设计模式《责任链模式》/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -932,7 +1310,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
