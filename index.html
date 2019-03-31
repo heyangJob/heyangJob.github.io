@@ -371,6 +371,923 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/31/设计模式-代理模式（十）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="何阳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/icon.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何阳">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/31/设计模式-代理模式（十）/" class="post-title-link" itemprop="url">设计模式_代理模式（十）</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-31 23:43:30 / 修改时间：23:49:35" itemprop="dateCreated datePublished" datetime="2019-03-31T23:43:30+08:00">2019-03-31</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/设计模式/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h4><p> &emsp;&emsp;上一节我们讲了<a href="https://www.jianshu.com/p/7b56dd1eb846" target="_blank" rel="noopener">观察者模式</a>，这回咱们说说代理模式。</p>
+<h4 id="示例地址"><a href="#示例地址" class="headerlink" title="示例地址"></a>示例地址</h4><p> &emsp;&emsp;<a href="https://github.com/heyangJob/Design-Pattern/tree/master/Proxy" target="_blank" rel="noopener">Demo</a></p>
+<h4 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h4><p><img src="https://note.youdao.com/yws/api/personal/file/WEBf8a3bb9e7cfe0a4cd03cc7bdeed8188b?method=download&amp;shareKey=a3fb0063c3535a8c48d1b0bd80e6f57d" alt="image"></p>
+<h4 id="代理模式的定义"><a href="#代理模式的定义" class="headerlink" title="代理模式的定义"></a>代理模式的定义</h4><p> &emsp;&emsp;为其他对象提供一种代理以控制对这个对象的访问。</p>
+<h4 id="代理模式的使用场景"><a href="#代理模式的使用场景" class="headerlink" title="代理模式的使用场景"></a>代理模式的使用场景</h4><p> &emsp;&emsp;当无法或不想直接访问某个对象或访问某个对象存在困难时可以通过一个代理对象来间接访问，为了保证客户端使用的透明性，委托对象与代理对象需要实现相同的接口。</p>
+<h4 id="代理模式的示例"><a href="#代理模式的示例" class="headerlink" title="代理模式的示例"></a>代理模式的示例</h4><p> &emsp;&emsp;代理模式挺简单的，就跟单例模式一样简单。我们日常冲话费都是支付宝或者微信。这里面微信或者支付宝就是代理。</p>
+<h4 id="静态代理"><a href="#静态代理" class="headerlink" title="静态代理"></a>静态代理</h4><h6 id="1-充值接口"><a href="#1-充值接口" class="headerlink" title="1. 充值接口"></a>1. 充值接口</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 话费充值接口</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/19  上午10:58.</span><br><span class="line"> */</span><br><span class="line">public interface IHuaFei &#123;</span><br><span class="line"></span><br><span class="line">    void recharge ();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="2-充值实现"><a href="#2-充值实现" class="headerlink" title="2. 充值实现"></a>2. 充值实现</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 充值实现</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/19  上午11:12.</span><br><span class="line"> */</span><br><span class="line">public class Recharge implements IHuaFei &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void recharge() &#123;</span><br><span class="line">        System.out.println(&quot;充值100元话费&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="3-支付宝代理"><a href="#3-支付宝代理" class="headerlink" title="3. 支付宝代理"></a>3. 支付宝代理</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 支付宝代缴话费</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/19  上午11:12.</span><br><span class="line"> */</span><br><span class="line">public class ZhiFuBaoProxy implements IHuaFei &#123;</span><br><span class="line">    private Recharge mRecharge;</span><br><span class="line"></span><br><span class="line">    public ZhiFuBaoProxy(Recharge recharge) &#123;</span><br><span class="line">        mRecharge = recharge;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void recharge() &#123;</span><br><span class="line">        mRecharge.recharge();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="4-Client调用"><a href="#4-Client调用" class="headerlink" title="4. Client调用"></a>4. Client调用</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Recharge mRecharge = new Recharge();</span><br><span class="line">ZhiFuBaoProxy mZhiFuBao = new ZhiFuBaoProxy(mRecharge);</span><br><span class="line">mZhiFuBao.recharge();</span><br></pre></td></tr></table></figure>
+<h4 id="动态代理"><a href="#动态代理" class="headerlink" title="动态代理"></a>动态代理</h4><h6 id="1-动态代理类"><a href="#1-动态代理类" class="headerlink" title="1. 动态代理类"></a>1. 动态代理类</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 动态代理</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/19  上午11:33.</span><br><span class="line"> */</span><br><span class="line">public class DynamicProxy  implements InvocationHandler &#123;</span><br><span class="line">    private Object object;</span><br><span class="line">    public DynamicProxy(Object object) &#123;</span><br><span class="line">        this.object = object;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable &#123;</span><br><span class="line">        Object result = method.invoke(object, args);</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="2-Client"><a href="#2-Client" class="headerlink" title="2. Client"></a>2. Client</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">IHuaFei mIHuaFei = new Recharge();</span><br><span class="line">DynamicProxy proxy = new DynamicProxy(mIHuaFei);</span><br><span class="line">ClassLoader classLoader = mIHuaFei.getClass().getClassLoader();</span><br><span class="line">IHuaFei huaFei = (IHuaFei) Proxy.newProxyInstance(classLoader, new Class[]&#123;IHuaFei.class&#125;, proxy);</span><br><span class="line">huaFei.recharge();</span><br></pre></td></tr></table></figure>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>&emsp;&emsp;代理模式为的是对被代理对象提供访问控制，客户端关心的实际上还是被代理对象所具有的功能。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/31/设计模式-观察者模式（九）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="何阳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/icon.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何阳">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/31/设计模式-观察者模式（九）/" class="post-title-link" itemprop="url">未命名</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-31 23:43:04 / 修改时间：23:50:07" itemprop="dateCreated datePublished" datetime="2019-03-31T23:43:04+08:00">2019-03-31</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <hr>
+<p>title: 设计模式_观察者模式（九）<br>date: 2019-03-29 23:43:04<br>tags: </p>
+<h2 id="categories-设计模式"><a href="#categories-设计模式" class="headerlink" title="categories: 设计模式"></a>categories: 设计模式</h2><h4 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h4><p> &emsp;&emsp;开弓没有回头箭，我们还的继续，回顾上一节我们讲的<a href="https://www.jianshu.com/p/215a8f2b3876" target="_blank" rel="noopener">建造者模式</a>，这节我们说说观察者模式。</p>
+<h4 id="示例地址"><a href="#示例地址" class="headerlink" title="示例地址"></a>示例地址</h4><p>&emsp;&emsp;<a href="https://github.com/heyangJob/Design-Pattern/tree/master/Observer" target="_blank" rel="noopener">Demo</a></p>
+<h4 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h4><p><img src="https://note.youdao.com/yws/api/personal/file/WEBca6cab6b5728ca1b65295cbfe92c7e21?method=download&amp;shareKey=0c7d3c99f7683b2e0f474b864a42ee30" alt="image"></p>
+<h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p> &emsp;&emsp;定义对象间一种一对多的依赖关系，使得每当一个对象改变状态，则所有依赖于它的对象都会得到通知并被自动更新。</p>
+<h4 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h4><p> &emsp;&emsp; 1.关联行为场景，需要注意的是，关联行为是可拆分的，而不是”组合”关系；<br>&emsp;&emsp; 2.事件多级触发场景；<br>&emsp;&emsp; 3.跨系统的消息交换场景，例如消息队列、事件总线的处理机制。</p>
+<h4 id="观察者模式中的两个角色"><a href="#观察者模式中的两个角色" class="headerlink" title="观察者模式中的两个角色"></a>观察者模式中的两个角色</h4><p> &emsp;&emsp;Observer:  观察者角色。<br> &emsp;&emsp;Observable：被观察者角色。</p>
+<h4 id="观察者模式示例"><a href="#观察者模式示例" class="headerlink" title="观察者模式示例"></a>观察者模式示例</h4><p>  &emsp;&emsp;举个栗子，我们在上班的时候，每个公司或者每个楼都有烟感设备，一旦抽烟或者楼道发生火灾，第一立刻鸣警，第二，装备里面的水银自断，立刻喷水。这个例子中，观察者是烟感设备，被观察者是烟或者火。</p>
+<h6 id="1-定义观察者接口"><a href="#1-定义观察者接口" class="headerlink" title="1. 定义观察者接口"></a>1. 定义观察者接口</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 观察者接口</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/18  上午10:38.</span><br><span class="line"> */</span><br><span class="line">public interface IObserver &#123;</span><br><span class="line">    //更新消息</span><br><span class="line">    void updateMessage(String message);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="2-观察者的实现（烟感应器）"><a href="#2-观察者的实现（烟感应器）" class="headerlink" title="2. 观察者的实现（烟感应器）"></a>2. 观察者的实现（烟感应器）</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 烟感应器</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/18  上午11:05.</span><br><span class="line"> */</span><br><span class="line">public class YanObserver implements IObserver &#123;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void updateMessage(String message) &#123;</span><br><span class="line">        System.out.println(message + &quot;烟感应器 感应到了火情，立刻鸣警&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="3-观察者的实现（水银感应器）"><a href="#3-观察者的实现（水银感应器）" class="headerlink" title="3. 观察者的实现（水银感应器）"></a>3. 观察者的实现（水银感应器）</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 水银感应器</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/18  上午11:08.</span><br><span class="line"> */</span><br><span class="line">public class ShuiYinObserver implements IObserver &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void updateMessage(String message) &#123;</span><br><span class="line">        System.out.println(message + &quot;水银感应器 感应到了火情，立刻自毁水银，开始喷水&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="4-被观察者接口"><a href="#4-被观察者接口" class="headerlink" title="4. 被观察者接口"></a>4. 被观察者接口</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 被观察者接口</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/18  上午10:39.</span><br><span class="line"> */</span><br><span class="line">public interface IObservable &#123;</span><br><span class="line">    //添加</span><br><span class="line">    void addObserver(IObserver observer);</span><br><span class="line"></span><br><span class="line">    //移除</span><br><span class="line">    void removeObserver(IObserver observer);</span><br><span class="line"></span><br><span class="line">    //通知</span><br><span class="line">    void noticeObserver(String messgae);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="5-被观察者实现（着火）"><a href="#5-被观察者实现（着火）" class="headerlink" title="5. 被观察者实现（着火）"></a>5. 被观察者实现（着火）</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 发生火情</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/18  上午11:23.</span><br><span class="line"> */</span><br><span class="line">public class ZhaoHuo implements IObservable &#123;</span><br><span class="line"></span><br><span class="line">    private List&lt;IObserver&gt; mIObservers = new ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void addObserver(IObserver observer) &#123;</span><br><span class="line">        if (!mIObservers.contains(observer)) &#123;</span><br><span class="line">            mIObservers.add(observer);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void removeObserver(IObserver observer) &#123;</span><br><span class="line">        if (mIObservers.contains(observer)) &#123;</span><br><span class="line">            mIObservers.remove(observer);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void noticeObserver(String messgae) &#123;</span><br><span class="line">        for (IObserver observer : mIObservers) &#123;</span><br><span class="line">            observer.updateMessage(messgae);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void change(String messgae) &#123;</span><br><span class="line">        System.out.println(&quot;推模型---------&quot;);</span><br><span class="line">        noticeObserver(messgae);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="6-Client调用"><a href="#6-Client调用" class="headerlink" title="6. Client调用"></a>6. Client调用</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">ZhaoHuo zhaoHuo = new ZhaoHuo();</span><br><span class="line"></span><br><span class="line">//烟感设备</span><br><span class="line">IObserver yanObserver = new YanObserver();</span><br><span class="line">IObserver shuiYinObserver = new ShuiYinObserver();</span><br><span class="line"></span><br><span class="line">//添加观察者</span><br><span class="line">zhaoHuo.addObserver(yanObserver);</span><br><span class="line">zhaoHuo.addObserver(shuiYinObserver);</span><br><span class="line"></span><br><span class="line">//通知</span><br><span class="line">zhaoHuo.change(&quot;着火了 ！&quot;);</span><br></pre></td></tr></table></figure>
+<h4 id="推模型和拉模型概念"><a href="#推模型和拉模型概念" class="headerlink" title="推模型和拉模型概念"></a>推模型和拉模型概念</h4><p>&emsp;&emsp;在观察者模式中，又分为推模型和拉模型两种方式。</p>
+<h6 id="1-推模型"><a href="#1-推模型" class="headerlink" title="1. 推模型"></a>1. 推模型</h6><p>&emsp;&emsp;主题对象向观察者推送主题的详细信息，不管观察者是否需要，推送的信息通常是主题对象的全部或部分数据。</p>
+<h6 id="2-拉模型"><a href="#2-拉模型" class="headerlink" title="2. 拉模型"></a>2. 拉模型</h6><p>&emsp;&emsp;主题对象在通知观察者的时候，只传递少量信息。如果观察者需要更具体的信息，由观察者主动到主题对象中获取，相当于是观察者从主题对象中拉数据。一般这种模型的实现中，会把主题对象自身通过update()方法传递给观察者，这样在观察者需要获取数据的时候，就可以通过这个引用来获取了。</p>
+<h4 id="推模型和拉模型二者的比较"><a href="#推模型和拉模型二者的比较" class="headerlink" title="推模型和拉模型二者的比较"></a>推模型和拉模型二者的比较</h4><p> &emsp;&emsp;1、推模型是假定目标对象知道观察者需要的数据；拉模型不知道observer需要什么数据，因此把自身传给observer，由观察者来取值<br> &emsp;&emsp;2、推模型使observer对象难以复用，拉模型传递的是目标对象本身，满足各种需要</p>
+<h4 id="拉模型的示例"><a href="#拉模型的示例" class="headerlink" title="拉模型的示例"></a>拉模型的示例</h4><p>&emsp;&emsp;上面那个烟感设备就是典型的推模型，下面我们来看看拉模型的实现</p>
+<h6 id="1-观察者接口（这里主要讲参数变成被观察者本身了）"><a href="#1-观察者接口（这里主要讲参数变成被观察者本身了）" class="headerlink" title="1. 观察者接口（这里主要讲参数变成被观察者本身了）"></a>1. 观察者接口（这里主要讲参数变成被观察者本身了）</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 观察者接口</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/18  上午10:38.</span><br><span class="line"> */</span><br><span class="line">public interface IObserver &#123;</span><br><span class="line">    //更新消息</span><br><span class="line">    void updateMessage(IObservable observable);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="2-烟感应器"><a href="#2-烟感应器" class="headerlink" title="2.烟感应器"></a>2.烟感应器</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 烟感应器</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/18  上午11:05.</span><br><span class="line"> */</span><br><span class="line">public class YanObserver implements IObserver &#123;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void updateMessage(IObservable observable) &#123;</span><br><span class="line">        String message=((ZhaoHuo)observable).getMessage();</span><br><span class="line">        System.out.println(message + &quot;烟感应器 感应到了火情，立刻鸣警&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="3-水银感应器"><a href="#3-水银感应器" class="headerlink" title="3. 水银感应器"></a>3. 水银感应器</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 水银感应器</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/18  上午11:08.</span><br><span class="line"> */</span><br><span class="line">public class ShuiYinObserver implements IObserver &#123;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void updateMessage(IObservable observable) &#123;</span><br><span class="line"></span><br><span class="line">         String message=((ZhaoHuo)observable).getMessage();</span><br><span class="line">        System.out.println(message + &quot;水银感应器 感应到了火情，立刻自毁水银，开始喷水&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="4-被观察者接口（通知中不传递任何参数）"><a href="#4-被观察者接口（通知中不传递任何参数）" class="headerlink" title="4. 被观察者接口（通知中不传递任何参数）"></a>4. 被观察者接口（通知中不传递任何参数）</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 被观察者接口</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/18  上午10:39.</span><br><span class="line"> */</span><br><span class="line">public interface IObservable &#123;</span><br><span class="line">    //添加</span><br><span class="line">    void addObserver(IObserver observer);</span><br><span class="line"></span><br><span class="line">    //移除</span><br><span class="line">    void removeObserver(IObserver observer);</span><br><span class="line"></span><br><span class="line">    //通知</span><br><span class="line">    void noticeObserver();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="5-发生火情（自身作为参数传递）"><a href="#5-发生火情（自身作为参数传递）" class="headerlink" title="5. 发生火情（自身作为参数传递）"></a>5. 发生火情（自身作为参数传递）</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 发生火情</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/18  上午11:23.</span><br><span class="line"> */</span><br><span class="line">public class ZhaoHuo implements IObservable &#123;</span><br><span class="line"></span><br><span class="line">    private String message;</span><br><span class="line"></span><br><span class="line">    private List&lt;IObserver&gt; mIObservers = new ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void addObserver(IObserver observer) &#123;</span><br><span class="line">        if (!mIObservers.contains(observer)) &#123;</span><br><span class="line">            mIObservers.add(observer);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void removeObserver(IObserver observer) &#123;</span><br><span class="line">        if (mIObservers.contains(observer)) &#123;</span><br><span class="line">            mIObservers.remove(observer);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void noticeObserver() &#123;</span><br><span class="line">        for (IObserver observer : mIObservers) &#123;</span><br><span class="line">            // 将自身作为参数传递</span><br><span class="line">            observer.updateMessage(this);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void change(String message) &#123;</span><br><span class="line">        message = message;</span><br><span class="line">        System.out.println(&quot; 拉模型：&quot; + message);</span><br><span class="line">        //状态发生改变，通知各个观察者</span><br><span class="line">        this.noticeObserver();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    public String getMessage() &#123;</span><br><span class="line">        return message;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="6-Client"><a href="#6-Client" class="headerlink" title="6. Client"></a>6. Client</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">ZhaoHuo zhaoHuo = new ZhaoHuo();</span><br><span class="line"></span><br><span class="line">      //烟感设备</span><br><span class="line">      IObserver yanObserver = new YanObserver();</span><br><span class="line">      IObserver shuiYinObserver = new ShuiYinObserver();</span><br><span class="line"></span><br><span class="line">      //添加观察者</span><br><span class="line">      zhaoHuo.addObserver(yanObserver);</span><br><span class="line">      zhaoHuo.addObserver(shuiYinObserver);</span><br><span class="line"></span><br><span class="line">      //通知</span><br><span class="line">      zhaoHuo.change(&quot;着火了 ！&quot;);</span><br></pre></td></tr></table></figure>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>&emsp;&emsp;观察者模式定义的是一对多的依赖关系，一个被观察者可以拥有多个观察者，并且通过接口对观察者与被观察者进行逻辑解耦，降低二者的直接耦合。<br>&emsp;&emsp;1. 针对观察者与被观察者分别定义接口，有利于分别进行扩展。<br>&emsp;&emsp;2. 定义观察者集合，并定义针对集合的添加、删除操作，用于增加、删除订阅者（观察者<br>&emsp;&emsp;3. 定义通知方法，用于将新情况通知给观察者用户（订阅者用户）<br>&emsp;&emsp;4、观察者中需要有个接收被观察者通知的方法。  </p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/28/设计模式-建造者模式（八）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="何阳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/icon.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何阳">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/28/设计模式-建造者模式（八）/" class="post-title-link" itemprop="url">设计模式_建造者模式（八）</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-28 23:42:37" itemprop="dateCreated datePublished" datetime="2019-03-28T23:42:37+08:00">2019-03-28</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-03-31 23:49:57" itemprop="dateModified" datetime="2019-03-31T23:49:57+08:00">2019-03-31</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/设计模式/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h4><p> &emsp;&emsp;双休日出去玩了2天，一直没更新，今天我们继续，上一回咱们说了<a href="https://www.jianshu.com/p/a61574484266" target="_blank" rel="noopener">原型模式</a>，这次我们来讲讲建造者模式。</p>
+<h4 id="示例地址"><a href="#示例地址" class="headerlink" title="示例地址"></a>示例地址</h4><p> &emsp;&emsp;<a href="https://github.com/heyangJob/Design-Pattern/tree/master/Builder" target="_blank" rel="noopener">Demo</a></p>
+<h4 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h4><p><img src="https://note.youdao.com/yws/api/personal/file/WEB662f709c3df08ede737d44c0b5c50432?method=download&amp;shareKey=d4a28e3fa8f11b76b87aa5fe035de4ae" alt="image"></p>
+<h4 id="建造者模式定义"><a href="#建造者模式定义" class="headerlink" title="建造者模式定义"></a>建造者模式定义</h4><p>&emsp;&emsp;将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示</p>
+<h4 id="建造者模式使用场景"><a href="#建造者模式使用场景" class="headerlink" title="建造者模式使用场景"></a>建造者模式使用场景</h4><p>&emsp;&emsp;1. 相同的方法，不同的执行顺序，产生不同的事件结果时。<br>&emsp;&emsp;2. 多个部件或零件，都可以装配到一个对象中，但是产生的运行结果又不相同时。<br>&emsp;&emsp;3. 产品类非常复杂，或者产品类中的调用顺序不同产生了不同的作用，这个时候使用建造者模式非常合适。<br>&emsp;&emsp;4. 当初始化一个对象特别复杂，如参数多，且很多参数都具有默认值时。</p>
+<h4 id="建造者相关的概念"><a href="#建造者相关的概念" class="headerlink" title="建造者相关的概念"></a>建造者相关的概念</h4><p>&emsp;&emsp;Product 产品类：产品的抽象类<br>&emsp;&emsp;Builder：抽象Builder类，规范产品的组建，一般是由子类实现具体的组建过程。<br>&emsp;&emsp;ConcreteBuilder :具体的Builder类。<br>&emsp;&emsp;Director:统一组装过程。</p>
+<h4 id="建造者模式示例"><a href="#建造者模式示例" class="headerlink" title="建造者模式示例"></a>建造者模式示例</h4><p>&emsp;&emsp;在开发过程中，我们会创建很多的Bean,比如下面这个</p>
+<h6 id="1-创建Bean"><a href="#1-创建Bean" class="headerlink" title="1. 创建Bean"></a>1. 创建Bean</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 新闻实体类</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/16  下午5:32.</span><br><span class="line"> */</span><br><span class="line">public class News &#123;</span><br><span class="line"></span><br><span class="line">    private int id;</span><br><span class="line">    private String title;</span><br><span class="line">    private String subTitle;</span><br><span class="line">    private String createTime;</span><br><span class="line">    private String lookCount;</span><br><span class="line">    private String type;</span><br><span class="line"></span><br><span class="line">    public News() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public News(int id, String title, String subTitle, String createTime, String lookCount, String type) &#123;</span><br><span class="line">        this.id = id;</span><br><span class="line">        this.title = title;</span><br><span class="line">        this.subTitle = subTitle;</span><br><span class="line">        this.createTime = createTime;</span><br><span class="line">        this.lookCount = lookCount;</span><br><span class="line">        this.type = type;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int getId() &#123;</span><br><span class="line">        return id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setId(int id) &#123;</span><br><span class="line">        this.id = id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getTitle() &#123;</span><br><span class="line">        return title;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setTitle(String title) &#123;</span><br><span class="line">        this.title = title;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getSubTitle() &#123;</span><br><span class="line">        return subTitle;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setSubTitle(String subTitle) &#123;</span><br><span class="line">        this.subTitle = subTitle;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getCreateTime() &#123;</span><br><span class="line">        return createTime;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setCreateTime(String createTime) &#123;</span><br><span class="line">        this.createTime = createTime;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getLookCount() &#123;</span><br><span class="line">        return lookCount;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setLookCount(String lookCount) &#123;</span><br><span class="line">        this.lookCount = lookCount;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getType() &#123;</span><br><span class="line">        return type;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setType(String type) &#123;</span><br><span class="line">        this.type = type;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String toString() &#123;</span><br><span class="line">        return &quot;News&#123;&quot; +</span><br><span class="line">                &quot;id=&quot; + id +</span><br><span class="line">                &quot;, title=&apos;&quot; + title + &apos;\&apos;&apos; +</span><br><span class="line">                &quot;, subTitle=&apos;&quot; + subTitle + &apos;\&apos;&apos; +</span><br><span class="line">                &quot;, createTime=&apos;&quot; + createTime + &apos;\&apos;&apos; +</span><br><span class="line">                &quot;, lookCount=&apos;&quot; + lookCount + &apos;\&apos;&apos; +</span><br><span class="line">                &quot;, type=&apos;&quot; + type + &apos;\&apos;&apos; +</span><br><span class="line">                &apos;&#125;&apos;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="2-使用的时候，我们需要这样"><a href="#2-使用的时候，我们需要这样" class="headerlink" title="2. 使用的时候，我们需要这样"></a>2. 使用的时候，我们需要这样</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">News news = new News(1, &quot;今日快讯&quot;, &quot;北京大暴雨&quot;,&quot;2018-01-17&quot;, &quot;200&quot;, &quot;历史&quot;);</span><br><span class="line">System.out.println(news.toString());</span><br></pre></td></tr></table></figure>
+<h6 id="3-导致的问题"><a href="#3-导致的问题" class="headerlink" title="3. 导致的问题"></a>3. 导致的问题</h6><p>&emsp;&emsp;这个构造器调用通常需要许多你本不想设置的参数，但还是不得不为它们传递值。 </p>
+<h6 id="4-换一种方式"><a href="#4-换一种方式" class="headerlink" title="4. 换一种方式"></a>4. 换一种方式</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">News newsBean = new News();</span><br><span class="line">newsBean.setId(1);</span><br><span class="line">newsBean.setTitle(&quot;今日快讯&quot;);</span><br><span class="line">newsBean.setSubTitle(&quot;北京大暴雨&quot;);</span><br><span class="line">newsBean.setCreateTime(&quot;2018-01-17&quot;);</span><br><span class="line">newsBean.setLookCount(&quot;200&quot;);</span><br><span class="line">newsBean.setType(&quot;历史&quot;);</span><br><span class="line">System.out.println(newsBean.toString());</span><br></pre></td></tr></table></figure>
+<h6 id="5-存在问题"><a href="#5-存在问题" class="headerlink" title="5. 存在问题"></a>5. 存在问题</h6><p>&emsp;&emsp;构造过程被分到了几个调用中，在构造过程中JavaBean可能处于不一致的状态。</p>
+<h4 id="建造者模式"><a href="#建造者模式" class="headerlink" title="建造者模式"></a>建造者模式</h4><p> &emsp;&emsp;我们使用建模者模式来解决问题</p>
+<h6 id="1-抽象建造者类"><a href="#1-抽象建造者类" class="headerlink" title="1. 抽象建造者类"></a>1. 抽象建造者类</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 抽象建造者类</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/16  下午4:36.</span><br><span class="line"> */</span><br><span class="line">public abstract class Buildler &#123;</span><br><span class="line"></span><br><span class="line">    public abstract Buildler setId(int id);</span><br><span class="line"></span><br><span class="line">    public abstract Buildler setTitle(String title);</span><br><span class="line"></span><br><span class="line">    public abstract Buildler setSubTitle(String subTitle);</span><br><span class="line"></span><br><span class="line">    public abstract Buildler setCreateTime(String createTime);</span><br><span class="line"></span><br><span class="line">    public abstract Buildler setLookCount(String lookCount);</span><br><span class="line"></span><br><span class="line">    public abstract Buildler setType(String type);</span><br><span class="line"></span><br><span class="line">    public abstract News build();</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="2-具体建造者类"><a href="#2-具体建造者类" class="headerlink" title="2. 具体建造者类"></a>2. 具体建造者类</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 具体建造者类</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/16  下午4:52.</span><br><span class="line"> */</span><br><span class="line">public class SimpleBuilder extends Buildler &#123;</span><br><span class="line"></span><br><span class="line">    private News mNews;</span><br><span class="line"></span><br><span class="line">    public SimpleBuilder() &#123;</span><br><span class="line">        mNews = new News();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Buildler setId(int id) &#123;</span><br><span class="line">        mNews.setId(id);</span><br><span class="line">        return this;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Buildler setTitle(String title) &#123;</span><br><span class="line">        mNews.setTitle(title);</span><br><span class="line">        return this;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Buildler setSubTitle(String subTitle) &#123;</span><br><span class="line">        mNews.setSubTitle(subTitle);</span><br><span class="line">        return this;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Buildler setCreateTime(String createTime) &#123;</span><br><span class="line">        mNews.setCreateTime(createTime);</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Buildler setLookCount(String lookCount) &#123;</span><br><span class="line">        mNews.setLookCount(lookCount);</span><br><span class="line">        return this;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Buildler setType(String type) &#123;</span><br><span class="line">        mNews.setType(type);</span><br><span class="line">        return this;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public News build() &#123;</span><br><span class="line">        return mNews;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="3-指挥者类"><a href="#3-指挥者类" class="headerlink" title="3. 指挥者类"></a>3. 指挥者类</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 指挥者类</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/16  下午4:57.</span><br><span class="line"> */</span><br><span class="line">public class Director &#123;</span><br><span class="line"></span><br><span class="line">    // 组装产品</span><br><span class="line">    public static News create(String type) &#123;</span><br><span class="line">        return new SimpleBuilder().setType(type)</span><br><span class="line">                .setId(1)</span><br><span class="line">                .setTitle(&quot;历史上的今天&quot;)</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="4-调用"><a href="#4-调用" class="headerlink" title="4. 调用"></a>4. 调用</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">News history = Director.create(&quot;历史&quot;);</span><br><span class="line">News military = Director.create(&quot;军事&quot;);</span><br><span class="line"></span><br><span class="line">System.out.println(history.toString());</span><br><span class="line">System.out.println(military.toString());</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 另外一种方式创建</span><br><span class="line">SimpleBuilder simpleBuilder = new SimpleBuilder();</span><br><span class="line">News science =simpleBuilder.setType(&quot;科技&quot;).setTitle(&quot;小米上市&quot;).build();</span><br><span class="line">System.out.println(science.toString());</span><br></pre></td></tr></table></figure>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p> &emsp;&emsp;在《Effective Java》书中第二条，就提到“遇到多个构造器参数时要考虑用构建器”，其实这里的构建器就属于建造者模式。建造者模式将构建与表示分离。上面的例子中，我们其实根本就不会知道具体是怎么产生一条新闻的，因为这个过程让director给代劳了。然后，SimpleBuilder。director其实只是执行了这个过程。这样子，达到了分离模块的功能。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/27/设计模式-原型模式（七）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="何阳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/icon.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何阳">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/27/设计模式-原型模式（七）/" class="post-title-link" itemprop="url">设计模式_原型模式（七）</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-27 23:42:09" itemprop="dateCreated datePublished" datetime="2019-03-27T23:42:09+08:00">2019-03-27</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-03-31 23:47:47" itemprop="dateModified" datetime="2019-03-31T23:47:47+08:00">2019-03-31</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/设计模式/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h4><p>&emsp;&emsp;回顾上一节我们讲的<a href="https://www.jianshu.com/p/262ada910a4e" target="_blank" rel="noopener">状态模式</a>，这节我们来讲一下原型模式。和原型模式相关的2个概念：浅拷贝和深拷贝。</p>
+<h4 id="示例地址"><a href="#示例地址" class="headerlink" title="示例地址"></a>示例地址</h4><p>&emsp;&emsp;<a href="https://github.com/heyangJob/Design-Pattern/tree/master/Prototype" target="_blank" rel="noopener">Demo</a></p>
+<h4 id="先上类图"><a href="#先上类图" class="headerlink" title="先上类图"></a>先上类图</h4><p><img src="https://note.youdao.com/yws/api/personal/file/WEB78c9e275819a5c777c8544498bb3d38f?method=download&amp;shareKey=0a847836684d435b19c20a6c121a4fb9" alt="image"></p>
+<h4 id="再看定义"><a href="#再看定义" class="headerlink" title="再看定义"></a>再看定义</h4><p>&emsp;&emsp;用原型实例指定创建对象的种类，并通过拷贝这些原型创建新的对象。</p>
+<h4 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h4><p>&emsp;&emsp;1. 类初始化需要消耗非常多的资源，这个资源包括数据、硬件资源等，通过原型拷贝避免这些消耗。<br>&emsp;&emsp;2. 通过new产生一个对象需要非常繁琐的数据准备或者访问权限，<br>&emsp;&emsp;3. 一个对象需要提供给其他对象访问，而且各个调用者可能都需要修改其值时，可以考虑使用原型模式拷贝多个对象供调用者使用，即保护性拷贝。</p>
+<h4 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h4><p>&emsp;&emsp;通过实现Cloneable接口的原型模式在调用clone函数构造实例时并不一定比通过new操作速度快，只有当通过new构造对象较为耗时或者说成本较高时，通过clone方法才能够获得效率上的提升。因此，在使用Cloneable时需要考虑构建对象的成本以及做一些效率上的测试。</p>
+<h4 id="浅拷贝"><a href="#浅拷贝" class="headerlink" title="浅拷贝"></a>浅拷贝</h4><p>&emsp;&emsp;浅拷贝是将原始对象中的数据型字段拷贝到新对象中去，将引用型字段的“引用”复制到新对象中去，不把“引用的对象”复制进去，所以原始对象和新对象引用同一对象，新对象中的引用型字段发生变化会导致原始对象中的对应字段也发生变化。</p>
+<h6 id="1-示例"><a href="#1-示例" class="headerlink" title="1. 示例"></a>1. 示例</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 1.浅拷贝拷贝外层对象，对象里面的引用对象不进行拷贝。</span><br><span class="line"> * 2.深拷贝需要进行内部的拷贝（人为进行拷贝）。</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/13  下午4:10.</span><br><span class="line"> */</span><br><span class="line">public class Person implements Cloneable &#123;</span><br><span class="line"></span><br><span class="line">    private String name;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    private Son mSon;</span><br><span class="line"></span><br><span class="line">    public Person(String name, int age) &#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getName() &#123;</span><br><span class="line">        return name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setName(String name) &#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Son getSon() &#123;</span><br><span class="line">        return mSon;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setSon(Son son) &#123;</span><br><span class="line">        mSon = son;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected Object clone() throws CloneNotSupportedException &#123;</span><br><span class="line">        return (Person) super.clone();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String toString() &#123;</span><br><span class="line">        return &quot;Person&#123;&quot; +</span><br><span class="line">                &quot;name=&apos;&quot; + name + &apos;\&apos;&apos; +</span><br><span class="line">                &quot;, mSon=&quot; + mSon +</span><br><span class="line">                &apos;&#125;&apos;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/13  下午4:54.</span><br><span class="line"> */</span><br><span class="line">public class Son implements Cloneable &#123;</span><br><span class="line">    public Son(String schoolName) &#123;</span><br><span class="line">        this.schoolName = schoolName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private String schoolName;</span><br><span class="line"></span><br><span class="line">    public String getSchoolName() &#123;</span><br><span class="line">        return schoolName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setSchoolName(String schoolName) &#123;</span><br><span class="line">        this.schoolName = schoolName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    protected Son clone() &#123;</span><br><span class="line">        Son clone = null;</span><br><span class="line">        try &#123;</span><br><span class="line">            clone = (Son) super.clone();</span><br><span class="line">        &#125; catch (CloneNotSupportedException e) &#123;</span><br><span class="line">            throw new RuntimeException(e); // won&apos;t happen</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return clone;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String toString() &#123;</span><br><span class="line">        return &quot;Son&#123;&quot; +</span><br><span class="line">                &quot;schoolName=&apos;&quot; + schoolName + &apos;\&apos;&apos; +</span><br><span class="line">                &apos;&#125;&apos;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="2-调用"><a href="#2-调用" class="headerlink" title="2. 调用"></a>2. 调用</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">public class MainActivity extends AppCompatActivity &#123;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">        Person p = new Person(&quot;zhang&quot;);</span><br><span class="line">        Son son = new Son(&quot;实验二小&quot;);</span><br><span class="line">        p.setSon(son);</span><br><span class="line">        Person p1 = null;</span><br><span class="line">        try &#123;</span><br><span class="line">            p1 = (Person) p.clone();</span><br><span class="line">            p1.setName(&quot;yang&quot;);</span><br><span class="line">            son.setSchoolName(&quot;希望小学&quot;);</span><br><span class="line">            System.out.println(&quot;----&quot; + p.toString());</span><br><span class="line">            System.out.println(&quot;----&quot; + p1.toString());</span><br><span class="line">        &#125; catch (CloneNotSupportedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="3-打印"><a href="#3-打印" class="headerlink" title="3. 打印"></a>3. 打印</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">System.out: ----Person&#123;name=&apos;zhang&apos;, mSon=Son&#123;schoolName=&apos;希望小学&apos;&#125;&#125;</span><br><span class="line">System.out: ----Person&#123;name=&apos;yang&apos;, mSon=Son&#123;schoolName=&apos;希望小学&apos;&#125;&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="4-分析原因"><a href="#4-分析原因" class="headerlink" title="4. 分析原因"></a>4. 分析原因</h6><p>&emsp;&emsp;Object 类提供的方法 clone 只是拷贝本对象，<br>其对象内部的数组、引用对象等都不拷贝，还是指向原生对象的内部元素地址。原始类型比如int,long,String(Java 就希望你把 String 认为是基本类型，String 是没有 clone 方法的)等都会被拷贝的。所以String改变了,引用的Son两者还是一样的，没有改变。</p>
+<h4 id="深拷贝"><a href="#深拷贝" class="headerlink" title="深拷贝"></a>深拷贝</h4><p> &emsp;&emsp;深拷贝是在引用方面不同，深拷贝就是创建一个新的和原始字段的内容相同的字段，是两个一样大的数据段，所以两者的引用是不同的，之后的新对象中的引用型字段发生改变，不会引起原始对象中的字段发生改变。</p>
+<h6 id="1-示例-1"><a href="#1-示例-1" class="headerlink" title="1. 示例"></a>1. 示例</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 深拷贝</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/13  下午4:53.</span><br><span class="line"> */</span><br><span class="line">public class PersonTwo implements Cloneable &#123;</span><br><span class="line"></span><br><span class="line">    private String name;</span><br><span class="line"></span><br><span class="line">    private Son mSon;</span><br><span class="line"></span><br><span class="line">    public PersonTwo(String name) &#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getName() &#123;</span><br><span class="line">        return name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setName(String name) &#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Son getSon() &#123;</span><br><span class="line">        return mSon;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setSon(Son son) &#123;</span><br><span class="line">        mSon = son;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected Object clone() &#123;</span><br><span class="line">        PersonTwo clone = null;</span><br><span class="line">        try &#123;</span><br><span class="line">            clone = (PersonTwo) super.clone();</span><br><span class="line">        &#125; catch (CloneNotSupportedException e) &#123;</span><br><span class="line">            throw new RuntimeException(e); // won&apos;t happen</span><br><span class="line">        &#125;</span><br><span class="line">        clone.mSon = mSon.clone();</span><br><span class="line">        return clone;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String toString() &#123;</span><br><span class="line">        return &quot;Person&#123;&quot; +</span><br><span class="line">                &quot;name=&apos;&quot; + name + &apos;\&apos;&apos; +</span><br><span class="line">                &quot;, mSon=&quot; + mSon +</span><br><span class="line">                &apos;&#125;&apos;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="2-调用-1"><a href="#2-调用-1" class="headerlink" title="2. 调用"></a>2. 调用</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public class MainActivity extends AppCompatActivity &#123;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">        PersonTwo p = new PersonTwo(&quot;zhang&quot;);</span><br><span class="line">        Son son = new Son(&quot;实验二小&quot;);</span><br><span class="line">        p.setSon(son);</span><br><span class="line">        PersonTwo p1 = null;</span><br><span class="line">        p1 = (PersonTwo) p.clone();</span><br><span class="line">        p1.setName(&quot;yang&quot;);</span><br><span class="line">        son.setSchoolName(&quot;希望小学&quot;);</span><br><span class="line">        System.out.println(&quot;----&quot; + p.toString());</span><br><span class="line">        System.out.println(&quot;----&quot; + p1.toString());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="3-打印-1"><a href="#3-打印-1" class="headerlink" title="3. 打印"></a>3. 打印</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">System.out:----Person&#123;name=&apos;zhang&apos;, mSon=Son&#123;schoolName=&apos;希望小学&apos;&#125;&#125;</span><br><span class="line">System.out: ----Person&#123;name=&apos;yang&apos;, mSon=Son&#123;schoolName=&apos;实验二小&apos;&#125;&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h6><p>&emsp;&emsp;深拷贝到达了我们想要的效果，拷贝的时候所有的引用都变了</p>
+<h4 id="原型模式示例"><a href="#原型模式示例" class="headerlink" title="原型模式示例"></a>原型模式示例</h4><p>&emsp;&emsp;日常生活中，我们总接收或者发送邮件，如果让我们来写一个程序发送邮件怎么写。</p>
+<h6 id="1-先来定义个发送邮件的类"><a href="#1-先来定义个发送邮件的类" class="headerlink" title="1. 先来定义个发送邮件的类"></a>1. 先来定义个发送邮件的类</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 邮件模板Bean</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/13  下午3:02.</span><br><span class="line"> */</span><br><span class="line">public class Mail &#123;</span><br><span class="line">    public String receiver;// 接收者</span><br><span class="line">    public String tail;// 结尾备注</span><br><span class="line">    private String context; // 内容</span><br><span class="line">    private String sub; // 标题</span><br><span class="line"></span><br><span class="line">    public String getReceiver() &#123;</span><br><span class="line">        return receiver;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setReceiver(String receiver) &#123;</span><br><span class="line">        this.receiver = receiver;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getTail() &#123;</span><br><span class="line">        return tail;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setTail(String tail) &#123;</span><br><span class="line">        this.tail = tail;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getContext() &#123;</span><br><span class="line">        return context;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setContext(String context) &#123;</span><br><span class="line">        this.context = context;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getSub() &#123;</span><br><span class="line">        return sub;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setSub(String sub) &#123;</span><br><span class="line">        this.sub = sub;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="2-发送邮件"><a href="#2-发送邮件" class="headerlink" title="2. 发送邮件"></a>2. 发送邮件</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public class MainActivity extends AppCompatActivity &#123;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">         /* 发送邮件 */</span><br><span class="line">        final Mail mail = new Mail();</span><br><span class="line">        mail.setTail(&quot;xxx银行的所有版权&quot;);</span><br><span class="line"></span><br><span class="line">         for (int i = 0; i &lt; 100; i++) &#123;</span><br><span class="line">            mail.setSub(&quot;i&quot; + &quot; 先生（女士） &quot;);</span><br><span class="line">            mail.setReceiver(&quot;i0001122&quot; + &quot;@qq.com&quot;);</span><br><span class="line">            sendMail(mail);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void sendMail(Mail mail) &#123;</span><br><span class="line">        System.out.println(&quot;标题： &quot; + mail.getSub() + &quot;\t收件人&quot;</span><br><span class="line">                + mail.getReceiver() + &quot;\t....发送成功！ &quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="3-存在问题"><a href="#3-存在问题" class="headerlink" title="3. 存在问题"></a>3. 存在问题</h6><p>&emsp;&emsp;如果使用单线程发送，按照一封邮件发出去需要 0.03秒, 1000封邮件需要30秒，可以接受。100万封邮件呢？大概就是几小时，肯定行不通。那么我们换成多线程,将sendMail任务封装，但是问题有来了，因为用的是同一个对象，如果线程1还没发送完，线程2执行了，那么就造成了数据错乱，线程1发送的名字变成了线程2的。</p>
+<h6 id="4-解决办法"><a href="#4-解决办法" class="headerlink" title="4. 解决办法"></a>4. 解决办法</h6><p>&emsp;&emsp;使用mail.clone()将对象拷贝一份，产生一个新的对象，和原有对象一样，然后再修改细节的数据，如设置称谓，设置收件人地址等等。而这种不通过 new 关键字来产生一个对象，而是通过对象拷贝来实现的模式就叫做原型模式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 邮件模板Bean</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/13  下午3:02.</span><br><span class="line"> */</span><br><span class="line">public class Mail implements Cloneable &#123;</span><br><span class="line">   </span><br><span class="line">   .......</span><br><span class="line">   .......</span><br><span class="line">   .......</span><br><span class="line"></span><br><span class="line">    // 进行浅拷贝</span><br><span class="line">    @Override</span><br><span class="line">    protected Mail clone() throws CloneNotSupportedException &#123;</span><br><span class="line">        Mail mail = (Mail) super.clone();</span><br><span class="line">        return mail;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">public class MainActivity extends AppCompatActivity &#123;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">        for (int i = 0; i &lt; 100; i++) &#123;</span><br><span class="line">            Mail cloneMail;</span><br><span class="line">            try &#123;</span><br><span class="line">                cloneMail = mail.clone();</span><br><span class="line">                cloneMail.setSub(&quot;i&quot; + &quot; 先生（女士） &quot;);</span><br><span class="line">                cloneMail.setReceiver(&quot;i0001122&quot; + &quot;@qq.com&quot;);</span><br><span class="line">                sendMail(cloneMail);</span><br><span class="line">            &#125; catch (CloneNotSupportedException e) &#123;</span><br><span class="line">                // TODO Auto-generated catch block</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    public static void sendMail(Mail mail) &#123;</span><br><span class="line">        System.out.println(&quot;标题： &quot; + mail.getSub() + &quot;\t收件人&quot;</span><br><span class="line">                + mail.getReceiver() + &quot;\t....发送成功！ &quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ol>
+<li>对象拷贝时，类的构造函数是不会被执行的。<br>&emsp;&emsp;一个实现了 Cloneable 并重写了 clone 方法的类 A,有一个构造函数B，通过 new 关键字产生了一个对象 S，再然后通过 S.clone()方式产生了一个新的对象 T，那么在对象拷贝时构造函数 B 是不会被执行的，Object 类的 clone 方法的原理是从内存中（具体的说就是堆内存）以二进制流的方式进行拷贝，重新分配一个内存块，那构造函数没有被执行也是非常正常的了。</li>
+<li>final 类型修饰的成员变量不能进行深拷贝</li>
+<li>在实际项目中，原型模式很少单独出现，一般是和工厂方法模式一起出现，通过 clone的方法创建一个对象，然后由工厂方法提供给调用者。原型模式先产生出一个包含大量共有信息的类，然后可以拷贝出副本，修正细节信息，建立了一个完整的个性对象。</li>
+</ol>
+<h4 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h4><p>&emsp;&emsp;<a href="https://blog.csdn.net/o279642707/article/details/62046780" target="_blank" rel="noopener">23中设计模式之_原型模式(深/浅拷贝)</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/26/设计模式-状态模式（六）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="何阳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/icon.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何阳">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/26/设计模式-状态模式（六）/" class="post-title-link" itemprop="url">设计模式_状态模式（六）</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-26 23:41:37" itemprop="dateCreated datePublished" datetime="2019-03-26T23:41:37+08:00">2019-03-26</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-03-31 23:47:00" itemprop="dateModified" datetime="2019-03-31T23:47:00+08:00">2019-03-31</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/设计模式/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h4><p>&emsp;&emsp;上一节我们说了<a href="https://www.jianshu.com/p/3b396c1efc44" target="_blank" rel="noopener">策略模式</a>。这一节我们讲讲策略模式的双胞胎弟弟：状态模式，这个模式大家可能不常见，也不常用，但是我们还是需要了解一下。</p>
+<h4 id="示例地址"><a href="#示例地址" class="headerlink" title="示例地址"></a>示例地址</h4><p>&emsp;&emsp;<a href="https://github.com/heyangJob/Design-Pattern/tree/master/State" target="_blank" rel="noopener">Demo</a></p>
+<h4 id="依然是类图"><a href="#依然是类图" class="headerlink" title="依然是类图"></a>依然是类图</h4><p><img src="https://note.youdao.com/yws/api/personal/file/WEB656efc5bb5023f60996851fe01a909f1?method=download&amp;shareKey=c9d9034d03ef079e493d9ba4ee79ea3c" alt="image"></p>
+<h4 id="在看定义"><a href="#在看定义" class="headerlink" title="在看定义"></a>在看定义</h4><p>&emsp;&emsp;当一个对象的内在状态改变时允许改变其行为，这个对象看起来就是改变了其类。</p>
+<h4 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h4><p>&emsp;&emsp; 1. 一个对象的行为取决于它的状态，并且它必须在运行时根据状态改变它的行为。<br>&emsp;&emsp;2. 代码中包含大量与对象状态有关的条件语句，例如，一个操作中含有庞大的多分支语句（if-else或者switch-case），且这些分支依赖于该对象的状态。</p>
+<h4 id="状态模式的作用"><a href="#状态模式的作用" class="headerlink" title="状态模式的作用"></a>状态模式的作用</h4><p>&emsp;&emsp;将每一个条件分支放入一个独立的类中，这是的你可以根据对象自身的情况将对象的状态作为一个对象，这一对象可以不依赖于其他对象而独立变化，这样通过多态来去除过多的、重复的if-else等分支语句。</p>
+<h4 id="状态模式的示例"><a href="#状态模式的示例" class="headerlink" title="状态模式的示例"></a>状态模式的示例</h4><p>&emsp;&emsp;我们上初中的时候都学过物理，知道液化、升华、气化，大自然的水也有这三种状态固体、液体、气体，不同的状态有不同的表现形式，固态是冰，液态是水，气态就是水蒸气了。</p>
+<h6 id="1-定义一个状态接口"><a href="#1-定义一个状态接口" class="headerlink" title="1. 定义一个状态接口"></a>1. 定义一个状态接口</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 水的状态</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/12  下午4:15.</span><br><span class="line"> */</span><br><span class="line">public interface IState &#123;</span><br><span class="line">    // 什么形状</span><br><span class="line">    void shape();</span><br><span class="line"></span><br><span class="line">    // 什么用途</span><br><span class="line">    void use();</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="2-各种状态的实现"><a href="#2-各种状态的实现" class="headerlink" title="2. 各种状态的实现"></a>2. 各种状态的实现</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 固体</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/12  下午5:07.</span><br><span class="line"> */</span><br><span class="line">public class IceState implements IState &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void shape() &#123;</span><br><span class="line">        System.out.println(&quot;这是0度以下的水 固体的&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void use() &#123;</span><br><span class="line">        System.out.println(&quot;当前用途：可以用来存储蔬菜，保鲜的作用&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 液体</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/12  下午5:11.</span><br><span class="line"> */</span><br><span class="line">public class FluidState implements IState &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void shape() &#123;</span><br><span class="line">        System.out.println(&quot;这是0度到100之间的水 液体的&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void use() &#123;</span><br><span class="line">        System.out.println(&quot;当前用途：洗澡、浇树&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 气体</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/12  下午5:10.</span><br><span class="line"> */</span><br><span class="line">public class GasState implements IState &#123;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void shape() &#123;</span><br><span class="line">        System.out.println(&quot;这是100度以上的水 气体的&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void use() &#123;</span><br><span class="line">        System.out.println(&quot;当前用途：用来真桑拿、食品等&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="3-状态管理类"><a href="#3-状态管理类" class="headerlink" title="3. 状态管理类"></a>3. 状态管理类</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 状态管理类</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/12  下午5:12.</span><br><span class="line"> */</span><br><span class="line">public class ClientContext &#123;</span><br><span class="line"></span><br><span class="line">    private IState mIState = new IceState();</span><br><span class="line"></span><br><span class="line">    private static volatile ClientContext mClientContext;</span><br><span class="line"></span><br><span class="line">    private ClientContext() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static ClientContext getInstance() &#123;</span><br><span class="line">        if (null == mClientContext) &#123;</span><br><span class="line">            synchronized (ClientContext.class) &#123;</span><br><span class="line">                if (null == mClientContext) &#123;</span><br><span class="line">                    mClientContext = new ClientContext();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return mClientContext;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setIState(IState IState) &#123;</span><br><span class="line">        mIState = IState;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void use() &#123;</span><br><span class="line">        mIState.use();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void shape() &#123;</span><br><span class="line">        mIState.shape();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="4-Client使用"><a href="#4-Client使用" class="headerlink" title="4. Client使用"></a>4. Client使用</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 默认是固态的水</span><br><span class="line">ClientContext.getInstance().use();</span><br><span class="line"></span><br><span class="line">//液态的水</span><br><span class="line">ClientContext.getInstance().setIState(new FluidState());</span><br><span class="line">ClientContext.getInstance().use();</span><br><span class="line"></span><br><span class="line">// 气态</span><br><span class="line">ClientContext.getInstance().setIState(new GasState());</span><br><span class="line">ClientContext.getInstance().use();</span><br></pre></td></tr></table></figure>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>&emsp;&emsp;状态模式主要是避免代码膨胀，同时保证程序的扩展性和维护性。</p>
+<h4 id="策略模式与状态模式的区别"><a href="#策略模式与状态模式的区别" class="headerlink" title="策略模式与状态模式的区别"></a>策略模式与状态模式的区别</h4><p>&emsp;&emsp;策略模式：封装一系列平行且复杂多变的实现方式。<br>&emsp;&emsp;状态模式：实现把对象的内在状态的变化封装起来，用外部行为来表现出来。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/25/设计模式-策略模式（五）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -993,7 +1910,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-03-31 23:38:08" itemprop="dateModified" datetime="2019-03-31T23:38:08+08:00">2019-03-31</time>
+                <time title="修改时间：2019-03-31 23:50:49" itemprop="dateModified" datetime="2019-03-31T23:50:49+08:00">2019-03-31</time>
               
             
           </span>
@@ -1047,7 +1964,7 @@
       
         
           
-            <h4 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h4><p>&emsp;&emsp;上一节我们说了<a href="https://www.jianshu.com/p/117cd76381fe" target="_blank" rel="noopener">单例模式</a>，这一节我们来说说工厂方法模式。</p>
+            <h4 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h4><p>&emsp;&emsp;上一节我们说了<a href="https://www.heyangjob.cn/2019/03/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89/" target="_blank" rel="noopener">单例模式</a>，这一节我们来说说工厂方法模式。</p>
 <h4 id="示例地址"><a href="#示例地址" class="headerlink" title="示例地址"></a>示例地址</h4><p>&emsp;&emsp;<a href="https://github.com/heyangJob/Design-Pattern/tree/master/Factory" target="_blank" rel="noopener">Demo</a></p>
 <h4 id="先看类图"><a href="#先看类图" class="headerlink" title="先看类图"></a>先看类图</h4><p><img src="https://note.youdao.com/yws/api/personal/file/WEB086195d0ff2e583f2a2720daf31eb788?method=download&amp;shareKey=e48be0d40b223f27ea0e318dcb697631" alt="image"></p>
 <h4 id="工厂方法模式定义"><a href="#工厂方法模式定义" class="headerlink" title="工厂方法模式定义"></a>工厂方法模式定义</h4><p>&emsp;&emsp;定义一个用于创建对象的接口，让子类决定实例化哪一个类。</p>
@@ -1294,242 +2211,13 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/20/设计模式-六大原则（开篇）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="何阳">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/icon.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="何阳">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/03/20/设计模式-六大原则（开篇）/" class="post-title-link" itemprop="url">设计模式_六大原则（开篇）</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-03-20 23:36:03" itemprop="dateCreated datePublished" datetime="2019-03-20T23:36:03+08:00">2019-03-20</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-03-31 23:37:05" itemprop="dateModified" datetime="2019-03-31T23:37:05+08:00">2019-03-31</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/设计模式/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h4><h5 id="emsp-emsp-创建型模式"><a href="#emsp-emsp-创建型模式" class="headerlink" title="&emsp;&emsp;创建型模式"></a>&emsp;&emsp;创建型模式</h5><ul>
-<li><a href="https://www.jianshu.com/p/117cd76381fe" target="_blank" rel="noopener">单例模式</a></li>
-<li><a href="https://www.jianshu.com/p/1ed430b68b02" target="_blank" rel="noopener">工厂方法模式</a></li>
-<li><a href="https://www.jianshu.com/p/0b7c8d6fdca4" target="_blank" rel="noopener">抽象工厂模式</a></li>
-<li><a href="https://www.jianshu.com/p/a61574484266" target="_blank" rel="noopener">原型模式</a></li>
-<li><a href="https://www.jianshu.com/p/215a8f2b3876" target="_blank" rel="noopener">建造者模式</a></li>
-</ul>
-<h5 id="emsp-emsp-结构型模式"><a href="#emsp-emsp-结构型模式" class="headerlink" title="&emsp;&emsp;结构型模式"></a>&emsp;&emsp;结构型模式</h5><ul>
-<li><a href="https://www.jianshu.com/p/61c1f5ad329c" target="_blank" rel="noopener">代理模式</a></li>
-<li><a href="https://www.jianshu.com/p/d082eb9eadb8" target="_blank" rel="noopener">适配器模式</a></li>
-<li><a href="https://www.jianshu.com/p/ed58f2332a11" target="_blank" rel="noopener">装饰模式</a> </li>
-<li><a href="https://www.jianshu.com/p/8669751d2292" target="_blank" rel="noopener">桥接模式</a></li>
-<li><a href="https://www.jianshu.com/p/8988d797755c" target="_blank" rel="noopener">组合模式</a></li>
-<li><a href="https://www.jianshu.com/p/58b205672bab" target="_blank" rel="noopener">享元模式</a></li>
-<li><a href="https://www.jianshu.com/p/6acc81c64f28" target="_blank" rel="noopener">外观模式</a></li>
-</ul>
-<h5 id="emsp-emsp-行为型模式"><a href="#emsp-emsp-行为型模式" class="headerlink" title="&emsp;&emsp;行为型模式"></a>&emsp;&emsp;行为型模式</h5><ul>
-<li><a href="https://www.jianshu.com/p/f0757c949d4e" target="_blank" rel="noopener">模板方法模式</a></li>
-<li><a href="https://www.jianshu.com/p/3b396c1efc44" target="_blank" rel="noopener">策略模式</a> </li>
-<li><a href="https://www.jianshu.com/p/262ada910a4e" target="_blank" rel="noopener">状态模式</a></li>
-<li><a href="https://www.jianshu.com/p/7b56dd1eb846" target="_blank" rel="noopener">观察者模式</a></li>
-<li><a href="https://www.jianshu.com/p/bfcc59af14a7" target="_blank" rel="noopener">责任链模式</a></li>
-<li><a href="https://www.jianshu.com/p/d8ec93bd8baf" target="_blank" rel="noopener">中介者模式</a></li>
-<li><a href="https://www.jianshu.com/p/14d27c8fea8d" target="_blank" rel="noopener">备忘录模式</a></li>
-<li><a href="https://www.jianshu.com/p/eb36739c23fb" target="_blank" rel="noopener">命令模式</a></li>
-<li><a href="https://www.jianshu.com/p/6b91dcf8e18e" target="_blank" rel="noopener">解释器模式</a></li>
-<li><a href="https://www.jianshu.com/p/d65996e81f8a" target="_blank" rel="noopener">访问者模式</a></li>
-<li><a href="https://www.jianshu.com/p/c3f2c006c2fa" target="_blank" rel="noopener">迭代器模式</a></li>
-</ul>
-<h4 id="一、单一职责原则"><a href="#一、单一职责原则" class="headerlink" title="一、单一职责原则"></a>一、单一职责原则</h4><h5 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h5><p>&emsp;&emsp;一个类只负责一个功能领域中的相应职责，或者可以定义为：就一个类而言，应该只有一个引起它变化的原因。简单来说，一个类中应该是一组相关性很高的函数、数据的封装。</p>
-<h6 id="1-一般我们写一个网络请求可能是这样"><a href="#1-一般我们写一个网络请求可能是这样" class="headerlink" title="1. 一般我们写一个网络请求可能是这样"></a>1. 一般我们写一个网络请求可能是这样</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">public class HttpUtils &#123;</span><br><span class="line">    private HttpUtils() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static &lt;T&gt; void get(Context context, String url, Map&lt;String, Object&gt; params, final HttpCallBack&lt;T&gt;</span><br><span class="line">            callback, final boolean cache) &#123;</span><br><span class="line">        OkHttpClient mOkHttpClient = new OkHttpClient();</span><br><span class="line">        // 公共参数</span><br><span class="line">        params.put(&quot;app_name&quot;, &quot;joke_essay&quot;);</span><br><span class="line">        params.put(&quot;version_name&quot;, &quot;5.7.0&quot;);</span><br><span class="line">        params.put(&quot;device_platform&quot;, &quot;android&quot;);</span><br><span class="line"></span><br><span class="line">        final String jointUrl = Utils.jointParams(url, params);  //打印</span><br><span class="line">        // 缓存问题</span><br><span class="line">        Log.e(&quot;Post请求路径：&quot;, jointUrl);  // 缓存写到  SP 里面，多级缓存（内存中 30条,数据库 ，文件中 ）</span><br><span class="line">        final String cacheJson = (String) PreferencesUtil.getInstance().getParam(jointUrl, &quot;&quot;);</span><br><span class="line">        // 写一大堆处理逻辑 ，内存怎么扩展等等</span><br><span class="line"></span><br><span class="line">        if (cache &amp;&amp; !TextUtils.isEmpty(cacheJson)) &#123;</span><br><span class="line">            Log.e(&quot;TAG&quot;,  &quot;从缓存中获取数据&quot;);</span><br><span class="line">            Gson gson = new Gson();</span><br><span class="line">            T objResult = (T) gson.fromJson(cacheJson,</span><br><span class="line">                    Utils.analysisClazzInfo(callback));</span><br><span class="line">            callback.onSuccess(objResult);</span><br><span class="line">            return;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Request.Builder requestBuilder = new Request.Builder().url(jointUrl).tag(context);</span><br><span class="line">        //可以省略，默认是GET请求</span><br><span class="line">        Request request = requestBuilder.build();</span><br><span class="line"></span><br><span class="line">        mOkHttpClient.newCall(request).enqueue(new Callback() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void onFailure(Call call, final IOException e) &#123;</span><br><span class="line">                // 失败</span><br><span class="line">                callback.onFailure(e);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            @Override</span><br><span class="line">            public void onResponse(Call call, Response response) throws IOException &#123;</span><br><span class="line">                final String resultJson = response.body().string();</span><br><span class="line"></span><br><span class="line">                Log.e(&quot;TAG&quot;, resultJson.equals(cacheJson) + &quot;&quot;);</span><br><span class="line">                Log.e(&quot;TAG&quot;, resultJson + &quot;&quot;);</span><br><span class="line">                if (cache &amp;&amp; resultJson.equals(cacheJson)) &#123;</span><br><span class="line">                    return;</span><br><span class="line">                &#125;</span><br><span class="line">                Gson gson = new Gson();</span><br><span class="line">                T objResult = (T) gson.fromJson(resultJson,</span><br><span class="line">                        Utils.analysisClazzInfo(callback));</span><br><span class="line">                callback.onSuccess(objResult);</span><br><span class="line"></span><br><span class="line">                if (cache) &#123;</span><br><span class="line">                    PreferencesUtil.getInstance().saveParam(jointUrl, resultJson);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="2-然后这样调用"><a href="#2-然后这样调用" class="headerlink" title="2. 然后这样调用"></a>2. 然后这样调用</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, Object&gt; params = new HashMap&lt;&gt;();</span><br><span class="line">        // 特定参数</span><br><span class="line">        params.put(&quot;iid&quot;, 6152551759L);</span><br><span class="line">        params.put(&quot;aid&quot;, 7);</span><br><span class="line"></span><br><span class="line">        HttpUtils.get(this, ConstantValue.UrlConstant.HOME_DISCOVERY_URL, params, new HttpCallBack&lt;DiscoverListResult&gt;() &#123;</span><br><span class="line"></span><br><span class="line">            @Override</span><br><span class="line">            public void onFailure(Exception e) &#123;</span><br><span class="line">                // 失败</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            @Override</span><br><span class="line">            public void onSuccess(DiscoverListResult result)&#123;</span><br><span class="line">                if (result.isOK()) &#123;</span><br><span class="line">                    // 没有列表数据的情况, 打印 Toast 或者做一些其他处理</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    // 有数据列表的情况，显示列表</span><br><span class="line">                    showListData(result);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;,true);</span><br></pre></td></tr></table></figure>
-<h6 id="3-导致问题"><a href="#3-导致问题" class="headerlink" title="3. 导致问题"></a>3. 导致问题</h6><p>&emsp;&emsp;所有的功能都写在一个类里，这样随着功能的增多，HttpUtils 类会越来越大，代码也越来越复杂。HttpUtils简直就没有设计可言，更不要说扩展性、灵活性了。</p>
-<h6 id="4-单一职责原则入场"><a href="#4-单一职责原则入场" class="headerlink" title="4. 单一职责原则入场"></a>4. 单一职责原则入场</h6><p>&emsp;&emsp;我们将HttpUtils进行拆分，一个类只负责一个职责。<br><img src="https://note.youdao.com/yws/api/personal/file/WEB6f95cecdf7fa3d79f16c57044929c8f1?method=download&amp;shareKey=7b6cbf7ae6f0cf47f379293646c04c08" alt="image"></p>
-<h6 id="5-HttpUtils"><a href="#5-HttpUtils" class="headerlink" title="5. HttpUtils"></a>5. HttpUtils</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public class HttpUtils &#123;</span><br><span class="line">    private OKHttpRequest mHttpRequest;</span><br><span class="line">    </span><br><span class="line">    public &lt;T&gt; void request() &#123;</span><br><span class="line">        request(null);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public &lt;T&gt; void request(final HttpCallBack&lt;T&gt; callback) &#123;</span><br><span class="line">        // 异常判断</span><br><span class="line">        mHttpRequest.get(mContext, mUrl, mParams, callback, true);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //省略其他代码</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="6-OKHttpRequest"><a href="#6-OKHttpRequest" class="headerlink" title="6. OKHttpRequest"></a>6. OKHttpRequest</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public class OKHttpRequest &#123;</span><br><span class="line">    private HttpCache mHttpCache;</span><br><span class="line"></span><br><span class="line">    public OKHttpRequest() &#123;</span><br><span class="line">        mHttpCache = new HttpCache();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 参数还是很多</span><br><span class="line">    public &lt;T&gt; void get(Context context, String url, Map&lt;String, Object&gt; params,final HttpCallBack&lt;T&gt; callback, final boolean cache) &#123;</span><br><span class="line">        OkHttpClient mOkHttpClient = new OkHttpClient();</span><br><span class="line">    </span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //省略其他代码</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="7-HttpCache"><a href="#7-HttpCache" class="headerlink" title="7. HttpCache"></a>7. HttpCache</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public class HttpCache &#123;</span><br><span class="line">    public void saveCache(String finalUrl, String resultJson) &#123;</span><br><span class="line">        PreferencesUtil.getInstance().saveParam(finalUrl, resultJson);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getCache(String finalUrl) &#123;</span><br><span class="line">        return (String) PreferencesUtil.getInstance().getParam(finalUrl, &quot;&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="二、开闭原则"><a href="#二、开闭原则" class="headerlink" title="二、开闭原则"></a>二、开闭原则</h4><h5 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h5><p>&emsp;&emsp;软件中的对象（类、模块、函数等）应该对于扩展是开放的，但是，对于修改是封闭的。我的理解是对于原来写好的代码里面是不可修改，但是对于外部又是可扩展的。其实就是多了一个接口而已。</p>
-<h6 id="1-上面代码存在问题"><a href="#1-上面代码存在问题" class="headerlink" title="1. 上面代码存在问题"></a>1. 上面代码存在问题</h6><p>&emsp;&emsp;如果把xutils换成OkHttp，但是我没想过要去改每个接口，比如后来接着 Retrofit又出来了，以后还指不定要出一些什么，我想能不能再写得强大一些，可以切换，而不用改动原来的代码。</p>
-<h6 id="2-修改后的类图"><a href="#2-修改后的类图" class="headerlink" title="2. 修改后的类图"></a>2. 修改后的类图</h6><p><img src="https://note.youdao.com/yws/api/personal/file/WEB2446a119397b82cfeff47f257c9435e3?method=download&amp;shareKey=70eff13f5fadeccb9a04bcb1eb6f6396" alt="image"></p>
-<h6 id="3-开闭原则入场"><a href="#3-开闭原则入场" class="headerlink" title="3. 开闭原则入场"></a>3. 开闭原则入场</h6><p>&emsp;&emsp;新增IHttpRequest接口<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/8/22  上午10:49.</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">public interface IHttpRequest &#123;</span><br><span class="line">    &lt;T&gt; void get(Context context, String url, Map&lt;String, Object&gt; params,</span><br><span class="line">                 final HttpCallBack&lt;T&gt; callback, final boolean cache);</span><br><span class="line"></span><br><span class="line">    &lt;T&gt; void post(Context context, String url, Map&lt;String, Object&gt; params,</span><br><span class="line">                  final HttpCallBack&lt;T&gt; callback, final boolean cache);</span><br><span class="line"></span><br><span class="line">    &lt;T&gt; void download(Context context, String url, Map&lt;String, Object&gt; params,</span><br><span class="line">                      final HttpCallBack&lt;T&gt; callback);</span><br><span class="line"></span><br><span class="line">    &lt;T&gt; void upload(Context context, String url, Map&lt;String, Object&gt; params,</span><br><span class="line">                    final HttpCallBack&lt;T&gt; callback);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h6 id="4-XUtilsRequest"><a href="#4-XUtilsRequest" class="headerlink" title="4. XUtilsRequest"></a>4. XUtilsRequest</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public class XUtilsRequest implements IHttpRequest &#123;</span><br><span class="line">    private SPHttpCache mHttpCache;</span><br><span class="line"></span><br><span class="line">    public XUtilsRequest() &#123;</span><br><span class="line">        mHttpCache = new SPHttpCache();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 参数还是很多</span><br><span class="line">    public &lt;T&gt; void get(Context context, String url, Map&lt;String, Object&gt; params,</span><br><span class="line">                        final HttpCallBack&lt;T&gt; callback, final boolean cache) &#123;</span><br><span class="line">        RequestParams requestParams = new RequestParams();</span><br><span class="line">        x.http().get(requestParams, new org.xutils.common.Callback.CommonCallback&lt;String&gt;() &#123;</span><br><span class="line"></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<h6 id="5-OKHttpRequest"><a href="#5-OKHttpRequest" class="headerlink" title="5. OKHttpRequest"></a>5. OKHttpRequest</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public class  OKHttpRequest implements IHttpRequest&#123;</span><br><span class="line">    private SPHttpCache mHttpCache;</span><br><span class="line"></span><br><span class="line">    public OKHttpRequest() &#123;</span><br><span class="line">        mHttpCache = new SPHttpCache();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 参数还是很多</span><br><span class="line">    public &lt;T&gt; void get(Context context, String url, Map&lt;String, Object&gt; params,</span><br><span class="line">                        final HttpCallBack&lt;T&gt; callback, final boolean cache) &#123;</span><br><span class="line">        OkHttpClient mOkHttpClient = new OkHttpClient();</span><br><span class="line">        </span><br><span class="line">                            </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="6-HttpUtils"><a href="#6-HttpUtils" class="headerlink" title="6. HttpUtils"></a>6. HttpUtils</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">public class HttpUtils &#123;</span><br><span class="line">    private IHttpRequest mHttpRequest;</span><br><span class="line">    private static IHttpRequest mInitHttpRequest;</span><br><span class="line"></span><br><span class="line">    public static HttpUtils with(Context context)&#123;</span><br><span class="line">        return new HttpUtils(context);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public HttpUtils httpRequest(IHttpRequest httpRequest)&#123;</span><br><span class="line">        mHttpRequest = httpRequest;</span><br><span class="line">        return this;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">      public &lt;T&gt; void request()&#123;</span><br><span class="line">        request(null);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public &lt;T&gt; void request(final HttpCallBack&lt;T&gt; callback)&#123;</span><br><span class="line">        if(mHttpRequest == null)&#123;</span><br><span class="line">            mHttpRequest = mInitHttpRequest;</span><br><span class="line">        &#125;</span><br><span class="line">        // 异常判断</span><br><span class="line">        mHttpRequest.get(mContext,mUrl,mParams,callback,true);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="7-Client"><a href="#7-Client" class="headerlink" title="7. Client"></a>7. Client</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">HttpUtils.with(this).cache(true).get().httpRequest(new OKHttpRequest()).url(ConstantValue.UrlConstant.HOME_DISCOVERY_URL).param(&quot;iid&quot;, 6152551759L).param(&quot;aid&quot;, 7).request(</span><br><span class="line">           new HttpCallBack&lt;DiscoverListResult&gt;() &#123;</span><br><span class="line"></span><br><span class="line">       @Override</span><br><span class="line">       public void onFailure(Exception e) &#123;</span><br><span class="line">           // 失败</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       @Override</span><br><span class="line">       public void onSuccess(DiscoverListResult result)&#123;</span><br><span class="line">           if (result.isOK()) &#123;</span><br><span class="line">               // 没有列表数据的情况, 打印 Toast 或者做一些其他处理</span><br><span class="line">           &#125; else &#123;</span><br><span class="line">               // 有数据列表的情况，显示列表</span><br><span class="line">               showListData(result);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">   &#125;);</span><br></pre></td></tr></table></figure>
-<h6 id="8-归纳"><a href="#8-归纳" class="headerlink" title="8. 归纳"></a>8. 归纳</h6><p>&emsp;&emsp;当软件需要变化时，应该尽量通过扩展的方式来实现变化，而不是通过修改已有的代码来实现。我们尽量不要通过继承等方式添加新的实现，这会导致类型的膨胀以及历史遗留代码的冗余。</p>
-<h4 id="三、里氏替换原则"><a href="#三、里氏替换原则" class="headerlink" title="三、里氏替换原则"></a>三、里氏替换原则</h4><h5 id="定义-2"><a href="#定义-2" class="headerlink" title="定义"></a>定义</h5><p>&emsp;&emsp;所有引用基类的地方必须能透明地使用其子类的对象。通俗点讲，只要父类能出现的地方子类就可以出现。但是，反过来就不行了，有子类出现的地方，父类未必就能适应。 </p>
-<h5 id="代码体现"><a href="#代码体现" class="headerlink" title="代码体现"></a>代码体现</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HttpUtils.initHttpRequest(new OKHttpRequest());</span><br><span class="line">HttpUtils.initHttpRequest(new XUtilsRequest());</span><br></pre></td></tr></table></figure>
-<h4 id="四、依赖倒置原则"><a href="#四、依赖倒置原则" class="headerlink" title="四、依赖倒置原则"></a>四、依赖倒置原则</h4><h5 id="定义-3"><a href="#定义-3" class="headerlink" title="定义"></a>定义</h5><p>&emsp;&emsp;依赖反转原则指代了一种特定的解耦形式，高层模块不依赖低层次模块的细节，说白了高层次就是不依赖细节而是依赖抽象。</p>
-<h6 id="1-刚开始代码是这样写的"><a href="#1-刚开始代码是这样写的" class="headerlink" title="1. 刚开始代码是这样写的"></a>1. 刚开始代码是这样写的</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public class HttpUtils &#123;</span><br><span class="line">    private OKHttpRequest mHttpRequest;</span><br><span class="line">    </span><br><span class="line">    private HttpUtils(Context context) &#123;</span><br><span class="line">        mHttpRequest = new OKHttpRequest();</span><br><span class="line">        mParams = new HashMap&lt;&gt;();</span><br><span class="line">        this.mContext = context;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="2-用过开闭原则之后是这样写的"><a href="#2-用过开闭原则之后是这样写的" class="headerlink" title="2. 用过开闭原则之后是这样写的"></a>2. 用过开闭原则之后是这样写的</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class HttpUtils &#123;</span><br><span class="line">    private IHttpRequest mHttpRequest;</span><br><span class="line"></span><br><span class="line">    public static HttpUtils with(Context context)&#123;</span><br><span class="line">        return new HttpUtils(context);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public HttpUtils httpRequest(IHttpRequest httpRequest)&#123;</span><br><span class="line">        mHttpRequest = httpRequest;</span><br><span class="line">        return this;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="3-总结"><a href="#3-总结" class="headerlink" title="3. 总结"></a>3. 总结</h6><p>&emsp;&emsp;这个时候我们依赖的就已经不在是具体的细节了，而是抽象的 IHttpRequest ，具体的实现我们是在 Application 中配置的，可以配置 Okhttp 或者 xUtils 等等。从上面这几个来看要让整个系统更加灵活，似乎一直都是抽象的功劳。</p>
-<h4 id="五、接口隔离原则"><a href="#五、接口隔离原则" class="headerlink" title="五、接口隔离原则"></a>五、接口隔离原则</h4><h5 id="定义-4"><a href="#定义-4" class="headerlink" title="定义"></a>定义</h5><p>&emsp;&emsp;客户端不应该依赖它不需要的接口。另一种定义是：类间的依赖关系应该建立在最小的接口上。接口隔离原则将非常庞大、臃肿的接口拆分成为更小的和更具体的接口，这样客户将会只需要知道他们感兴趣的方法。接口隔离原则的目的是系统解开耦合，从而容易重构、更改和重新部署，让客户端依赖的接口尽可能地小。</p>
-<h6 id="1-我们在关闭文件流、Socket流通常是这样操作的"><a href="#1-我们在关闭文件流、Socket流通常是这样操作的" class="headerlink" title="1. 我们在关闭文件流、Socket流通常是这样操作的"></a>1. 我们在关闭文件流、Socket流通常是这样操作的</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">private void breakConnection() &#123;</span><br><span class="line">        mReadFlag = false;</span><br><span class="line">        // 关闭输入流</span><br><span class="line">        if (mInStream != null) &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                mInStream.close();</span><br><span class="line">            &#125; catch (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        // 关闭输出流</span><br><span class="line">        if (mOutStream != null) &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                mOutStream.close();</span><br><span class="line">            &#125; catch (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        // 关闭Socket</span><br><span class="line">        if (mSocket != null) &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                mSocket.close();</span><br><span class="line">                mSocket = null;</span><br><span class="line">            &#125; catch (Exception e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>&emsp;&emsp;各种try…catch嵌套，都是些简单的代码，但是会严重影响代码的可读性，并且多层级的大括号很容易将代码写到错误的层级中。大家应该对这类代码也非常反感，那我们看看如何解决这类问题。我们看源码发现他们都有一个 close 方法，而且这个方法是 Closeable 接口的，也就是说上面的这几个类都是实现了 Closeable 接口，该接口标识了一个可关闭的对象。</p>
-<h6 id="2-都实现了Closeable接口"><a href="#2-都实现了Closeable接口" class="headerlink" title="2.都实现了Closeable接口"></a>2.都实现了Closeable接口</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public abstract class InputStream implements Closeable &#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public abstract class OutputStream implements Closeable, Flushable &#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Socket implements java.io.Closeable &#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="3-Closeable"><a href="#3-Closeable" class="headerlink" title="3. Closeable"></a>3. Closeable</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public interface Closeable extends AutoCloseable &#123;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * Closes this stream and releases any system resources associated</span><br><span class="line">     * with it. If the stream is already closed then invoking this</span><br><span class="line">     * method has no effect.</span><br><span class="line">     *</span><br><span class="line">     * &lt;p&gt; As noted in &#123;@link AutoCloseable#close()&#125;, cases where the</span><br><span class="line">     * close may fail require careful attention. It is strongly advised</span><br><span class="line">     * to relinquish the underlying resources and to internally</span><br><span class="line">     * &lt;em&gt;mark&lt;/em&gt; the &#123;@code Closeable&#125; as closed, prior to throwing</span><br><span class="line">     * the &#123;@code IOException&#125;.</span><br><span class="line">     *</span><br><span class="line">     * @throws IOException if an I/O error occurs</span><br><span class="line">     */</span><br><span class="line">    public void close() throws IOException;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="4-修改代码"><a href="#4-修改代码" class="headerlink" title="4. 修改代码"></a>4. 修改代码</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">private void breakConnection() &#123;</span><br><span class="line">    mReadFlag = false;</span><br><span class="line">    // 关闭输入流</span><br><span class="line">    close(mInStream);</span><br><span class="line">    // 关闭输出流</span><br><span class="line">    close(mOutStream);</span><br><span class="line">    // 关闭Socket</span><br><span class="line">    close(mSocket);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line">* 关闭 Closeable</span><br><span class="line">* @param closeable</span><br><span class="line">*/</span><br><span class="line">private void close(Closeable closeable) &#123;</span><br><span class="line">    if (closeable != null) &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            closeable.close();</span><br><span class="line">        &#125; catch (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="5-总结"><a href="#5-总结" class="headerlink" title="5. 总结"></a>5. 总结</h6><p>&emsp;&emsp;代码简洁了很多！保证了代码的重用性。close 方法的基本原理就是依赖于 Closeable 抽象而不是具体实现（这其实也是依赖倒置），并且建立在最小化依赖原则的基础，它只需要知道这个对象是可关闭，其他的一概不关心，也就是这里的接口隔离原则。</p>
-<h4 id="六、最少知识原则"><a href="#六、最少知识原则" class="headerlink" title="六、最少知识原则"></a>六、最少知识原则</h4><h5 id="定义-5"><a href="#定义-5" class="headerlink" title="定义"></a>定义</h5><p>&emsp;&emsp;一个对象应该对其他对象有最少的了解。通俗地讲，一个类应该对自己需要耦合或调用的类知道得最少，类的内部如何实现、如何复杂都与调用者或者依赖者没关系，调用者或者依赖者只需要知道他需要的方法即可，其他的我一概不关心。类与类之间的关系越密切，耦合度越大，当一个类发生改变时，对另一个类的影响也越大。</p>
-<h4 id="示例地址"><a href="#示例地址" class="headerlink" title="示例地址"></a>示例地址</h4><p>&emsp;&emsp;<a href="https://github.com/heyangJob/Design-Pattern/tree/master/SixPrinciple" target="_blank" rel="noopener">Demo</a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
 
 
           </div>
@@ -1571,7 +2259,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-count">11</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
