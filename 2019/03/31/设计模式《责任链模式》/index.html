@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="引言&amp;emsp;&amp;emsp;上一章我们将了代理模式，这一节我们说说责任链模式，目前的这几种模式都是比较简单的。 示例地址 &amp;emsp;&amp;emsp;Demo地址 类图 定义&amp;emsp;&amp;emsp;使多个对象都有机会处理请求,从而避免了请求的发送者和接收者之间的耦合关系。将这些对象连成一条链，并沿着这条链传递该请求，只到有对象处理它为止。 责任链模式使用场景&amp;emsp;&amp;emsp;1. 多个对象可以处">
+<meta name="keywords" content="Android,iOS,React Native,ionic,微信公众号,微信小程序">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式《责任链模式》">
+<meta property="og:url" content="http://yoursite.com/2019/03/31/设计模式《责任链模式》/index.html">
+<meta property="og:site_name" content="何阳">
+<meta property="og:description" content="引言&amp;emsp;&amp;emsp;上一章我们将了代理模式，这一节我们说说责任链模式，目前的这几种模式都是比较简单的。 示例地址 &amp;emsp;&amp;emsp;Demo地址 类图 定义&amp;emsp;&amp;emsp;使多个对象都有机会处理请求,从而避免了请求的发送者和接收者之间的耦合关系。将这些对象连成一条链，并沿着这条链传递该请求，只到有对象处理它为止。 责任链模式使用场景&amp;emsp;&amp;emsp;1. 多个对象可以处">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/WEB94b7994c0d0171ea42bf75c05ef14515?method=download&shareKey=93ae56707281efa28b61100493148ffe">
+<meta property="og:updated_time" content="2019-03-31T13:12:08.495Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="设计模式《责任链模式》">
+<meta name="twitter:description" content="引言&amp;emsp;&amp;emsp;上一章我们将了代理模式，这一节我们说说责任链模式，目前的这几种模式都是比较简单的。 示例地址 &amp;emsp;&amp;emsp;Demo地址 类图 定义&amp;emsp;&amp;emsp;使多个对象都有机会处理请求,从而避免了请求的发送者和接收者之间的耦合关系。将这些对象连成一条链，并沿着这条链传递该请求，只到有对象处理它为止。 责任链模式使用场景&amp;emsp;&amp;emsp;1. 多个对象可以处">
+<meta name="twitter:image" content="https://note.youdao.com/yws/api/personal/file/WEB94b7994c0d0171ea42bf75c05ef14515?method=download&shareKey=93ae56707281efa28b61100493148ffe">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/03/31/设计模式《责任链模式》/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>设计模式《责任链模式》 | 何阳</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">何阳</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">不积跬步，无以至千里；不积小流，无以成江海。</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/31/设计模式《责任链模式》/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="何阳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何阳">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">设计模式《责任链模式》
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-31 21:11:34 / 修改时间：21:12:08" itemprop="dateCreated datePublished" datetime="2019-03-31T21:11:34+08:00">2019-03-31</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/设计模式/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h4><p>&emsp;&emsp;上一章我们将了<a href="https://www.jianshu.com/p/61c1f5ad329c" target="_blank" rel="noopener">代理模式</a>，这一节我们说说责任链模式，目前的这几种模式都是比较简单的。</p>
+<h4 id="示例地址"><a href="#示例地址" class="headerlink" title="示例地址"></a>示例地址</h4><p> &emsp;&emsp;<a href="https://github.com/heyangJob/Design-Pattern/tree/master/Responsibility" target="_blank" rel="noopener">Demo地址</a></p>
+<h4 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h4><p><img src="https://note.youdao.com/yws/api/personal/file/WEB94b7994c0d0171ea42bf75c05ef14515?method=download&amp;shareKey=93ae56707281efa28b61100493148ffe" alt="image"></p>
+<h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>&emsp;&emsp;使多个对象都有机会处理请求,从而避免了请求的发送者和接收者之间的耦合关系。将这些对象连成一条链，并沿着这条链传递该请求，只到有对象处理它为止。</p>
+<h4 id="责任链模式使用场景"><a href="#责任链模式使用场景" class="headerlink" title="责任链模式使用场景"></a>责任链模式使用场景</h4><p>&emsp;&emsp;1. 多个对象可以处理同一请求，但具体由那个对象处理则在运行时动态决定。<br>&emsp;&emsp;2. 在请求处理者不明确的情况下向多个对象中的一个提交。<br>&emsp;&emsp;3. 需要动态指定一组对象处理请求。</p>
+<h4 id="责任链模式示例"><a href="#责任链模式示例" class="headerlink" title="责任链模式示例"></a>责任链模式示例</h4><p>&emsp;&emsp;在古代，小百姓打官司都是先到知县，不合理到知府，然后巡抚。</p>
+<h6 id="1-先定义一个当官的接口，他们有权利处理老百姓的告状"><a href="#1-先定义一个当官的接口，他们有权利处理老百姓的告状" class="headerlink" title="1. 先定义一个当官的接口，他们有权利处理老百姓的告状"></a>1. 先定义一个当官的接口，他们有权利处理老百姓的告状</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 有权利的人</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/19  下午4:11.</span><br><span class="line"> */</span><br><span class="line">public abstract class DangGuan &#123;</span><br><span class="line">    private DangGuan nextDangGuan;</span><br><span class="line"></span><br><span class="line">    public DangGuan getNextDangGuan() &#123;</span><br><span class="line">        return nextDangGuan;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setNextDangGuan(DangGuan nextDangGuan) &#123;</span><br><span class="line">        this.nextDangGuan = nextDangGuan;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //案情</span><br><span class="line">    abstract void anQing(String desc);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="2-知县"><a href="#2-知县" class="headerlink" title="2. 知县"></a>2. 知县</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 知县</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/19  下午4:39.</span><br><span class="line"> */</span><br><span class="line">public class CountyGuan extends DangGuan &#123;</span><br><span class="line">    @Override</span><br><span class="line">    void anQing(String desc) &#123;</span><br><span class="line">        if (desc.equals(&quot;知县&quot;)) &#123;</span><br><span class="line">            System.out.println(&quot;知县处理了此案情&quot;);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            System.out.println(&quot;知县：这案情我处理不了，我先上报&quot;);</span><br><span class="line">            getNextDangGuan().anQing(desc);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="3-知府"><a href="#3-知府" class="headerlink" title="3. 知府"></a>3. 知府</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 知府</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/19  下午4:43.</span><br><span class="line"> */</span><br><span class="line">public class CityGuan extends DangGuan &#123;</span><br><span class="line">    @Override</span><br><span class="line">    void anQing(String desc) &#123;</span><br><span class="line">        if (desc.equals(&quot;知府&quot;)) &#123;</span><br><span class="line">            System.out.println(&quot;知府处理了此案情&quot;);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            System.out.println(&quot;知府：这案情我处理不了，我先上报&quot;);</span><br><span class="line">            getNextDangGuan().anQing(desc);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="4-巡抚"><a href="#4-巡抚" class="headerlink" title="4. 巡抚"></a>4. 巡抚</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 巡抚</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/19  下午4:44.</span><br><span class="line"> */</span><br><span class="line">public class ProvinceGuan extends DangGuan &#123;</span><br><span class="line">    @Override</span><br><span class="line">    void anQing(String desc) &#123;</span><br><span class="line">        if (desc.equals(&quot;巡抚&quot;)) &#123;</span><br><span class="line">            System.out.println(&quot;巡抚处理了此案情&quot;);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            getNextDangGuan().anQing(desc);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="5-老百姓告状"><a href="#5-老百姓告状" class="headerlink" title="5. 老百姓告状"></a>5. 老百姓告状</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">CountyGuan countyGuan = new CountyGuan();</span><br><span class="line">CityGuan cityGuan = new CityGuan();</span><br><span class="line">ProvinceGuan provinceGuan = new ProvinceGuan();</span><br><span class="line"></span><br><span class="line">countyGuan.setNextDangGuan(cityGuan);</span><br><span class="line">cityGuan.setNextDangGuan(provinceGuan);</span><br><span class="line"></span><br><span class="line">System.out.println(&quot;老百姓开始告状了。&quot;);</span><br><span class="line">countyGuan.anQing(&quot;巡抚&quot;);</span><br></pre></td></tr></table></figure>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>&emsp;&emsp;职责链的模式链的组成：<br>&emsp;&emsp;第一步需要在处理者对象类中定义后继处理者对象，将这部分代码抽象到抽象类中实现，降低了代码重复性。<br>&emsp;&emsp;第二步就是在处理者对象类中的处理方法中如果当前处理者对象无法处理，就将其传递到后继对象去处理。<br>&emsp;&emsp;第三步就是在测试类中将这些处理者类的实例串联成链。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/31/设计模式《单例模式》/" rel="next" title="设计模式《单例模式》">
+                <i class="fa fa-chevron-left"></i> 设计模式《单例模式》
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">何阳</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#示例地址"><span class="nav-number">2.</span> <span class="nav-text">示例地址</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#类图"><span class="nav-number">3.</span> <span class="nav-text">类图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#定义"><span class="nav-number">4.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#责任链模式使用场景"><span class="nav-number">5.</span> <span class="nav-text">责任链模式使用场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#责任链模式示例"><span class="nav-number">6.</span> <span class="nav-text">责任链模式示例</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-先定义一个当官的接口，他们有权利处理老百姓的告状"><span class="nav-number">6.0.1.</span> <span class="nav-text">1. 先定义一个当官的接口，他们有权利处理老百姓的告状</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-知县"><span class="nav-number">6.0.2.</span> <span class="nav-text">2. 知县</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-知府"><span class="nav-number">6.0.3.</span> <span class="nav-text">3. 知府</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-巡抚"><span class="nav-number">6.0.4.</span> <span class="nav-text">4. 巡抚</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-老百姓告状"><span class="nav-number">6.0.5.</span> <span class="nav-text">5. 老百姓告状</span></a></li></ol></li></ol><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">何阳</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.0.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.1"></script>
+
+
+  
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
