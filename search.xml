@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[React Native 开篇]]></title>
+    <url>%2F2019%2F04%2F02%2FReact-Native-%E5%BC%80%E7%AF%87%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>React Native</category>
+      </categories>
+  </entry>
+  <entry>
     <title><![CDATA[Android_插件化实现方式（代理）]]></title>
     <url>%2F2019%2F04%2F01%2FAndroid-%E6%8F%92%E4%BB%B6%E5%8C%96%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F%EF%BC%88%E4%BB%A3%E7%90%86%EF%BC%89%2F</url>
     <content type="text"></content>
