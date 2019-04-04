@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="一、先看看EventBus的简单使用1. 导入eventbus1compile &amp;apos;org.greenrobot:eventbus:3.0.0&amp;apos; 2. MainActivity1234567891011121314151617181920212223242526272829303132333435363738public class MainActivity extends Ap">
+<meta name="keywords" content="Android,iOS,React Native,ionic,微信公众号,微信小程序">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android  EventBus源码分析">
+<meta property="og:url" content="http://yoursite.com/2019/04/03/Android-EventBus源码分析/index.html">
+<meta property="og:site_name" content="何阳">
+<meta property="og:description" content="一、先看看EventBus的简单使用1. 导入eventbus1compile &amp;apos;org.greenrobot:eventbus:3.0.0&amp;apos; 2. MainActivity1234567891011121314151617181920212223242526272829303132333435363738public class MainActivity extends Ap">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-04-04T13:05:25.506Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android  EventBus源码分析">
+<meta name="twitter:description" content="一、先看看EventBus的简单使用1. 导入eventbus1compile &amp;apos;org.greenrobot:eventbus:3.0.0&amp;apos; 2. MainActivity1234567891011121314151617181920212223242526272829303132333435363738public class MainActivity extends Ap">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/04/03/Android-EventBus源码分析/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Android  EventBus源码分析 | 何阳</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/heyangJob" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">何阳</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">不积跬步，无以至千里；不积小流，无以成江海。</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/03/Android-EventBus源码分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="何阳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/icon.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何阳">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android  EventBus源码分析
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-03 21:03:41" itemprop="dateCreated datePublished" datetime="2019-04-03T21:03:41+08:00">2019-04-03</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-04 21:05:25" itemprop="dateModified" datetime="2019-04-04T21:05:25+08:00">2019-04-04</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="一、先看看EventBus的简单使用"><a href="#一、先看看EventBus的简单使用" class="headerlink" title="一、先看看EventBus的简单使用"></a>一、先看看EventBus的简单使用</h4><h6 id="1-导入eventbus"><a href="#1-导入eventbus" class="headerlink" title="1. 导入eventbus"></a>1. 导入eventbus</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compile &apos;org.greenrobot:eventbus:3.0.0&apos;</span><br></pre></td></tr></table></figure>
+<h6 id="2-MainActivity"><a href="#2-MainActivity" class="headerlink" title="2. MainActivity"></a>2. MainActivity</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">public class MainActivity extends AppCompatActivity implements View.OnClickListener &#123;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        //首先要在你要接受EventBus的界面注册，这一步很重要</span><br><span class="line">        EventBus.getDefault().register(this);</span><br><span class="line">        Button btnCommon = (Button) findViewById(R.id.btn_common);</span><br><span class="line">        btnCommon.setOnClickListener(this);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onClick(View v) &#123;</span><br><span class="line">        switch (v.getId()) &#123;          </span><br><span class="line">            case R.id.btn_common:</span><br><span class="line">                //点击按钮进入CommonActivity</span><br><span class="line">                CommonActivity.start(this);</span><br><span class="line">                break;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected void onDestroy() &#123;</span><br><span class="line">        super.onDestroy();</span><br><span class="line">        //在界面销毁的地方要解绑</span><br><span class="line">        EventBus.getDefault().unregister(this);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //任意写一个方法，给这个方法一个@Subscribe注解，参数类型可以自定义，但是一定要与你发出的类型相同</span><br><span class="line">    @Subscribe</span><br><span class="line">    public void getEventBus(Integer num) &#123;</span><br><span class="line">        if (num != null) &#123;</span><br><span class="line">            //这里拿到事件之后吐司一下</span><br><span class="line">            Toast.makeText(this, &quot;num&quot; + num, Toast.LENGTH_SHORT).show();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="3-CommonActivity"><a href="#3-CommonActivity" class="headerlink" title="3. CommonActivity"></a>3. CommonActivity</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public class CommonActivity extends AppCompatActivity implements View.OnClickListener &#123;</span><br><span class="line"></span><br><span class="line">    public static void start(Context context) &#123;</span><br><span class="line">        context.startActivity(new Intent(context, CommonActivity.class));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected void onCreate(@Nullable Bundle savedInstanceState) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_common);</span><br><span class="line">        Button button = (Button) findViewById(R.id.btn_send);</span><br><span class="line">        button.setOnClickListener(this);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onClick(View v) &#123;</span><br><span class="line">        switch (v.getId()) &#123;</span><br><span class="line">            case R.id.btn_send:</span><br><span class="line">                //点击按钮，发送一个int类型的事件</span><br><span class="line">                EventBus.getDefault().post(666);</span><br><span class="line">                finish();</span><br><span class="line">                break;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="4-指定线程执行"><a href="#4-指定线程执行" class="headerlink" title="4. 指定线程执行"></a>4. 指定线程执行</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">CommonActivity 里面发送消息放到子线程</span><br><span class="line"> new Thread(new Runnable() &#123;</span><br><span class="line">                    @Override</span><br><span class="line">                    public void run() &#123;</span><br><span class="line">                        EventBus.getDefault().post(666);</span><br><span class="line">                        finish();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;).start();</span><br><span class="line">                </span><br><span class="line">                </span><br><span class="line"> MainActivity里面接收事件，只需要指定线程模式即可，即threadMode = ThreadMode.MAIN</span><br><span class="line">  @Subscribe(threadMode = ThreadMode.MAIN)</span><br><span class="line">    public void getEventBus(Integer num) &#123;</span><br><span class="line">        if (num != null) &#123;</span><br><span class="line">            Toast.makeText(this, &quot;num&quot; + num, Toast.LENGTH_SHORT).show();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h6 id="5-Stick-Event（黏性事件）"><a href="#5-Stick-Event（黏性事件）" class="headerlink" title="5. Stick Event（黏性事件）"></a>5. Stick Event（黏性事件）</h6><p>&emsp;&emsp;简单讲，就是在发送事件之后再订阅该事件也能收到该事件，跟黏性广播类似。  </p>
+<p>&emsp;&emsp;先发布事件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//点击按钮，跳转到StickActivity并携带参数，参数类型为String</span><br><span class="line">EventBus.getDefault().postSticky(&quot;我是黏性事件&quot;);</span><br><span class="line">//开启新的activity</span><br><span class="line">StickActivity.start(this);</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;在订阅事件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">protected void onCreate(@Nullable Bundle savedInstanceState) &#123;</span><br><span class="line">    super.onCreate(savedInstanceState);</span><br><span class="line">    setContentView(R.layout.activity_stick);</span><br><span class="line">    //前面也说了，在任何你要接收事件的地方都要先注册</span><br><span class="line">    EventBus.getDefault().register(this);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//同样的，自定义一个方法，加上 @Subscribe，不同的是在后面再加上一句sticky = true告诉EventBus这是一个粘性事件</span><br><span class="line">@Subscribe(sticky = true)</span><br><span class="line">public void getEventBus(String str) &#123;</span><br><span class="line">    Toast.makeText(this, str, Toast.LENGTH_SHORT).show();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="二、源码分析（EventBus-java）"><a href="#二、源码分析（EventBus-java）" class="headerlink" title="二、源码分析（EventBus.java）"></a>二、源码分析（EventBus.java）</h4><h6 id="1-subscriptionsByEventType"><a href="#1-subscriptionsByEventType" class="headerlink" title="1. subscriptionsByEventType"></a>1. subscriptionsByEventType</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// subscriptionsByEventType 这个集合存放的是？</span><br><span class="line">// key 是 Event 参数的类 例如String</span><br><span class="line">// value 存放的是 Subscription 的集合列表</span><br><span class="line">// Subscription 包含两个属性，一个是 subscriber 订阅者（反射执行对象），一个是 SubscriberMethod 注解方法的所有属性参数值</span><br><span class="line"></span><br><span class="line">private final Map&lt;Class&lt;?&gt;, CopyOnWriteArrayList&lt;Subscription&gt;&gt; subscriptionsByEventType;</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;将Event的参数类型作为Key,Subscription的集合列表作为Value。然后在post发送内容的时候依据参数的类型去寻找对应的注册者 ，执行对象的方法。结构如下(伪代码)。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Object&gt; mList=new ArrayList&lt;&gt;();</span><br><span class="line">mList.add(new Subscription(MainActivity,test1(String)));</span><br><span class="line">mList.add(new Subscription(MainActivity,test2(String)));</span><br><span class="line">mList.add(new Subscription(MainActivity2,test2(String)));</span><br><span class="line"></span><br><span class="line">List&lt;Object&gt; mList1=new ArrayList&lt;&gt;();</span><br><span class="line">mList.add(new Subscription(MainActivity,test3(int)));</span><br><span class="line">mList.add(new Subscription(MainActivity2,test1(int)));</span><br><span class="line"></span><br><span class="line">Map&lt;String,List&gt; map=new HashMap&lt;&gt;();</span><br><span class="line">map.put(&quot;int&quot;,mList1);</span><br><span class="line">map.put(&quot;String&quot;,mList);</span><br></pre></td></tr></table></figure>
+<h6 id="2-typesBySubscriber"><a href="#2-typesBySubscriber" class="headerlink" title="2. typesBySubscriber"></a>2. typesBySubscriber</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// typesBySubscriber 这个集合存放的是？</span><br><span class="line">// key 是所有的订阅者</span><br><span class="line">// value 是所有订阅者里面方法的参数的class 例如String</span><br><span class="line">private final Map&lt;Object, List&lt;Class&lt;?&gt;&gt;&gt; typesBySubscriber;</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;将注册者作为Key,参数类型的集合作为Value。这个参数类型的集合针对的是当前注册者中的。 结构如下(伪代码)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Object&gt; mList=new ArrayList&lt;&gt;();</span><br><span class="line">mList.add(&quot;String&quot;);</span><br><span class="line">mList.add(&quot;int&quot;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Map&lt;String,List&gt; map=new HashMap&lt;&gt;();</span><br><span class="line">map.put(&quot;MainActivity&quot;,mList);</span><br></pre></td></tr></table></figure>
+<h6 id="3-register"><a href="#3-register" class="headerlink" title="3. register()"></a>3. register()</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public void register(Object subscriber) &#123;</span><br><span class="line">        // 首先获得class对象</span><br><span class="line">        Class&lt;?&gt; subscriberClass = subscriber.getClass();</span><br><span class="line">        // 通过 subscriberMethodFinder 来找到订阅者订阅了哪些事件.返回一个 SubscriberMethod 对象的 List, SubscriberMethod</span><br><span class="line">        // 里包含了这个方法的 Method 对象,以及将来响应订阅是在哪个线程的 ThreadMode ,以及订阅的事件类型 eventType ,以及订阅的优</span><br><span class="line">        // 先级 priority ,以及是否接收粘性 sticky 事件的 boolean 值，其实就是解析这个类上的所有 Subscriber 注解方法属性。</span><br><span class="line">        List&lt;SubscriberMethod&gt; subscriberMethods = subscriberMethodFinder.findSubscriberMethods(subscriberClass);</span><br><span class="line">        synchronized (this) &#123;</span><br><span class="line">            for (SubscriberMethod subscriberMethod : subscriberMethods) &#123;</span><br><span class="line">                // 订阅</span><br><span class="line">                subscribe(subscriber, subscriberMethod);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;findSubscriberMethods()去解析注册者对象的所有方法，并且找出带有注解 Subscribe注解的的方法，然后通过Annotation解析所有细节参数（threadMode，priority，sticky，eventType，method），把这些参数封装成一个 SubscriberMethod，添加到集合返回。</p>
+<h6 id="4-subscribe"><a href="#4-subscribe" class="headerlink" title="4. subscribe()"></a>4. subscribe()</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">private void subscribe(Object subscriber, SubscriberMethod subscriberMethod) &#123;</span><br><span class="line">      // 获取方法参数的 class</span><br><span class="line">      Class&lt;?&gt; eventType = subscriberMethod.eventType;</span><br><span class="line">      // 创建一个 Subscription</span><br><span class="line">      Subscription newSubscription = new Subscription(subscriber, subscriberMethod);</span><br><span class="line">      // 获取订阅了此事件类的所有订阅者信息列表</span><br><span class="line">      CopyOnWriteArrayList&lt;Subscription&gt; subscriptions = subscriptionsByEventType.get(eventType);</span><br><span class="line">      if (subscriptions == null) &#123;</span><br><span class="line">          // 线程安全的 ArrayList</span><br><span class="line">          subscriptions = new CopyOnWriteArrayList&lt;&gt;();</span><br><span class="line">          // 添加</span><br><span class="line">          subscriptionsByEventType.put(eventType, subscriptions);</span><br><span class="line">      &#125; else &#123;</span><br><span class="line">          // 是否包含，如果包含再次添加抛异常</span><br><span class="line">          if (subscriptions.contains(newSubscription)) &#123;</span><br><span class="line">              throw new EventBusException(&quot;Subscriber &quot; + subscriber.getClass() + &quot; already registered to event &quot;</span><br><span class="line">                      + eventType);</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      // 处理优先级</span><br><span class="line">      int size = subscriptions.size();</span><br><span class="line">      for (int i = 0; i &lt;= size; i++) &#123;</span><br><span class="line">          if (i == size || subscriberMethod.priority &gt; subscriptions.get(i).subscriberMethod.priority) &#123;</span><br><span class="line">              subscriptions.add(i, newSubscription);</span><br><span class="line">              break;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      // 通过 subscriber 获取  List&lt;Class&lt;?&gt;&gt;</span><br><span class="line">      List&lt;Class&lt;?&gt;&gt; subscribedEvents = typesBySubscriber.get(subscriber);</span><br><span class="line">      if (subscribedEvents == null) &#123;</span><br><span class="line">          subscribedEvents = new ArrayList&lt;&gt;();</span><br><span class="line">          typesBySubscriber.put(subscriber, subscribedEvents);</span><br><span class="line">      &#125;</span><br><span class="line">      // 将此事件类加入 订阅者事件类列表中</span><br><span class="line">      subscribedEvents.add(eventType);</span><br><span class="line"></span><br><span class="line">      // 处理粘性事件</span><br><span class="line">      if (subscriberMethod.sticky) &#123;</span><br><span class="line">          if (eventInheritance) &#123;</span><br><span class="line">              // Existing sticky events of all subclasses of eventType have to be considered.</span><br><span class="line">              // Note: Iterating over all events may be inefficient with lots of sticky events,</span><br><span class="line">              // thus data structure should be changed to allow a more efficient lookup</span><br><span class="line">              // (e.g. an additional map storing sub classes of super classes: Class -&gt; List&lt;Class&gt;).</span><br><span class="line">              Set&lt;Map.Entry&lt;Class&lt;?&gt;, Object&gt;&gt; entries = stickyEvents.entrySet();</span><br><span class="line">              for (Map.Entry&lt;Class&lt;?&gt;, Object&gt; entry : entries) &#123;</span><br><span class="line">                  Class&lt;?&gt; candidateEventType = entry.getKey();</span><br><span class="line">                  if (eventType.isAssignableFrom(candidateEventType)) &#123;</span><br><span class="line">                      Object stickyEvent = entry.getValue();</span><br><span class="line">                      checkPostStickyEventToSubscription(newSubscription, stickyEvent);</span><br><span class="line">                  &#125;</span><br><span class="line">              &#125;</span><br><span class="line">          &#125; else &#123;</span><br><span class="line">              Object stickyEvent = stickyEvents.get(eventType);</span><br><span class="line">              checkPostStickyEventToSubscription(newSubscription, stickyEvent);</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;解析所有SubscriberMethod的eventType，然后按照要求解析成 Map&lt;Class&lt;?&gt;, CopyOnWriteArrayList<subscription>&gt;subscriptionsByEventType的格式，key 是 eventType，value就是 Subscription 的列表，Subscription包含两个属性subscriber，SubscriberMethod</subscription></p>
+<h6 id="5-post"><a href="#5-post" class="headerlink" title="5. post()"></a>5. post()</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">public void post(Object event) &#123;</span><br><span class="line">        // currentPostingThreadState 是一个 ThreadLocal，</span><br><span class="line">        // 他的特点是获取当前线程一份独有的变量数据，不受其他线程影响。</span><br><span class="line">        // 这个在 Handler 里面有过源码分析</span><br><span class="line">        PostingThreadState postingState = currentPostingThreadState.get();</span><br><span class="line">        // postingState 就是获取到的线程独有的变量数据</span><br><span class="line">        List&lt;Object&gt; eventQueue = postingState.eventQueue;</span><br><span class="line">        // 把 post 的事件添加到事件队列</span><br><span class="line">        eventQueue.add(event);</span><br><span class="line">        // 如果没有处在事件发布状态，那么开始发送事件并一直保持发布状态</span><br><span class="line">        if (!postingState.isPosting) &#123;</span><br><span class="line">            // 是否是主线程</span><br><span class="line">            postingState.isMainThread = Looper.getMainLooper() == Looper.myLooper();</span><br><span class="line">            // isPosting = true</span><br><span class="line">            postingState.isPosting = true;</span><br><span class="line">            if (postingState.canceled) &#123;</span><br><span class="line">                throw new EventBusException(&quot;Internal error. Abort state was not reset&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">            try &#123;</span><br><span class="line">                while (!eventQueue.isEmpty()) &#123;</span><br><span class="line">                    postSingleEvent(eventQueue.remove(0), postingState);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; finally &#123;</span><br><span class="line">                postingState.isPosting = false;</span><br><span class="line">                postingState.isMainThread = false;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;遍历 subscriptionsByEventType，找到符合的方法调用方法的 method.invoke() 执行。</p>
+<h6 id="6-unregister"><a href="#6-unregister" class="headerlink" title="6. unregister()"></a>6. unregister()</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">/** Unregisters the given subscriber from all event classes. */</span><br><span class="line">public synchronized void unregister(Object subscriber) &#123;</span><br><span class="line">    // 获取订阅对象的所有订阅事件类列表</span><br><span class="line">    List&lt;Class&lt;?&gt;&gt; subscribedTypes = typesBySubscriber.get(subscriber);</span><br><span class="line">    if (subscribedTypes != null) &#123;</span><br><span class="line">        for (Class&lt;?&gt; eventType : subscribedTypes) &#123;</span><br><span class="line">            // 将订阅者的订阅信息移除</span><br><span class="line">            unsubscribeByEventType(subscriber, eventType);</span><br><span class="line">        &#125;</span><br><span class="line">        // 将订阅者从列表中移除</span><br><span class="line">        typesBySubscriber.remove(subscriber);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        Log.w(TAG, &quot;Subscriber to unregister was not registered before: &quot; + subscriber.getClass());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp; 在unregister()方法中。调用typesBySubscriber，先通过注册者（MainActivity）找到对应的参数类型集合。然后遍历参数类型集合，拿着参数类型去subscriptionsByEventType找对应的Subscriber。如果Subscriber的注册者是参数类型的注册者，直接移除。以下伪代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//第一步 先查找typesBySubscriber Map</span><br><span class="line">//传递   MainActivity，查找的是一个list集合 有2个参数类型</span><br><span class="line">//mList.add(&quot;String&quot;);</span><br><span class="line">//mList.add(&quot;int&quot;);</span><br><span class="line"></span><br><span class="line">//第二步 遍历集合， 拿着类型去subscriptionsByEventType查找</span><br><span class="line">// String 有3个   </span><br><span class="line">// mList.add(new Subscription(MainActivity, test1(String)));</span><br><span class="line">// mList.add(new Subscription(MainActivity, test2(String)));</span><br><span class="line">//mList.add(new Subscription(MainActivity2, test2(String)));</span><br><span class="line"></span><br><span class="line">//第三步</span><br><span class="line">//有2个与MainActivity一样的都移除。剩下</span><br><span class="line">//mList.add(new Subscription(MainActivity2, test2(String)));</span><br></pre></td></tr></table></figure>
+<h4 id="三、手写EventBus"><a href="#三、手写EventBus" class="headerlink" title="三、手写EventBus"></a>三、手写EventBus</h4><h6 id="1-主要手写EventBus-java"><a href="#1-主要手写EventBus-java" class="headerlink" title="1. 主要手写EventBus.java"></a>1. 主要手写EventBus.java</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/8/26  上午1:21.</span><br><span class="line"> */</span><br><span class="line">public class EventBus &#123;</span><br><span class="line">    // subscriptionsByEventType 这个集合存放的是？</span><br><span class="line">    // key 是 Event 参数的类  例如MainActivity里面的 test（String） String</span><br><span class="line">    // value 存放的是 Subscription 的集合列表</span><br><span class="line">    // Subscription 包含两个属性，一个是 subscriber 订阅者（反射执行对象），一个是 SubscriberMethod 注解方法的所有属性参数值</span><br><span class="line">    private final Map&lt;Class&lt;?&gt;, CopyOnWriteArrayList&lt;Subscription&gt;&gt; subscriptionsByEventType;</span><br><span class="line">    // typesBySubscriber 这个集合存放的是？</span><br><span class="line">    // key 是所有的订阅者   MainActivity</span><br><span class="line">    // value 是所有订阅者里面方法的参数的class 例如MainActivity里面的 test（String） String</span><br><span class="line">    private final Map&lt;Object, List&lt;Class&lt;?&gt;&gt;&gt; typesBySubscriber;</span><br><span class="line"></span><br><span class="line">    private EventBus() &#123;</span><br><span class="line">        typesBySubscriber = new HashMap&lt;Object, List&lt;Class&lt;?&gt;&gt;&gt;();</span><br><span class="line">        subscriptionsByEventType = new HashMap&lt;&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    static volatile EventBus defaultInstance;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * Convenience singleton for apps using a process-wide EventBus instance.</span><br><span class="line">     */</span><br><span class="line">    public static EventBus getDefault() &#123;</span><br><span class="line">        if (defaultInstance == null) &#123;</span><br><span class="line">            synchronized (EventBus.class) &#123;</span><br><span class="line">                if (defaultInstance == null) &#123;</span><br><span class="line">                    defaultInstance = new EventBus();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return defaultInstance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void register(Object object) &#123;</span><br><span class="line">        // 1. 解析所有方法封装成 SubscriberMethod 的集合</span><br><span class="line">        List&lt;SubscriberMethod&gt; subscriberMethods = new ArrayList&lt;&gt;();</span><br><span class="line">        Class&lt;?&gt; objClass = object.getClass();</span><br><span class="line">        Method[] methods = objClass.getDeclaredMethods();</span><br><span class="line">        for (Method method : methods) &#123;</span><br><span class="line">            //解析所有带有注解的方法</span><br><span class="line">            Subscribe subscribe = method.getAnnotation(Subscribe.class);</span><br><span class="line">            if (subscribe != null) &#123;</span><br><span class="line">                // 所有的Subscribe属性 解析出来</span><br><span class="line">                Class&lt;?&gt;[] parameterTypes = method.getParameterTypes();</span><br><span class="line">                SubscriberMethod subscriberMethod = new SubscriberMethod(</span><br><span class="line">                        method, parameterTypes[0], subscribe.threadMode(), subscribe.priority(), subscribe.sticky());</span><br><span class="line">                subscriberMethods.add(subscriberMethod);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        // 2. 按照规则存放到 subscriptionsByEventType 里面去</span><br><span class="line">        for (SubscriberMethod subscriberMethod : subscriberMethods) &#123;</span><br><span class="line">            subscriber(object, subscriberMethod);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 2. 按照规则存放到 subscriptionsByEventType 里面去</span><br><span class="line">    private void subscriber(Object object, SubscriberMethod subscriberMethod) &#123;</span><br><span class="line">        Class&lt;?&gt; eventType = subscriberMethod.eventType;</span><br><span class="line">        // 随处能找到，我这个代码</span><br><span class="line">        CopyOnWriteArrayList&lt;Subscription&gt; subscriptions = subscriptionsByEventType.get(eventType);</span><br><span class="line">        if (subscriptions == null) &#123;</span><br><span class="line">            subscriptions = new CopyOnWriteArrayList&lt;&gt;();</span><br><span class="line">            subscriptionsByEventType.put(eventType, subscriptions);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 判断优先级 （不写）</span><br><span class="line">        Subscription subscription = new Subscription(object, subscriberMethod);</span><br><span class="line">        subscriptions.add(subscription);</span><br><span class="line"></span><br><span class="line">        // typesBySubscriber 要弄好是为了方便移除</span><br><span class="line">        List&lt;Class&lt;?&gt;&gt; eventTypes = typesBySubscriber.get(object);</span><br><span class="line">        if (eventTypes == null) &#123;</span><br><span class="line">            eventTypes = new ArrayList&lt;&gt;();</span><br><span class="line">            typesBySubscriber.put(object, eventTypes);</span><br><span class="line">        &#125;</span><br><span class="line">        if (!eventTypes.contains(eventType)) &#123;</span><br><span class="line">            eventTypes.add(eventType);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void unregister(Object object) &#123;</span><br><span class="line">        List&lt;Class&lt;?&gt;&gt; eventTypes = typesBySubscriber.get(object);</span><br><span class="line">        if (eventTypes != null) &#123;</span><br><span class="line">            for (Class&lt;?&gt; eventType : eventTypes) &#123;</span><br><span class="line">                removeObject(eventType, object);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void removeObject(Class&lt;?&gt; eventType, Object object) &#123;</span><br><span class="line">        // 获取事件类的所有订阅信息列表，将订阅信息从订阅信息集合中移除，同时将订阅信息中的active属性置为FALSE</span><br><span class="line">        List&lt;Subscription&gt; subscriptions = subscriptionsByEventType.get(eventType);</span><br><span class="line">        if (subscriptions != null) &#123;</span><br><span class="line">            int size = subscriptions.size();</span><br><span class="line">            for (int i = 0; i &lt; size; i++) &#123;</span><br><span class="line">                Subscription subscription = subscriptions.get(i);</span><br><span class="line">                if (subscription.subscriber == object) &#123;</span><br><span class="line">                    // 将订阅信息从集合中移除</span><br><span class="line">                    subscriptions.remove(i);</span><br><span class="line">                    i--;</span><br><span class="line">                    size--;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void post(Object event) &#123;</span><br><span class="line">        // 遍历 subscriptionsByEventType，找到符合的方法调用方法的 method.invoke() 执行。要注意线程切换</span><br><span class="line">        Class&lt;?&gt; eventType = event.getClass();</span><br><span class="line">        // 找到符合的方法调用方法的 method.invoke() 执行</span><br><span class="line">        CopyOnWriteArrayList&lt;Subscription&gt; subscriptions = subscriptionsByEventType.get(eventType);</span><br><span class="line">        if (subscriptions != null) &#123;</span><br><span class="line">            for (Subscription subscription : subscriptions) &#123;</span><br><span class="line">                executeMethod(subscription, event);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void executeMethod(final Subscription subscription, final Object event) &#123;</span><br><span class="line">        ThreadMode threadMode = subscription.subscriberMethod.threadMode;</span><br><span class="line">        boolean isMainThread = Looper.getMainLooper() == Looper.myLooper();</span><br><span class="line">        switch (threadMode) &#123;</span><br><span class="line">            case POSTING:</span><br><span class="line">                invokeMethod(subscription, event);</span><br><span class="line">                break;</span><br><span class="line">            case MAIN:</span><br><span class="line">                if (isMainThread) &#123;</span><br><span class="line">                    invokeMethod(subscription, event);</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    // 行不行，不行？行？</span><br><span class="line">                    Handler handler = new Handler(Looper.getMainLooper());</span><br><span class="line">                    handler.post(new Runnable() &#123;</span><br><span class="line">                        @Override</span><br><span class="line">                        public void run() &#123;</span><br><span class="line">                            invokeMethod(subscription, event);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;);</span><br><span class="line">                &#125;</span><br><span class="line">                break;</span><br><span class="line">            case ASYNC:</span><br><span class="line">                AsyncPoster.enqueue(subscription, event);</span><br><span class="line">                break;</span><br><span class="line">            case BACKGROUND:</span><br><span class="line">                if (!isMainThread) &#123;</span><br><span class="line">                    invokeMethod(subscription, event);</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    AsyncPoster.enqueue(subscription, event);</span><br><span class="line">                &#125;</span><br><span class="line">                break;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void invokeMethod(Subscription subscription, Object event) &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            subscription.subscriberMethod.method.invoke(subscription.subscriber, event);</span><br><span class="line">        &#125; catch (IllegalAccessException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; catch (InvocationTargetException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="2-调用（MainActivity）"><a href="#2-调用（MainActivity）" class="headerlink" title="2. 调用（MainActivity）"></a>2. 调用（MainActivity）</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">   protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">       super.onCreate(savedInstanceState);</span><br><span class="line">       setContentView(R.layout.activity_main);</span><br><span class="line">       // 注册，思考为什么要注册？</span><br><span class="line">       EventBus.getDefault().register(this);</span><br><span class="line"></span><br><span class="line">       // 进入测试界面</span><br><span class="line">       mTv = (TextView) findViewById(R.id.test_tv);</span><br><span class="line">       mTv.setOnClickListener(new View.OnClickListener() &#123;</span><br><span class="line">           @Override</span><br><span class="line">           public void onClick(View v) &#123;</span><br><span class="line">               Intent intent = new Intent(MainActivity.this, TestActivity.class);</span><br><span class="line">               startActivity(intent);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line"> /**</span><br><span class="line">    * threadMode 执行的线程方式</span><br><span class="line">    * priority 执行的优先级</span><br><span class="line">    * sticky 粘性事件</span><br><span class="line">    */</span><br><span class="line">   @Subscribe(threadMode = ThreadMode.MAIN, priority = 50, sticky = true)</span><br><span class="line">   public void test1(String msg) &#123;</span><br><span class="line">       // 如果有一个地方用 EventBus 发送一个 String 对象，那么这个方法就会被执行</span><br><span class="line">       Log.e(&quot;TAG&quot;, &quot;msg1 = &quot; + msg);</span><br><span class="line">       mTv.setText(msg);</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">    @Override</span><br><span class="line">   protected void onDestroy() &#123;</span><br><span class="line">       // 解绑，思考为什么要解绑？</span><br><span class="line">       EventBus.getDefault().unregister(this);</span><br><span class="line">       super.onDestroy();</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h6 id="3-调用（TestActivity）"><a href="#3-调用（TestActivity）" class="headerlink" title="3. 调用（TestActivity）"></a>3. 调用（TestActivity）</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">    protected void onCreate(@Nullable Bundle savedInstanceState) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        findViewById(R.id.test_tv).setOnClickListener(new View.OnClickListener() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void onClick(View v) &#123;</span><br><span class="line">                EventBus.getDefault().post(&quot;text&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h6 id="4-执行结果"><a href="#4-执行结果" class="headerlink" title="4. 执行结果"></a>4. 执行结果</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">29731-29731/demo.dhcc.com.eventbusdemo E/TAG: msg1 = text</span><br></pre></td></tr></table></figure>
+<h6 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h6><p>&emsp;&emsp;主要的是使用反射，存储app中所有注册过的activity或者Fragment，在发生消息的时候去遍历这个map执行响应的方法。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/02/Android-AsyncTask源码分析/" rel="next" title="Android AsyncTask源码分析">
+                <i class="fa fa-chevron-left"></i> Android AsyncTask源码分析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/04/设计模式-迭代器模事（十二）/" rel="prev" title="设计模式_迭代器模事（十二）">
+                设计模式_迭代器模事（十二） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/icon.jpeg" alt="何阳">
+            
+              <p class="site-author-name" itemprop="name">何阳</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、先看看EventBus的简单使用"><span class="nav-number">1.</span> <span class="nav-text">一、先看看EventBus的简单使用</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-导入eventbus"><span class="nav-number">1.0.1.</span> <span class="nav-text">1. 导入eventbus</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-MainActivity"><span class="nav-number">1.0.2.</span> <span class="nav-text">2. MainActivity</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-CommonActivity"><span class="nav-number">1.0.3.</span> <span class="nav-text">3. CommonActivity</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-指定线程执行"><span class="nav-number">1.0.4.</span> <span class="nav-text">4. 指定线程执行</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-Stick-Event（黏性事件）"><span class="nav-number">1.0.5.</span> <span class="nav-text">5. Stick Event（黏性事件）</span></a></li></ol></li></ol><li class="nav-item nav-level-4"><a class="nav-link" href="#二、源码分析（EventBus-java）"><span class="nav-number">2.</span> <span class="nav-text">二、源码分析（EventBus.java）</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-subscriptionsByEventType"><span class="nav-number">2.0.1.</span> <span class="nav-text">1. subscriptionsByEventType</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-typesBySubscriber"><span class="nav-number">2.0.2.</span> <span class="nav-text">2. typesBySubscriber</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-register"><span class="nav-number">2.0.3.</span> <span class="nav-text">3. register()</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-subscribe"><span class="nav-number">2.0.4.</span> <span class="nav-text">4. subscribe()</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-post"><span class="nav-number">2.0.5.</span> <span class="nav-text">5. post()</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#6-unregister"><span class="nav-number">2.0.6.</span> <span class="nav-text">6. unregister()</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、手写EventBus"><span class="nav-number">3.</span> <span class="nav-text">三、手写EventBus</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-主要手写EventBus-java"><span class="nav-number">3.0.1.</span> <span class="nav-text">1. 主要手写EventBus.java</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-调用（MainActivity）"><span class="nav-number">3.0.2.</span> <span class="nav-text">2. 调用（MainActivity）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-调用（TestActivity）"><span class="nav-number">3.0.3.</span> <span class="nav-text">3. 调用（TestActivity）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-执行结果"><span class="nav-number">3.0.4.</span> <span class="nav-text">4. 执行结果</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-总结"><span class="nav-number">3.0.5.</span> <span class="nav-text">4. 总结</span></a></li></ol></li></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">何阳</span>
+
+  
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.0.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.1"></script>
+
+
+  
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+        // ref: https://github.com/ForbesLindesay/unescape-html
+        var unescapeHtml = function(html) {
+          return String(html)
+            .replace(/&quot;/g, '"')
+            .replace(/&#39;/g, '\'')
+            .replace(/&#x3A;/g, ':')
+            // replace all the other &#x; chars
+            .replace(/&#(\d+);/g, function (m, p) { return String.fromCharCode(p); })
+            .replace(/&lt;/g, '<')
+            .replace(/&gt;/g, '>')
+            .replace(/&amp;/g, '&');
+        };
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                content = unescapeHtml(content);
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
