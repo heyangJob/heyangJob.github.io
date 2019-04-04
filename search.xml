@@ -25,22 +25,6 @@
       </categories>
   </entry>
   <entry>
-    <title><![CDATA[React Native 开篇]]></title>
-    <url>%2F2019%2F04%2F02%2FReact-Native-%E5%BC%80%E7%AF%87%2F</url>
-    <content type="text"></content>
-      <categories>
-        <category>React Native</category>
-      </categories>
-  </entry>
-  <entry>
-    <title><![CDATA[Android_插件化实现方式（代理）]]></title>
-    <url>%2F2019%2F04%2F01%2FAndroid-%E6%8F%92%E4%BB%B6%E5%8C%96%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F%EF%BC%88%E4%BB%A3%E7%90%86%EF%BC%89%2F</url>
-    <content type="text"></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-  </entry>
-  <entry>
     <title><![CDATA[设计模式_责任链模式（十一）]]></title>
     <url>%2F2019%2F04%2F01%2F%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%2F</url>
     <content type="text"><![CDATA[引言&emsp;&emsp;上一章我们将了代理模式，这一节我们说说责任链模式，目前的这几种模式都是比较简单的。 示例地址 &emsp;&emsp;Demo地址 类图 定义&emsp;&emsp;使多个对象都有机会处理请求,从而避免了请求的发送者和接收者之间的耦合关系。将这些对象连成一条链，并沿着这条链传递该请求，只到有对象处理它为止。 责任链模式使用场景&emsp;&emsp;1. 多个对象可以处理同一请求，但具体由那个对象处理则在运行时动态决定。&emsp;&emsp;2. 在请求处理者不明确的情况下向多个对象中的一个提交。&emsp;&emsp;3. 需要动态指定一组对象处理请求。 责任链模式示例&emsp;&emsp;在古代，小百姓打官司都是先到知县，不合理到知府，然后巡抚。 1. 先定义一个当官的接口，他们有权利处理老百姓的告状1234567891011121314151617181920/** * 有权利的人 * * @author 512573717@qq.com * @created 2018/7/19 下午4:11. */public abstract class DangGuan &#123; private DangGuan nextDangGuan; public DangGuan getNextDangGuan() &#123; return nextDangGuan; &#125; public void setNextDangGuan(DangGuan nextDangGuan) &#123; this.nextDangGuan = nextDangGuan; &#125; //案情 abstract void anQing(String desc);&#125; 2. 知县1234567891011121314151617/** * 知县 * * @author 512573717@qq.com * @created 2018/7/19 下午4:39. */public class CountyGuan extends DangGuan &#123; @Override void anQing(String desc) &#123; if (desc.equals(&quot;知县&quot;)) &#123; System.out.println(&quot;知县处理了此案情&quot;); &#125; else &#123; System.out.println(&quot;知县：这案情我处理不了，我先上报&quot;); getNextDangGuan().anQing(desc); &#125; &#125;&#125; 3. 知府1234567891011121314151617/** * 知府 * * @author 512573717@qq.com * @created 2018/7/19 下午4:43. */public class CityGuan extends DangGuan &#123; @Override void anQing(String desc) &#123; if (desc.equals(&quot;知府&quot;)) &#123; System.out.println(&quot;知府处理了此案情&quot;); &#125; else &#123; System.out.println(&quot;知府：这案情我处理不了，我先上报&quot;); getNextDangGuan().anQing(desc); &#125; &#125;&#125; 4. 巡抚12345678910111213141516/** * 巡抚 * * @author 512573717@qq.com * @created 2018/7/19 下午4:44. */public class ProvinceGuan extends DangGuan &#123; @Override void anQing(String desc) &#123; if (desc.equals(&quot;巡抚&quot;)) &#123; System.out.println(&quot;巡抚处理了此案情&quot;); &#125; else &#123; getNextDangGuan().anQing(desc); &#125; &#125;&#125; 5. 老百姓告状123456789CountyGuan countyGuan = new CountyGuan();CityGuan cityGuan = new CityGuan();ProvinceGuan provinceGuan = new ProvinceGuan();countyGuan.setNextDangGuan(cityGuan);cityGuan.setNextDangGuan(provinceGuan);System.out.println(&quot;老百姓开始告状了。&quot;);countyGuan.anQing(&quot;巡抚&quot;); 总结&emsp;&emsp;职责链的模式链的组成：&emsp;&emsp;第一步需要在处理者对象类中定义后继处理者对象，将这部分代码抽象到抽象类中实现，降低了代码重复性。&emsp;&emsp;第二步就是在处理者对象类中的处理方法中如果当前处理者对象无法处理，就将其传递到后继对象去处理。&emsp;&emsp;第三步就是在测试类中将这些处理者类的实例串联成链。]]></content>
