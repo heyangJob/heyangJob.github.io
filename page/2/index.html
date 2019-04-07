@@ -371,6 +371,196 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/28/设计模式-建造者模式（八）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="何阳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/icon.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何阳">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/28/设计模式-建造者模式（八）/" class="post-title-link" itemprop="url">设计模式_建造者模式（八）</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-28 23:42:37" itemprop="dateCreated datePublished" datetime="2019-03-28T23:42:37+08:00">2019-03-28</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-03-31 23:59:49" itemprop="dateModified" datetime="2019-03-31T23:59:49+08:00">2019-03-31</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/设计模式/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h4><p> &emsp;&emsp;双休日出去玩了2天，一直没更新，今天我们继续，上一回咱们说了<a href="https://www.heyangjob.cn/2019/03/27/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%83%EF%BC%89/" target="_blank" rel="noopener">原型模式</a>，这次我们来讲讲建造者模式。</p>
+<h4 id="示例地址"><a href="#示例地址" class="headerlink" title="示例地址"></a>示例地址</h4><p> &emsp;&emsp;<a href="https://github.com/heyangJob/Design-Pattern/tree/master/Builder" target="_blank" rel="noopener">Demo</a></p>
+<h4 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h4><p><img src="https://note.youdao.com/yws/api/personal/file/WEB662f709c3df08ede737d44c0b5c50432?method=download&amp;shareKey=d4a28e3fa8f11b76b87aa5fe035de4ae" alt="image"></p>
+<h4 id="建造者模式定义"><a href="#建造者模式定义" class="headerlink" title="建造者模式定义"></a>建造者模式定义</h4><p>&emsp;&emsp;将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示</p>
+<h4 id="建造者模式使用场景"><a href="#建造者模式使用场景" class="headerlink" title="建造者模式使用场景"></a>建造者模式使用场景</h4><p>&emsp;&emsp;1. 相同的方法，不同的执行顺序，产生不同的事件结果时。<br>&emsp;&emsp;2. 多个部件或零件，都可以装配到一个对象中，但是产生的运行结果又不相同时。<br>&emsp;&emsp;3. 产品类非常复杂，或者产品类中的调用顺序不同产生了不同的作用，这个时候使用建造者模式非常合适。<br>&emsp;&emsp;4. 当初始化一个对象特别复杂，如参数多，且很多参数都具有默认值时。</p>
+<h4 id="建造者相关的概念"><a href="#建造者相关的概念" class="headerlink" title="建造者相关的概念"></a>建造者相关的概念</h4><p>&emsp;&emsp;Product 产品类：产品的抽象类<br>&emsp;&emsp;Builder：抽象Builder类，规范产品的组建，一般是由子类实现具体的组建过程。<br>&emsp;&emsp;ConcreteBuilder :具体的Builder类。<br>&emsp;&emsp;Director:统一组装过程。</p>
+<h4 id="建造者模式示例"><a href="#建造者模式示例" class="headerlink" title="建造者模式示例"></a>建造者模式示例</h4><p>&emsp;&emsp;在开发过程中，我们会创建很多的Bean,比如下面这个</p>
+<h6 id="1-创建Bean"><a href="#1-创建Bean" class="headerlink" title="1. 创建Bean"></a>1. 创建Bean</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 新闻实体类</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/16  下午5:32.</span><br><span class="line"> */</span><br><span class="line">public class News &#123;</span><br><span class="line"></span><br><span class="line">    private int id;</span><br><span class="line">    private String title;</span><br><span class="line">    private String subTitle;</span><br><span class="line">    private String createTime;</span><br><span class="line">    private String lookCount;</span><br><span class="line">    private String type;</span><br><span class="line"></span><br><span class="line">    public News() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public News(int id, String title, String subTitle, String createTime, String lookCount, String type) &#123;</span><br><span class="line">        this.id = id;</span><br><span class="line">        this.title = title;</span><br><span class="line">        this.subTitle = subTitle;</span><br><span class="line">        this.createTime = createTime;</span><br><span class="line">        this.lookCount = lookCount;</span><br><span class="line">        this.type = type;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int getId() &#123;</span><br><span class="line">        return id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setId(int id) &#123;</span><br><span class="line">        this.id = id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getTitle() &#123;</span><br><span class="line">        return title;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setTitle(String title) &#123;</span><br><span class="line">        this.title = title;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getSubTitle() &#123;</span><br><span class="line">        return subTitle;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setSubTitle(String subTitle) &#123;</span><br><span class="line">        this.subTitle = subTitle;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getCreateTime() &#123;</span><br><span class="line">        return createTime;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setCreateTime(String createTime) &#123;</span><br><span class="line">        this.createTime = createTime;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getLookCount() &#123;</span><br><span class="line">        return lookCount;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setLookCount(String lookCount) &#123;</span><br><span class="line">        this.lookCount = lookCount;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getType() &#123;</span><br><span class="line">        return type;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setType(String type) &#123;</span><br><span class="line">        this.type = type;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String toString() &#123;</span><br><span class="line">        return &quot;News&#123;&quot; +</span><br><span class="line">                &quot;id=&quot; + id +</span><br><span class="line">                &quot;, title=&apos;&quot; + title + &apos;\&apos;&apos; +</span><br><span class="line">                &quot;, subTitle=&apos;&quot; + subTitle + &apos;\&apos;&apos; +</span><br><span class="line">                &quot;, createTime=&apos;&quot; + createTime + &apos;\&apos;&apos; +</span><br><span class="line">                &quot;, lookCount=&apos;&quot; + lookCount + &apos;\&apos;&apos; +</span><br><span class="line">                &quot;, type=&apos;&quot; + type + &apos;\&apos;&apos; +</span><br><span class="line">                &apos;&#125;&apos;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="2-使用的时候，我们需要这样"><a href="#2-使用的时候，我们需要这样" class="headerlink" title="2. 使用的时候，我们需要这样"></a>2. 使用的时候，我们需要这样</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">News news = new News(1, &quot;今日快讯&quot;, &quot;北京大暴雨&quot;,&quot;2018-01-17&quot;, &quot;200&quot;, &quot;历史&quot;);</span><br><span class="line">System.out.println(news.toString());</span><br></pre></td></tr></table></figure>
+<h6 id="3-导致的问题"><a href="#3-导致的问题" class="headerlink" title="3. 导致的问题"></a>3. 导致的问题</h6><p>&emsp;&emsp;这个构造器调用通常需要许多你本不想设置的参数，但还是不得不为它们传递值。 </p>
+<h6 id="4-换一种方式"><a href="#4-换一种方式" class="headerlink" title="4. 换一种方式"></a>4. 换一种方式</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">News newsBean = new News();</span><br><span class="line">newsBean.setId(1);</span><br><span class="line">newsBean.setTitle(&quot;今日快讯&quot;);</span><br><span class="line">newsBean.setSubTitle(&quot;北京大暴雨&quot;);</span><br><span class="line">newsBean.setCreateTime(&quot;2018-01-17&quot;);</span><br><span class="line">newsBean.setLookCount(&quot;200&quot;);</span><br><span class="line">newsBean.setType(&quot;历史&quot;);</span><br><span class="line">System.out.println(newsBean.toString());</span><br></pre></td></tr></table></figure>
+<h6 id="5-存在问题"><a href="#5-存在问题" class="headerlink" title="5. 存在问题"></a>5. 存在问题</h6><p>&emsp;&emsp;构造过程被分到了几个调用中，在构造过程中JavaBean可能处于不一致的状态。</p>
+<h4 id="建造者模式"><a href="#建造者模式" class="headerlink" title="建造者模式"></a>建造者模式</h4><p> &emsp;&emsp;我们使用建模者模式来解决问题</p>
+<h6 id="1-抽象建造者类"><a href="#1-抽象建造者类" class="headerlink" title="1. 抽象建造者类"></a>1. 抽象建造者类</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 抽象建造者类</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/16  下午4:36.</span><br><span class="line"> */</span><br><span class="line">public abstract class Buildler &#123;</span><br><span class="line"></span><br><span class="line">    public abstract Buildler setId(int id);</span><br><span class="line"></span><br><span class="line">    public abstract Buildler setTitle(String title);</span><br><span class="line"></span><br><span class="line">    public abstract Buildler setSubTitle(String subTitle);</span><br><span class="line"></span><br><span class="line">    public abstract Buildler setCreateTime(String createTime);</span><br><span class="line"></span><br><span class="line">    public abstract Buildler setLookCount(String lookCount);</span><br><span class="line"></span><br><span class="line">    public abstract Buildler setType(String type);</span><br><span class="line"></span><br><span class="line">    public abstract News build();</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="2-具体建造者类"><a href="#2-具体建造者类" class="headerlink" title="2. 具体建造者类"></a>2. 具体建造者类</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 具体建造者类</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/16  下午4:52.</span><br><span class="line"> */</span><br><span class="line">public class SimpleBuilder extends Buildler &#123;</span><br><span class="line"></span><br><span class="line">    private News mNews;</span><br><span class="line"></span><br><span class="line">    public SimpleBuilder() &#123;</span><br><span class="line">        mNews = new News();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Buildler setId(int id) &#123;</span><br><span class="line">        mNews.setId(id);</span><br><span class="line">        return this;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Buildler setTitle(String title) &#123;</span><br><span class="line">        mNews.setTitle(title);</span><br><span class="line">        return this;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Buildler setSubTitle(String subTitle) &#123;</span><br><span class="line">        mNews.setSubTitle(subTitle);</span><br><span class="line">        return this;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Buildler setCreateTime(String createTime) &#123;</span><br><span class="line">        mNews.setCreateTime(createTime);</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Buildler setLookCount(String lookCount) &#123;</span><br><span class="line">        mNews.setLookCount(lookCount);</span><br><span class="line">        return this;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Buildler setType(String type) &#123;</span><br><span class="line">        mNews.setType(type);</span><br><span class="line">        return this;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public News build() &#123;</span><br><span class="line">        return mNews;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="3-指挥者类"><a href="#3-指挥者类" class="headerlink" title="3. 指挥者类"></a>3. 指挥者类</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 指挥者类</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/16  下午4:57.</span><br><span class="line"> */</span><br><span class="line">public class Director &#123;</span><br><span class="line"></span><br><span class="line">    // 组装产品</span><br><span class="line">    public static News create(String type) &#123;</span><br><span class="line">        return new SimpleBuilder().setType(type)</span><br><span class="line">                .setId(1)</span><br><span class="line">                .setTitle(&quot;历史上的今天&quot;)</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="4-调用"><a href="#4-调用" class="headerlink" title="4. 调用"></a>4. 调用</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">News history = Director.create(&quot;历史&quot;);</span><br><span class="line">News military = Director.create(&quot;军事&quot;);</span><br><span class="line"></span><br><span class="line">System.out.println(history.toString());</span><br><span class="line">System.out.println(military.toString());</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 另外一种方式创建</span><br><span class="line">SimpleBuilder simpleBuilder = new SimpleBuilder();</span><br><span class="line">News science =simpleBuilder.setType(&quot;科技&quot;).setTitle(&quot;小米上市&quot;).build();</span><br><span class="line">System.out.println(science.toString());</span><br></pre></td></tr></table></figure>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p> &emsp;&emsp;在《Effective Java》书中第二条，就提到“遇到多个构造器参数时要考虑用构建器”，其实这里的构建器就属于建造者模式。建造者模式将构建与表示分离。上面的例子中，我们其实根本就不会知道具体是怎么产生一条新闻的，因为这个过程让director给代劳了。然后，SimpleBuilder。director其实只是执行了这个过程。这样子，达到了分离模块的功能。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/27/设计模式-原型模式（七）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1960,7 +2150,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-count">19</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>

@@ -96,27 +96,27 @@
 
 
 
-  <meta name="description" content="引言&amp;emsp;&amp;emsp;上一节我们说了抽象工厂模式，今天我们来说说”模板方法模式”。 示例地址&amp;emsp;&amp;emsp;Demo 依然是先看类图 模板方法模式的定义&amp;emsp;&amp;emsp;定义一个操作中的算法的框架，而将一些步骤延迟到子类中，使的子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤。 使用场景&amp;emsp;&amp;emsp;1. 多个子类有公有的方法，并且逻辑基本相同时。&amp;emsp">
+  <meta name="description" content="引言 &amp;emsp;&amp;emsp;上一节我们讲了适配器模式，这回我们来说说外观模式。 示例地址&amp;emsp;&amp;emsp;Demo 类图 定义&amp;emsp;&amp;emsp;要求一个子系统的外部与其内部的通信必须通过一个统一的对象进行。门面模式提供一个高层次的接口，使得子系统更易于使用。 使用场景&amp;emsp;&amp;emsp;1.  为一个复杂子系统提供一个简单接口。子系统往往因为不断演化而变得越来越复杂，甚至可能被替">
 <meta name="keywords" content="Android,iOS,React Native,ionic,微信公众号,微信小程序">
 <meta property="og:type" content="article">
-<meta property="og:title" content="设计模式_模板方法模式（四）">
-<meta property="og:url" content="http://yoursite.com/2019/03/24/设计模式-模板方法模式（四）/index.html">
+<meta property="og:title" content="设计模式_外观模式（十四）">
+<meta property="og:url" content="http://yoursite.com/2019/04/07/设计模式-外观模式（十四）/index.html">
 <meta property="og:site_name" content="何阳">
-<meta property="og:description" content="引言&amp;emsp;&amp;emsp;上一节我们说了抽象工厂模式，今天我们来说说”模板方法模式”。 示例地址&amp;emsp;&amp;emsp;Demo 依然是先看类图 模板方法模式的定义&amp;emsp;&amp;emsp;定义一个操作中的算法的框架，而将一些步骤延迟到子类中，使的子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤。 使用场景&amp;emsp;&amp;emsp;1. 多个子类有公有的方法，并且逻辑基本相同时。&amp;emsp">
+<meta property="og:description" content="引言 &amp;emsp;&amp;emsp;上一节我们讲了适配器模式，这回我们来说说外观模式。 示例地址&amp;emsp;&amp;emsp;Demo 类图 定义&amp;emsp;&amp;emsp;要求一个子系统的外部与其内部的通信必须通过一个统一的对象进行。门面模式提供一个高层次的接口，使得子系统更易于使用。 使用场景&amp;emsp;&amp;emsp;1.  为一个复杂子系统提供一个简单接口。子系统往往因为不断演化而变得越来越复杂，甚至可能被替">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/WEB25de4a9d5dfd8ba04ffd57e5d30af8ab?method=download&shareKey=0027acec1aaddcea6d315514b7087744">
-<meta property="og:updated_time" content="2019-03-31T15:53:15.988Z">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/WEB1b2a92208b889f28d0cbc0fe76cb0a84?method=download&shareKey=3b330a1bab66d5696ede29538044c908">
+<meta property="og:updated_time" content="2019-04-07T13:50:07.968Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="设计模式_模板方法模式（四）">
-<meta name="twitter:description" content="引言&amp;emsp;&amp;emsp;上一节我们说了抽象工厂模式，今天我们来说说”模板方法模式”。 示例地址&amp;emsp;&amp;emsp;Demo 依然是先看类图 模板方法模式的定义&amp;emsp;&amp;emsp;定义一个操作中的算法的框架，而将一些步骤延迟到子类中，使的子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤。 使用场景&amp;emsp;&amp;emsp;1. 多个子类有公有的方法，并且逻辑基本相同时。&amp;emsp">
-<meta name="twitter:image" content="https://note.youdao.com/yws/api/personal/file/WEB25de4a9d5dfd8ba04ffd57e5d30af8ab?method=download&shareKey=0027acec1aaddcea6d315514b7087744">
+<meta name="twitter:title" content="设计模式_外观模式（十四）">
+<meta name="twitter:description" content="引言 &amp;emsp;&amp;emsp;上一节我们讲了适配器模式，这回我们来说说外观模式。 示例地址&amp;emsp;&amp;emsp;Demo 类图 定义&amp;emsp;&amp;emsp;要求一个子系统的外部与其内部的通信必须通过一个统一的对象进行。门面模式提供一个高层次的接口，使得子系统更易于使用。 使用场景&amp;emsp;&amp;emsp;1.  为一个复杂子系统提供一个简单接口。子系统往往因为不断演化而变得越来越复杂，甚至可能被替">
+<meta name="twitter:image" content="https://note.youdao.com/yws/api/personal/file/WEB1b2a92208b889f28d0cbc0fe76cb0a84?method=download&shareKey=3b330a1bab66d5696ede29538044c908">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/03/24/设计模式-模板方法模式（四）/">
+  <link rel="canonical" href="http://yoursite.com/2019/04/07/设计模式-外观模式（十四）/">
 
 
 
@@ -126,7 +126,7 @@
   };
 </script>
 
-  <title>设计模式_模板方法模式（四） | 何阳</title>
+  <title>设计模式_外观模式（十四） | 何阳</title>
   
 
 
@@ -376,7 +376,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/24/设计模式-模板方法模式（四）/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/07/设计模式-外观模式（十四）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="何阳">
@@ -393,7 +393,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">设计模式_模板方法模式（四）
+          <h1 class="post-title" itemprop="name headline">设计模式_外观模式（十四）
 
               
             
@@ -419,24 +419,12 @@
                 
               
 
-              <time title="创建时间：2019-03-24 23:35:16" itemprop="dateCreated datePublished" datetime="2019-03-24T23:35:16+08:00">2019-03-24</time>
+              <time title="创建时间：2019-04-07 21:48:19 / 修改时间：21:50:07" itemprop="dateCreated datePublished" datetime="2019-04-07T21:48:19+08:00">2019-04-07</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-03-31 23:53:15" itemprop="dateModified" datetime="2019-03-31T23:53:15+08:00">2019-03-31</time>
               
             
           </span>
@@ -488,17 +476,18 @@
       
 
       
-        <h4 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h4><p>&emsp;&emsp;上一节我们说了<a href="https://www.heyangjob.cn/2019/03/23/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%89%EF%BC%89/" target="_blank" rel="noopener">抽象工厂模式</a>，今天我们来说说”模板方法模式”。</p>
-<h4 id="示例地址"><a href="#示例地址" class="headerlink" title="示例地址"></a>示例地址</h4><p>&emsp;&emsp;<a href="https://github.com/heyangJob/Design-Pattern/tree/master/Template" target="_blank" rel="noopener">Demo</a></p>
-<h4 id="依然是先看类图"><a href="#依然是先看类图" class="headerlink" title="依然是先看类图"></a>依然是先看类图</h4><p><img src="https://note.youdao.com/yws/api/personal/file/WEB25de4a9d5dfd8ba04ffd57e5d30af8ab?method=download&amp;shareKey=0027acec1aaddcea6d315514b7087744" alt="image"></p>
-<h4 id="模板方法模式的定义"><a href="#模板方法模式的定义" class="headerlink" title="模板方法模式的定义"></a>模板方法模式的定义</h4><p>&emsp;&emsp;定义一个操作中的算法的框架，而将一些步骤延迟到子类中，使的子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤。</p>
-<h4 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h4><p>&emsp;&emsp;1. 多个子类有公有的方法，并且逻辑基本相同时。<br>&emsp;&emsp;2. 重要、复杂的算法，可以把核心算法设计为模板方法，周边的相关细节功能则有各个子类实现。<br>&emsp;&emsp;3. 重构时，模板方法模式是一个经常使用的模式，把相同的代码抽取到父类中，然后通过钩子函数约束其行为。</p>
-<h4 id="模板方法模式示例"><a href="#模板方法模式示例" class="headerlink" title="模板方法模式示例"></a>模板方法模式示例</h4><p>&emsp;&emsp;每到年底，在北京的外地人都要回家，很多人选择做火车回家，也有选择坐飞机回去的。但是他们都经历同样的过程。买票、上车（登机）、下车、回家。</p>
-<h6 id="1-首先，我们来写基类"><a href="#1-首先，我们来写基类" class="headerlink" title="1. 首先，我们来写基类"></a>1. 首先，我们来写基类</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 春节回家的基类</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/10  下午3:03.</span><br><span class="line"> */</span><br><span class="line">public abstract class BaseGoHome &#123;</span><br><span class="line"></span><br><span class="line">    //选择出行方式</span><br><span class="line">    public abstract void travelWay();</span><br><span class="line"></span><br><span class="line">    //买票</span><br><span class="line">    public abstract void buyTicket();</span><br><span class="line"></span><br><span class="line">    //上车</span><br><span class="line">    public abstract void shangche();</span><br><span class="line"></span><br><span class="line">    //下车</span><br><span class="line">    public abstract void xiache();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="2-看看老王怎么回家的"><a href="#2-看看老王怎么回家的" class="headerlink" title="2. 看看老王怎么回家的"></a>2. 看看老王怎么回家的</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 老王回家</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/10  下午3:11.</span><br><span class="line"> */</span><br><span class="line">public class LaoWang extends BaseGoHome &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void travelWay() &#123;</span><br><span class="line">        System.out.println(&quot;选择做火车回家&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void buyTicket() &#123;</span><br><span class="line">        System.out.println(&quot;去火车站买票&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void shangche() &#123;</span><br><span class="line">        System.out.println(&quot;在候车室检票进站&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void xiache() &#123;</span><br><span class="line">        System.out.println(&quot;下车 做公交回家&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="3-在看看小明的"><a href="#3-在看看小明的" class="headerlink" title="3. 在看看小明的"></a>3. 在看看小明的</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 小明回家</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/10  下午3:10.</span><br><span class="line"> */</span><br><span class="line">public class XiaoMing extends BaseGoHome &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void travelWay() &#123;</span><br><span class="line">        System.out.println(&quot;选择做飞机回家&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void buyTicket() &#123;</span><br><span class="line">        System.out.println(&quot;在网上买提前订票&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void shangche() &#123;</span><br><span class="line">        System.out.println(&quot;换登记牌 登机&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void xiache() &#123;</span><br><span class="line">        System.out.println(&quot;打车回家&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="4-具体运用"><a href="#4-具体运用" class="headerlink" title="4. 具体运用"></a>4. 具体运用</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(&quot;小明春节回家&quot;);</span><br><span class="line">BaseGoHome xiaoming = new XiaoMing();</span><br><span class="line">xiaoming.travelWay();</span><br><span class="line">xiaoming.buyTicket();</span><br><span class="line">xiaoming.shangche();</span><br><span class="line">xiaoming.xiache();</span><br><span class="line"></span><br><span class="line">System.out.println(&quot;老王春节回家&quot;);</span><br><span class="line">BaseGoHome laowang = new XiaoMing();</span><br><span class="line">laowang.travelWay();</span><br><span class="line">laowang.buyTicket();</span><br><span class="line">laowang.shangche();</span><br><span class="line">laowang.xiache();</span><br></pre></td></tr></table></figure>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>&emsp;&emsp;模板方法模式，我们用的应该是比较多的，例如BaseActivity、BaseFragment。Android源码的Activity是一个典型的模板方法模式。</p>
+        <h4 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h4><p> &emsp;&emsp;上一节我们讲了<a href="https://www.heyangjob.cn/2019/04/05/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%8D%81%E4%B8%89%EF%BC%89/" target="_blank" rel="noopener">适配器模式</a>，这回我们来说说外观模式。</p>
+<h4 id="示例地址"><a href="#示例地址" class="headerlink" title="示例地址"></a>示例地址</h4><p>&emsp;&emsp;<a href="https://github.com/heyangJob/Design-Pattern/tree/master/Facade" target="_blank" rel="noopener">Demo</a></p>
+<h4 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h4><p><img src="https://note.youdao.com/yws/api/personal/file/WEB1b2a92208b889f28d0cbc0fe76cb0a84?method=download&amp;shareKey=3b330a1bab66d5696ede29538044c908" alt="image"></p>
+<h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>&emsp;&emsp;要求一个子系统的外部与其内部的通信必须通过一个统一的对象进行。门面模式提供一个高层次的接口，使得子系统更易于使用。</p>
+<h4 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h4><p>&emsp;&emsp;1.  为一个复杂子系统提供一个简单接口。子系统往往因为不断演化而变得越来越复杂，甚至可能被替换。大多数模式使用时都会产生更多、更小的类，在这使子系统更具可重用性的同时也更容易对子系统进行定制、修改，这种易变性使得隐藏子系统的具体实现变得尤为重要。外观模式提供一个简单统一的接口。对外隐藏子系统的具体实现、隔离变化。<br>&emsp;&emsp;2.  当你需要构建一个层次结构的子系统时，使用外观模式定义子系统中每层的入扣点。如果子系统之间是相互依赖的，你可以让他们仅通过外观接口进行通信，从而简化了他们之间的依赖关系。</p>
+<h4 id="外观模式示例"><a href="#外观模式示例" class="headerlink" title="外观模式示例"></a>外观模式示例</h4><p>&emsp;&emsp;之前我们开一个公司需要跑三个部门，流程比较麻烦。“前前后后加起来，即使你对业务非常熟悉、材料齐备、不出任何差错，也至少需要去３个部门跑６趟，前后加起来十几个工作日就过去了。”然后 15年国家出了一个政策“三证合一，就可以将所有材料集中送到一个窗口，材料在政府部门内部流转，企业不需要再跑路，经过５至１０个工作日就可一次性拿完三个证件。</p>
+<h6 id="1-工商营业执照"><a href="#1-工商营业执照" class="headerlink" title="1. 工商营业执照"></a>1. 工商营业执照</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 工商营业执照</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/25  下午2:19.</span><br><span class="line"> */</span><br><span class="line">public class BusinessCertificate &#123;</span><br><span class="line">    public void transaction() &#123;</span><br><span class="line">        System.out.println(&quot;工商行政管理部门办理 营业执照&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="2-组织机构代码证"><a href="#2-组织机构代码证" class="headerlink" title="2. 组织机构代码证"></a>2. 组织机构代码证</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 组织机构代码证</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/25  下午2:21.</span><br><span class="line"> */</span><br><span class="line">public class OrganizationCertificate &#123;</span><br><span class="line">    public void transaction() &#123;</span><br><span class="line">        System.out.println(&quot;组织机构代码管理部门办理 组织机构代码证&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="3-税务登记证"><a href="#3-税务登记证" class="headerlink" title="3. 税务登记证"></a>3. 税务登记证</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 税务登记证</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/25  下午2:23.</span><br><span class="line"> */</span><br><span class="line">public class TaxationCertificate &#123;</span><br><span class="line">    public void transaction() &#123;</span><br><span class="line">        System.out.println(&quot;税务部门办理 税务登记证&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="4-门面模式（一个窗口解决所有）"><a href="#4-门面模式（一个窗口解决所有）" class="headerlink" title="4. 门面模式（一个窗口解决所有）"></a>4. 门面模式（一个窗口解决所有）</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 三证合一 门面模式</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/25  下午2:30.</span><br><span class="line"> */</span><br><span class="line">public class FacadeCertificate &#123;</span><br><span class="line"></span><br><span class="line">    private OrganizationCertificate mOrganizationCertificate;</span><br><span class="line">    private TaxationCertificate mTaxationCertificate;</span><br><span class="line">    private BusinessCertificate mBusinessCertificate;</span><br><span class="line"></span><br><span class="line">    public FacadeCertificate() &#123;</span><br><span class="line">        mOrganizationCertificate = new OrganizationCertificate();</span><br><span class="line">        mTaxationCertificate = new TaxationCertificate();</span><br><span class="line">        mBusinessCertificate = new BusinessCertificate();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void transact() &#123;</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;收到申请人提供的材料&quot;);</span><br><span class="line">        // 办理营业执照</span><br><span class="line">        mBusinessCertificate.transaction();</span><br><span class="line">        // 组织机构</span><br><span class="line">        mOrganizationCertificate.transaction();</span><br><span class="line">        // 税务证</span><br><span class="line">        mTaxationCertificate.transaction();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="5-Client"><a href="#5-Client" class="headerlink" title="5. Client"></a>5. Client</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(&quot;老王去窗口注册企业，提交相关材料&quot;);</span><br><span class="line">FacadeCertificate facadeCertificate=new FacadeCertificate();</span><br><span class="line">facadeCertificate.transact();</span><br><span class="line">System.out.println(&quot;15个工作日 出证&quot;);</span><br></pre></td></tr></table></figure>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>&emsp;&emsp;外观模式的目的不是给予子系统添加新的功能接口，而是为了让外部减少与子系统内多个模块的交互，松散耦合，从而让外部能够更简单地使用子系统。<br>&emsp;&emsp;外观模式的本质是：封装交互，简化调用。</p>
 
       
     </div>
@@ -529,8 +518,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/23/设计模式-抽象工厂模式（三）/" rel="next" title="设计模式_抽象工厂模式（三）">
-                <i class="fa fa-chevron-left"></i> 设计模式_抽象工厂模式（三）
+              <a href="/2019/04/06/Android-APT编译时自动生成代码/" rel="next" title="Android_APT编译时自动生成代码">
+                <i class="fa fa-chevron-left"></i> Android_APT编译时自动生成代码
               </a>
             
           </div>
@@ -538,10 +527,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/03/25/设计模式-策略模式（五）/" rel="prev" title="设计模式_策略模式（五）">
-                设计模式_策略模式（五） <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -667,7 +652,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#示例地址"><span class="nav-number">2.</span> <span class="nav-text">示例地址</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#依然是先看类图"><span class="nav-number">3.</span> <span class="nav-text">依然是先看类图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模板方法模式的定义"><span class="nav-number">4.</span> <span class="nav-text">模板方法模式的定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用场景"><span class="nav-number">5.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模板方法模式示例"><span class="nav-number">6.</span> <span class="nav-text">模板方法模式示例</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-首先，我们来写基类"><span class="nav-number">6.0.1.</span> <span class="nav-text">1. 首先，我们来写基类</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-看看老王怎么回家的"><span class="nav-number">6.0.2.</span> <span class="nav-text">2. 看看老王怎么回家的</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-在看看小明的"><span class="nav-number">6.0.3.</span> <span class="nav-text">3. 在看看小明的</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-具体运用"><span class="nav-number">6.0.4.</span> <span class="nav-text">4. 具体运用</span></a></li></ol></li></ol><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#示例地址"><span class="nav-number">2.</span> <span class="nav-text">示例地址</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#类图"><span class="nav-number">3.</span> <span class="nav-text">类图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#定义"><span class="nav-number">4.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用场景"><span class="nav-number">5.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#外观模式示例"><span class="nav-number">6.</span> <span class="nav-text">外观模式示例</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-工商营业执照"><span class="nav-number">6.0.1.</span> <span class="nav-text">1. 工商营业执照</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-组织机构代码证"><span class="nav-number">6.0.2.</span> <span class="nav-text">2. 组织机构代码证</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-税务登记证"><span class="nav-number">6.0.3.</span> <span class="nav-text">3. 税务登记证</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-门面模式（一个窗口解决所有）"><span class="nav-number">6.0.4.</span> <span class="nav-text">4. 门面模式（一个窗口解决所有）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-Client"><span class="nav-number">6.0.5.</span> <span class="nav-text">5. Client</span></a></li></ol></li></ol><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></div>
             
 
           </div>
