@@ -96,22 +96,27 @@
 
 
 
-  <meta name="keywords" content="Android,iOS,React Native,ionic,微信公众号,微信小程序">
-<meta property="og:type" content="website">
-<meta property="og:title" content="个人简介">
-<meta property="og:url" content="http://yoursite.com/about/index.html">
+  <meta name="description" content="引言&amp;emsp;&amp;emsp;继续上一节的外观模式，我们在来说装饰模式。 示例地址&amp;emsp;&amp;emsp;Demo 类图 定义&amp;emsp;&amp;emsp;动态地给一个对象添加一些额外的职责。就增加功能来说，装饰模式相比生成子类更为灵活。 使用场景&amp;emsp;&amp;emsp;需要透明且动态地扩展的功能时。 装饰模式角色介绍&amp;emsp;&amp;emsp;1. Component：抽象组件，被装饰的原始对象。&amp;emsp">
+<meta name="keywords" content="Android,iOS,React Native,ionic,微信公众号,微信小程序">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式_装饰模式（十五）">
+<meta property="og:url" content="http://yoursite.com/2019/04/08/设计模式-装饰模式（十五）/index.html">
 <meta property="og:site_name" content="何阳">
+<meta property="og:description" content="引言&amp;emsp;&amp;emsp;继续上一节的外观模式，我们在来说装饰模式。 示例地址&amp;emsp;&amp;emsp;Demo 类图 定义&amp;emsp;&amp;emsp;动态地给一个对象添加一些额外的职责。就增加功能来说，装饰模式相比生成子类更为灵活。 使用场景&amp;emsp;&amp;emsp;需要透明且动态地扩展的功能时。 装饰模式角色介绍&amp;emsp;&amp;emsp;1. Component：抽象组件，被装饰的原始对象。&amp;emsp">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-31T11:06:24.304Z">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/WEB35902d03aeb7a8e9fa132d49e6df474b?method=download&shareKey=a0dbb7446606ea7113efa3deba0fa389">
+<meta property="og:updated_time" content="2019-04-08T12:56:10.417Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="个人简介">
+<meta name="twitter:title" content="设计模式_装饰模式（十五）">
+<meta name="twitter:description" content="引言&amp;emsp;&amp;emsp;继续上一节的外观模式，我们在来说装饰模式。 示例地址&amp;emsp;&amp;emsp;Demo 类图 定义&amp;emsp;&amp;emsp;动态地给一个对象添加一些额外的职责。就增加功能来说，装饰模式相比生成子类更为灵活。 使用场景&amp;emsp;&amp;emsp;需要透明且动态地扩展的功能时。 装饰模式角色介绍&amp;emsp;&amp;emsp;1. Component：抽象组件，被装饰的原始对象。&amp;emsp">
+<meta name="twitter:image" content="https://note.youdao.com/yws/api/personal/file/WEB35902d03aeb7a8e9fa132d49e6df474b?method=download&shareKey=a0dbb7446606ea7113efa3deba0fa389">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/about/">
+  <link rel="canonical" href="http://yoursite.com/2019/04/08/设计模式-装饰模式（十五）/">
 
 
 
@@ -121,7 +126,7 @@
   };
 </script>
 
-  <title>个人简介 | 何阳</title>
+  <title>设计模式_装饰模式（十五） | 何阳</title>
   
 
 
@@ -280,7 +285,7 @@
         
         
           
-          <li class="menu-item menu-item-about menu-item-active">
+          <li class="menu-item menu-item-about">
 
     
     
@@ -351,73 +356,201 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/08/设计模式-装饰模式（十五）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="何阳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/icon.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何阳">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-<h1 class="post-title" itemprop="name headline">个人简介
-
-</h1>
-
-<div class="post-meta">
-  
-  
-
-
-
-</div>
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
+          <h1 class="post-title" itemprop="name headline">设计模式_装饰模式（十五）
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-08 20:55:03 / 修改时间：20:56:10" itemprop="dateCreated datePublished" datetime="2019-04-08T20:55:03+08:00">2019-04-08</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
           
-        
-      </div>
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/设计模式/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <h4 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h4><p>&emsp;&emsp;继续上一节的<a href="https://www.heyangjob.cn/2019/04/07/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%A4%96%E8%A7%82%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%8D%81%E5%9B%9B%EF%BC%89/" target="_blank" rel="noopener">外观模式</a>，我们在来说装饰模式。</p>
+<h4 id="示例地址"><a href="#示例地址" class="headerlink" title="示例地址"></a>示例地址</h4><p>&emsp;&emsp;<a href="https://github.com/heyangJob/Design-Pattern/tree/master/Wrapper" target="_blank" rel="noopener">Demo</a></p>
+<h4 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h4><p><img src="https://note.youdao.com/yws/api/personal/file/WEB35902d03aeb7a8e9fa132d49e6df474b?method=download&amp;shareKey=a0dbb7446606ea7113efa3deba0fa389" alt="image"></p>
+<h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>&emsp;&emsp;动态地给一个对象添加一些额外的职责。就增加功能来说，装饰模式相比生成子类更为灵活。</p>
+<h4 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h4><p>&emsp;&emsp;需要透明且动态地扩展的功能时。</p>
+<h4 id="装饰模式角色介绍"><a href="#装饰模式角色介绍" class="headerlink" title="装饰模式角色介绍"></a>装饰模式角色介绍</h4><p>&emsp;&emsp;1. Component：抽象组件，被装饰的原始对象。<br>&emsp;&emsp;2. ConcreteComponent: 组件具体实现类。装饰的具体对象。<br>&emsp;&emsp;3. Decorator:抽象的装饰者，用来装饰组件的。一般是为抽象类。如果装饰单一，该类可直接作为具体的装饰者。<br>&emsp;&emsp;4. ConcreteDecoratorA：装饰者具体实现类。</p>
+<h4 id="装饰模式示例"><a href="#装饰模式示例" class="headerlink" title="装饰模式示例"></a>装饰模式示例</h4><p>&emsp;&emsp;最近帮别人买了手机。然后他自己贴了一个钢化膜，买了一个手机外壳，加上一个吊坠，格外的珍惜。不过比之前漂亮了不少。突然发现这是典型的装饰模式啊。</p>
+<h6 id="1-定义手机接口"><a href="#1-定义手机接口" class="headerlink" title="1. 定义手机接口"></a>1. 定义手机接口</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 手机</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/25  下午5:30.</span><br><span class="line"> */</span><br><span class="line">public interface IPhone &#123;</span><br><span class="line">    //装饰</span><br><span class="line">    void decorate();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="2-实现手机接口（被装饰的对象-华为手机）"><a href="#2-实现手机接口（被装饰的对象-华为手机）" class="headerlink" title="2. 实现手机接口（被装饰的对象 华为手机）"></a>2. 实现手机接口（被装饰的对象 华为手机）</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 华为手机</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/26  下午1:59.</span><br><span class="line"> */</span><br><span class="line">public class HuaWeiPhone  implements  IPhone&#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void decorate() &#123;</span><br><span class="line">        System.out.println(&quot;华为手机&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="3-装饰者（外壳）"><a href="#3-装饰者（外壳）" class="headerlink" title="3. 装饰者（外壳）"></a>3. 装饰者（外壳）</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 外壳</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/26  下午2:01.</span><br><span class="line"> */</span><br><span class="line">public abstract class Shell implements IPhone &#123;</span><br><span class="line"></span><br><span class="line">    private IPhone mHuaWeiPhone;</span><br><span class="line"></span><br><span class="line">    public Shell(IPhone huaWeiPhone) &#123;</span><br><span class="line">        mHuaWeiPhone = huaWeiPhone;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void decorate() &#123;</span><br><span class="line">        mHuaWeiPhone.decorate();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="4-粉红色的外壳加挂坠"><a href="#4-粉红色的外壳加挂坠" class="headerlink" title="4. 粉红色的外壳加挂坠"></a>4. 粉红色的外壳加挂坠</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 红色的外壳</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/26  下午2:05.</span><br><span class="line"> */</span><br><span class="line">public class RedShell extends Shell &#123;</span><br><span class="line"></span><br><span class="line">    public RedShell(IPhone huaWeiPhone) &#123;</span><br><span class="line">        super(huaWeiPhone);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void shell() &#123;</span><br><span class="line">        System.out.println(&quot;粉红色外壳&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void pendant() &#123;</span><br><span class="line">        System.out.println(&quot;小猪佩奇挂件&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void decorate() &#123;</span><br><span class="line">        super.decorate();</span><br><span class="line">        shell();</span><br><span class="line">        pendant();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="5-装饰者（贴膜）"><a href="#5-装饰者（贴膜）" class="headerlink" title="5. 装饰者（贴膜）"></a>5. 装饰者（贴膜）</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 手机贴膜</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/26  下午2:17.</span><br><span class="line"> */</span><br><span class="line">public abstract class Membrane implements IPhone &#123;</span><br><span class="line"></span><br><span class="line">    private IPhone mHuaWeiPhone;</span><br><span class="line"></span><br><span class="line">    public Membrane(IPhone huaWeiPhone) &#123;</span><br><span class="line">        mHuaWeiPhone = huaWeiPhone;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void decorate() &#123;</span><br><span class="line">        mHuaWeiPhone.decorate();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="6-贴钢化膜"><a href="#6-贴钢化膜" class="headerlink" title="6. 贴钢化膜"></a>6. 贴钢化膜</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 钢化膜</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/26  下午2:22.</span><br><span class="line"> */</span><br><span class="line">public class TemperingMembrane extends Membrane &#123;</span><br><span class="line"></span><br><span class="line">    public TemperingMembrane(IPhone huaWeiPhone) &#123;</span><br><span class="line">        super(huaWeiPhone);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void pasting() &#123;</span><br><span class="line">        System.out.println(&quot;蓝光钢化膜&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void decorate() &#123;</span><br><span class="line">        super.decorate();</span><br><span class="line">        pasting();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="7-Client"><a href="#7-Client" class="headerlink" title="7. Client"></a>7. Client</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">IPhone phone = new HuaWeiPhone();</span><br><span class="line"></span><br><span class="line">System.out.println(&quot;装饰外壳&quot;);</span><br><span class="line">RedShell redShell = new RedShell(phone);</span><br><span class="line">redShell.decorate();</span><br><span class="line"></span><br><span class="line">System.out.println(&quot;手机贴膜&quot;);</span><br><span class="line">TemperingMembrane temperingMembrane = new TemperingMembrane(redShell);</span><br><span class="line">temperingMembrane.decorate();</span><br></pre></td></tr></table></figure>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>&emsp;&emsp;装饰模式降低系统的耦合度，可以动态的增加或删除对象的职责，并使得需要装饰的具体构建类和具体装饰类可以独立变化，以便增加新的具体构建类和具体装饰类。  </p>
+<p>&emsp;&emsp;1. 优点：<br>&emsp;&emsp;&emsp;&emsp;扩展对象功能，比继承灵活，不会导致类个数急剧增加<br>&emsp;&emsp;&emsp;&emsp;可以对一个对象进行多次装饰，创造出不同行为的组合，得到功能更加强大的对象<br>&emsp;&emsp;&emsp;&emsp;具体构建类和具体装饰类可以独立变化，用户可以根据需要自己增加新的具体构件子类和具体装饰子类</p>
+<p>&emsp;&emsp;2. 缺点：<br>&emsp;&emsp;&emsp;&emsp;产生很多小对象。大量小对象占据内存，一定程度上影响性能<br>&emsp;&emsp;&emsp;&emsp;装饰模式易于出错，调试排查比较麻烦</p>
+
       
     </div>
-    
-
-
 
     
+
     
     
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/07/设计模式-外观模式（十四）/" rel="next" title="设计模式_外观模式（十四）">
+                <i class="fa fa-chevron-left"></i> 设计模式_外观模式（十四）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/08/Android-插件化hook模式/" rel="prev" title="Android_插件化hook模式">
+                Android_插件化hook模式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
   </div>
 
 
@@ -446,8 +579,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -508,6 +650,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#示例地址"><span class="nav-number">2.</span> <span class="nav-text">示例地址</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#类图"><span class="nav-number">3.</span> <span class="nav-text">类图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#定义"><span class="nav-number">4.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用场景"><span class="nav-number">5.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#装饰模式角色介绍"><span class="nav-number">6.</span> <span class="nav-text">装饰模式角色介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#装饰模式示例"><span class="nav-number">7.</span> <span class="nav-text">装饰模式示例</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-定义手机接口"><span class="nav-number">7.0.1.</span> <span class="nav-text">1. 定义手机接口</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-实现手机接口（被装饰的对象-华为手机）"><span class="nav-number">7.0.2.</span> <span class="nav-text">2. 实现手机接口（被装饰的对象 华为手机）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-装饰者（外壳）"><span class="nav-number">7.0.3.</span> <span class="nav-text">3. 装饰者（外壳）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-粉红色的外壳加挂坠"><span class="nav-number">7.0.4.</span> <span class="nav-text">4. 粉红色的外壳加挂坠</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-装饰者（贴膜）"><span class="nav-number">7.0.5.</span> <span class="nav-text">5. 装饰者（贴膜）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#6-贴钢化膜"><span class="nav-number">7.0.6.</span> <span class="nav-text">6. 贴钢化膜</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#7-Client"><span class="nav-number">7.0.7.</span> <span class="nav-text">7. Client</span></a></li></ol></li></ol><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">8.</span> <span class="nav-text">总结</span></a></li></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
