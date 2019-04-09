@@ -371,201 +371,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/22/设计模式-工厂方法模式（二）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="何阳">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/icon.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="何阳">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/03/22/设计模式-工厂方法模式（二）/" class="post-title-link" itemprop="url">设计模式_工厂方法模式（二）</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-03-22 23:34:11" itemprop="dateCreated datePublished" datetime="2019-03-22T23:34:11+08:00">2019-03-22</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-03-31 23:50:49" itemprop="dateModified" datetime="2019-03-31T23:50:49+08:00">2019-03-31</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/设计模式/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h4><p>&emsp;&emsp;上一节我们说了<a href="https://www.heyangjob.cn/2019/03/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89/" target="_blank" rel="noopener">单例模式</a>，这一节我们来说说工厂方法模式。</p>
-<h4 id="示例地址"><a href="#示例地址" class="headerlink" title="示例地址"></a>示例地址</h4><p>&emsp;&emsp;<a href="https://github.com/heyangJob/Design-Pattern/tree/master/Factory" target="_blank" rel="noopener">Demo</a></p>
-<h4 id="先看类图"><a href="#先看类图" class="headerlink" title="先看类图"></a>先看类图</h4><p><img src="https://note.youdao.com/yws/api/personal/file/WEB086195d0ff2e583f2a2720daf31eb788?method=download&amp;shareKey=e48be0d40b223f27ea0e318dcb697631" alt="image"></p>
-<h4 id="工厂方法模式定义"><a href="#工厂方法模式定义" class="headerlink" title="工厂方法模式定义"></a>工厂方法模式定义</h4><p>&emsp;&emsp;定义一个用于创建对象的接口，让子类决定实例化哪一个类。</p>
-<h4 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h4><p>&emsp;&emsp;在任何需要生成复制对象的地方，都可以使用工厂方法模式。</p>
-<h4 id="工厂方法模式示例"><a href="#工厂方法模式示例" class="headerlink" title="工厂方法模式示例"></a>工厂方法模式示例</h4><p>&emsp;&emsp;举个例子，我们吃饭的时候都会点主食，主食的种类分为  米饭、面,南方人喜欢吃米饭，但是北方人喜欢吃面。</p>
-<h4 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h4><h6 id="1-我们先来设计产品"><a href="#1-我们先来设计产品" class="headerlink" title="1. 我们先来设计产品"></a>1. 我们先来设计产品</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 主食</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/6  下午2:36.</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">public interface IZhuShi &#123;</span><br><span class="line">    // 主食吃什么</span><br><span class="line">    void eat();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="2-产品一-南方人爱吃米饭"><a href="#2-产品一-南方人爱吃米饭" class="headerlink" title="2. 产品一:南方人爱吃米饭"></a>2. 产品一:南方人爱吃米饭</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> *  主食米饭</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/6  下午2:37.</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">public class Rice implements IZhuShi &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void eat() &#123;</span><br><span class="line">      System.out.println(&quot;主食米饭上来了。&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="3-产品二-北方人爱吃面食"><a href="#3-产品二-北方人爱吃面食" class="headerlink" title="3. 产品二:北方人爱吃面食"></a>3. 产品二:北方人爱吃面食</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 主食面</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/6  下午2:43.</span><br><span class="line"> */</span><br><span class="line">public class Flour implements IZhuShi &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void eat() &#123;</span><br><span class="line">        System.out.println(&quot;主食 面上来了。&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="简单（静态）工厂"><a href="#简单（静态）工厂" class="headerlink" title="简单（静态）工厂"></a>简单（静态）工厂</h4><p>&emsp;&emsp;接下来是我们怎么创建产品了,就是我们在点餐的时候要选择吃什么。</p>
-<h6 id="1-主食工厂"><a href="#1-主食工厂" class="headerlink" title="1. 主食工厂"></a>1. 主食工厂</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 主食工厂</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/6  下午2:48.</span><br><span class="line"> */</span><br><span class="line">public class FactoryZhuShi &#123;</span><br><span class="line">    //南方人</span><br><span class="line">    public static final int SOUTH = 1;</span><br><span class="line">    //北方人</span><br><span class="line">    public static final int NORTH = 2;</span><br><span class="line"></span><br><span class="line">    public  static IZhuShi createZhuShi(int type) &#123;</span><br><span class="line">        switch (type) &#123;</span><br><span class="line">            case SOUTH:</span><br><span class="line">                return new Rice();</span><br><span class="line">            case NORTH:</span><br><span class="line">                return new Flour();</span><br><span class="line">            default:</span><br><span class="line">                return new Rice();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="2-调用工厂创建产品"><a href="#2-调用工厂创建产品" class="headerlink" title="2. 调用工厂创建产品"></a>2. 调用工厂创建产品</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">IZhuShi south = FactoryZhuShi.createZhuShi(FactoryZhuShi.SOUTH);</span><br><span class="line">south.eat();</span><br><span class="line"></span><br><span class="line">IZhuShi north = FactoryZhuShi.createZhuShi(FactoryZhuShi.NORTH);</span><br><span class="line">north.eat();</span><br></pre></td></tr></table></figure>
-<h6 id="3-如果我们增加了产品三-水饺-，这个时候就需要修改工程类了，违背了设计模式的六大原则（开闭原则）。"><a href="#3-如果我们增加了产品三-水饺-，这个时候就需要修改工程类了，违背了设计模式的六大原则（开闭原则）。" class="headerlink" title="3. 如果我们增加了产品三(水饺)，这个时候就需要修改工程类了，违背了设计模式的六大原则（开闭原则）。"></a>3. 如果我们增加了产品三(水饺)，这个时候就需要修改工程类了，违背了设计模式的六大原则（开闭原则）。</h6><h4 id="简单（反射）工厂"><a href="#简单（反射）工厂" class="headerlink" title="简单（反射）工厂"></a>简单（反射）工厂</h4><p>&emsp;&emsp;Java中反射是无所不能的。那我们就反一种思路，我们通过反射实现。</p>
-<h6 id="1-反射实现工厂"><a href="#1-反射实现工厂" class="headerlink" title="1. 反射实现工厂"></a>1. 反射实现工厂</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 通过反射获取主食</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/6  下午3:11.</span><br><span class="line"> */</span><br><span class="line">public class ReflectFactoryZhuShi &#123;</span><br><span class="line"></span><br><span class="line">    public static &lt;T extends IZhuShi&gt; T createZhuShi(Class&lt;T&gt; cls) &#123;</span><br><span class="line">        T object = null;</span><br><span class="line">        try &#123;</span><br><span class="line">            object = (T) (Class.forName(cls.getName())).newInstance();</span><br><span class="line">        &#125; catch (InstantiationException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; catch (IllegalAccessException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; catch (ClassNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        return object;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="2-调用工厂创建产品-1"><a href="#2-调用工厂创建产品-1" class="headerlink" title="2. 调用工厂创建产品"></a>2. 调用工厂创建产品</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">IZhuShi south = ReflectFactoryZhuShi.createZhuShi(Rice.class);</span><br><span class="line">south.eat();</span><br><span class="line"></span><br><span class="line">IZhuShi north = ReflectFactoryZhuShi.createZhuShi(Flour.class);</span><br><span class="line">north.eat();</span><br></pre></td></tr></table></figure>
-<h6 id="3-在增加新产品的时候，我们无需修改工厂类，解决设计模式的开闭原则。但是反射影响性能，我们在来看看方法工厂模式"><a href="#3-在增加新产品的时候，我们无需修改工厂类，解决设计模式的开闭原则。但是反射影响性能，我们在来看看方法工厂模式" class="headerlink" title="3. 在增加新产品的时候，我们无需修改工厂类，解决设计模式的开闭原则。但是反射影响性能，我们在来看看方法工厂模式"></a>3. 在增加新产品的时候，我们无需修改工厂类，解决设计模式的开闭原则。但是反射影响性能，我们在来看看方法工厂模式</h6><h4 id="简单工厂"><a href="#简单工厂" class="headerlink" title="简单工厂"></a>简单工厂</h4><p>&emsp;&emsp;反射有效率问题，我们看看最常用的一种写法</p>
-<h6 id="1-日常写法"><a href="#1-日常写法" class="headerlink" title="1. 日常写法"></a>1. 日常写法</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 简单工厂</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/6  下午3:37.</span><br><span class="line"> */</span><br><span class="line">public class MethodFactoryZhuShi &#123;</span><br><span class="line"></span><br><span class="line">    public static Rice getRice() &#123;</span><br><span class="line">        return new Rice();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static Flour getFlour() &#123;</span><br><span class="line">        return new Flour();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="2-简单调用"><a href="#2-简单调用" class="headerlink" title="2. 简单调用"></a>2. 简单调用</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">IZhuShi south = MethodFactoryZhuShi.getRice();</span><br><span class="line">south.eat();</span><br><span class="line"></span><br><span class="line">IZhuShi north = MethodFactoryZhuShi.getFlour();</span><br><span class="line">north.eat();</span><br></pre></td></tr></table></figure>
-<h4 id="工厂方法模式"><a href="#工厂方法模式" class="headerlink" title="工厂方法模式"></a>工厂方法模式</h4><h6 id="1-工厂接口"><a href="#1-工厂接口" class="headerlink" title="1. 工厂接口"></a>1. 工厂接口</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 主食创建工厂</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/6  下午4:08.</span><br><span class="line"> */</span><br><span class="line">public interface IFactory&lt;T extends IZhuShi&gt; &#123;</span><br><span class="line">    T create();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="2-米饭工厂"><a href="#2-米饭工厂" class="headerlink" title="2. 米饭工厂"></a>2. 米饭工厂</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> *  米饭工厂</span><br><span class="line"> * </span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/8  下午11:11.</span><br><span class="line"> * </span><br><span class="line"> */</span><br><span class="line">public class RiceFactory implements IFactory&lt;Rice&gt; &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public Rice create() &#123;</span><br><span class="line">        return new Rice();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="3-面食工厂"><a href="#3-面食工厂" class="headerlink" title="3. 面食工厂"></a>3. 面食工厂</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> *  面食工厂</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/8  下午11:11.</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">public class FlourFactory implements IFactory&lt;Flour&gt; &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public Flour create() &#123;</span><br><span class="line">        return new Flour();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="4-简单调用"><a href="#4-简单调用" class="headerlink" title="4. 简单调用"></a>4. 简单调用</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">IFactory northFactory = new FlourFactory();</span><br><span class="line">IZhuShi north = northFactory.create();</span><br><span class="line">north.eat();</span><br><span class="line"></span><br><span class="line">IFactory southFactory = new RiceFactory();</span><br><span class="line">IZhuShi south = southFactory.create();</span><br><span class="line">south.eat();</span><br></pre></td></tr></table></figure>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>&emsp;&emsp; 当有新的产品产生时，只要按照抽象产品角色、抽象工厂角色提供的合同来生成，那么就可以被客户使用，而不必去修改任何已有的代码。（即当有新产品时，只要创建并基础抽象产品；新建具体工厂继承抽象工厂；而不用修改任何一个类）工厂方法模式是完全符合开闭原则的！</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/21/设计模式-单例模式（一）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -926,6 +731,200 @@
 <h6 id="5-总结"><a href="#5-总结" class="headerlink" title="5. 总结"></a>5. 总结</h6><p>&emsp;&emsp;代码简洁了很多！保证了代码的重用性。close 方法的基本原理就是依赖于 Closeable 抽象而不是具体实现（这其实也是依赖倒置），并且建立在最小化依赖原则的基础，它只需要知道这个对象是可关闭，其他的一概不关心，也就是这里的接口隔离原则。</p>
 <h4 id="六、最少知识原则"><a href="#六、最少知识原则" class="headerlink" title="六、最少知识原则"></a>六、最少知识原则</h4><h5 id="定义-5"><a href="#定义-5" class="headerlink" title="定义"></a>定义</h5><p>&emsp;&emsp;一个对象应该对其他对象有最少的了解。通俗地讲，一个类应该对自己需要耦合或调用的类知道得最少，类的内部如何实现、如何复杂都与调用者或者依赖者没关系，调用者或者依赖者只需要知道他需要的方法即可，其他的我一概不关心。类与类之间的关系越密切，耦合度越大，当一个类发生改变时，对另一个类的影响也越大。</p>
 <h4 id="示例地址"><a href="#示例地址" class="headerlink" title="示例地址"></a>示例地址</h4><p>&emsp;&emsp;<a href="https://github.com/heyangJob/Design-Pattern/tree/master/SixPrinciple" target="_blank" rel="noopener">Demo</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/19/设计模式-UML建模（前传）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="何阳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/icon.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何阳">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/19/设计模式-UML建模（前传）/" class="post-title-link" itemprop="url">设计模式_UML建模（前传）</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-19 16:43:00" itemprop="dateCreated datePublished" datetime="2019-03-19T16:43:00+08:00">2019-03-19</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-09 16:46:41" itemprop="dateModified" datetime="2019-04-09T16:46:41+08:00">2019-04-09</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/设计模式/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><ul>
+<li>表示方法：用实线空心三角箭头表示。<br><img src="https://note.youdao.com/yws/api/personal/file/WEB3128d7c85991e61762c6466d60a22966?method=download&amp;shareKey=38669bd59726dab7ed79c52ddc561c6c" alt="image"></li>
+</ul>
+<h3 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h3><ul>
+<li>表示方法：空心三角形箭头的虚线，实现类指向接口<br><img src="https://note.youdao.com/yws/api/personal/file/WEB2578830d9f09013ca09c2b0452d2e64a?method=download&amp;shareKey=1e689c7dbabb898f4d98d8d929af0591" alt="image"></li>
+</ul>
+<h3 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h3><ul>
+<li>概念：是一种使用的关系，即一个类的实现需要另一个类的协助。java中，方法参数需要传入另一个类的对象，就表示依赖这个类。  </li>
+<li>表示方法：虚线箭头，类A指向类B。<br><img src="https://note.youdao.com/yws/api/personal/file/WEBd86dd2a255b5da52d1010355ac467c04?method=download&amp;shareKey=22a497310ac563e63f7779ad302a7736" alt="image"></li>
+</ul>
+<h3 id="关联"><a href="#关联" class="headerlink" title="关联"></a>关联</h3><ul>
+<li>概念：表示类与类之间的联接,它使一个类知道另一个类的属性和方法，这种关系比依赖更强、不存在依赖关系的偶然性、关系也不是临时性的，一般是长期性的。java中一个类的全局变量引用了另一个类，就表示关联了这个类  </li>
+<li>表示方法：实线箭头，类A指向类B<br><img src="https://note.youdao.com/yws/api/personal/file/WEB3a40d739dcac96572e820d3e86a73741?method=download&amp;shareKey=d7d91b5fb645fe3974592aba6e32e365" alt="image"></li>
+</ul>
+<h3 id="聚合"><a href="#聚合" class="headerlink" title="聚合"></a>聚合</h3><ul>
+<li>概念：聚合关联关系的一种特例，是强的关联关系。聚合是整体和个体之间的关系，即has-a的关系，整体与个体可以具有各自的生命周期，部分可以属于多个整体对象，也可以为多个整体对象共享。程序中聚合和关联关系是一致的，只能从语义级别来区分；</li>
+<li>表示方法：尾部为空心菱形的实线箭头（也可以没箭头），类A指向类B<br><img src="https://note.youdao.com/yws/api/personal/file/WEB1f437ac6338baac921edf28f96d250f0?method=download&amp;shareKey=b385f63cacca0b77400af7cd6ff2797a" alt="image"></li>
+</ul>
+<h3 id="组合"><a href="#组合" class="headerlink" title="组合"></a>组合</h3><ul>
+<li>概念：组合也是关联关系的一种特例。组合是一种整体与部分的关系，即contains-a的关系，比聚合更强。部分与整体的生命周期一致，整体的生命周期结束也就意味着部分的生命周期结束，组合关系不能共享。程序中组合和关联关系是一致的，只能从语义级别来区分。</li>
+<li>表示方法：尾部为实心菱形的实现箭头（也可以没箭头），类A指向类B<br><img src="https://note.youdao.com/yws/api/personal/file/WEB16f19c9feb0fd9e2196038c6232502e2?method=download&amp;shareKey=0ab56680762fd521125d3f71169b9608" alt="image"></li>
+</ul>
 
           
         
