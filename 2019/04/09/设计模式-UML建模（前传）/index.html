@@ -96,28 +96,32 @@
 
 
 
-  <meta name="description" content="引言&amp;emsp;&amp;emsp;上一回怎么说了工厂方法模式，这回咱们来讲一讲工厂模式的另外一种表现，今天的主角”抽象工厂模式”。 示例地址&amp;emsp;&amp;emsp;Demo 先上类图 看看定义&amp;emsp;&amp;emsp;为创建一组相关或者相互依赖的对象提供一个接口，而不需要指定它们的具体类。 使用场景&amp;emsp;&amp;emsp;一个对象族有相同的约束时可以使用抽象工厂模式。 抽象工厂中的2个概念产品族&amp;emsp">
+  <meta name="description" content="继承 表示方法：用实线空心三角箭头表示。  接口 表示方法：空心三角形箭头的虚线，实现类指向接口  依赖 概念：是一种使用的关系，即一个类的实现需要另一个类的协助。java中，方法参数需要传入另一个类的对象，就表示依赖这个类。   表示方法：虚线箭头，类A指向类B。  关联 概念：表示类与类之间的联接,它使一个类知道另一个类的属性和方法，这种关系比依赖更强、不存在依赖关系的偶然性、关系也不是临时性">
 <meta name="keywords" content="Android,iOS,React Native,ionic,微信公众号,微信小程序">
 <meta property="og:type" content="article">
-<meta property="og:title" content="设计模式_抽象工厂模式（三）">
-<meta property="og:url" content="http://yoursite.com/2019/03/23/设计模式-抽象工厂模式（三）/index.html">
+<meta property="og:title" content="设计模式_UML建模（前传）">
+<meta property="og:url" content="http://yoursite.com/2019/04/09/设计模式-UML建模（前传）/index.html">
 <meta property="og:site_name" content="何阳">
-<meta property="og:description" content="引言&amp;emsp;&amp;emsp;上一回怎么说了工厂方法模式，这回咱们来讲一讲工厂模式的另外一种表现，今天的主角”抽象工厂模式”。 示例地址&amp;emsp;&amp;emsp;Demo 先上类图 看看定义&amp;emsp;&amp;emsp;为创建一组相关或者相互依赖的对象提供一个接口，而不需要指定它们的具体类。 使用场景&amp;emsp;&amp;emsp;一个对象族有相同的约束时可以使用抽象工厂模式。 抽象工厂中的2个概念产品族&amp;emsp">
+<meta property="og:description" content="继承 表示方法：用实线空心三角箭头表示。  接口 表示方法：空心三角形箭头的虚线，实现类指向接口  依赖 概念：是一种使用的关系，即一个类的实现需要另一个类的协助。java中，方法参数需要传入另一个类的对象，就表示依赖这个类。   表示方法：虚线箭头，类A指向类B。  关联 概念：表示类与类之间的联接,它使一个类知道另一个类的属性和方法，这种关系比依赖更强、不存在依赖关系的偶然性、关系也不是临时性">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/WEB4a133db3035b35b5f7fbc7f4800616e5?method=download&shareKey=b8c7d1b61c083986c51283ae85e194f0">
-<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/WEB8a89f4d333fe9df77c247b57dc1e264f?method=download&shareKey=bea25acf6c643104de09f400b1475b44">
-<meta property="og:updated_time" content="2019-03-31T15:52:03.907Z">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/WEB3128d7c85991e61762c6466d60a22966?method=download&shareKey=38669bd59726dab7ed79c52ddc561c6c">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/WEB2578830d9f09013ca09c2b0452d2e64a?method=download&shareKey=1e689c7dbabb898f4d98d8d929af0591">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/WEBd86dd2a255b5da52d1010355ac467c04?method=download&shareKey=22a497310ac563e63f7779ad302a7736">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/WEB3a40d739dcac96572e820d3e86a73741?method=download&shareKey=d7d91b5fb645fe3974592aba6e32e365">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/WEB1f437ac6338baac921edf28f96d250f0?method=download&shareKey=b385f63cacca0b77400af7cd6ff2797a">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/WEB16f19c9feb0fd9e2196038c6232502e2?method=download&shareKey=0ab56680762fd521125d3f71169b9608">
+<meta property="og:updated_time" content="2019-04-09T08:43:23.852Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="设计模式_抽象工厂模式（三）">
-<meta name="twitter:description" content="引言&amp;emsp;&amp;emsp;上一回怎么说了工厂方法模式，这回咱们来讲一讲工厂模式的另外一种表现，今天的主角”抽象工厂模式”。 示例地址&amp;emsp;&amp;emsp;Demo 先上类图 看看定义&amp;emsp;&amp;emsp;为创建一组相关或者相互依赖的对象提供一个接口，而不需要指定它们的具体类。 使用场景&amp;emsp;&amp;emsp;一个对象族有相同的约束时可以使用抽象工厂模式。 抽象工厂中的2个概念产品族&amp;emsp">
-<meta name="twitter:image" content="https://note.youdao.com/yws/api/personal/file/WEB4a133db3035b35b5f7fbc7f4800616e5?method=download&shareKey=b8c7d1b61c083986c51283ae85e194f0">
+<meta name="twitter:title" content="设计模式_UML建模（前传）">
+<meta name="twitter:description" content="继承 表示方法：用实线空心三角箭头表示。  接口 表示方法：空心三角形箭头的虚线，实现类指向接口  依赖 概念：是一种使用的关系，即一个类的实现需要另一个类的协助。java中，方法参数需要传入另一个类的对象，就表示依赖这个类。   表示方法：虚线箭头，类A指向类B。  关联 概念：表示类与类之间的联接,它使一个类知道另一个类的属性和方法，这种关系比依赖更强、不存在依赖关系的偶然性、关系也不是临时性">
+<meta name="twitter:image" content="https://note.youdao.com/yws/api/personal/file/WEB3128d7c85991e61762c6466d60a22966?method=download&shareKey=38669bd59726dab7ed79c52ddc561c6c">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/03/23/设计模式-抽象工厂模式（三）/">
+  <link rel="canonical" href="http://yoursite.com/2019/04/09/设计模式-UML建模（前传）/">
 
 
 
@@ -127,7 +131,7 @@
   };
 </script>
 
-  <title>设计模式_抽象工厂模式（三） | 何阳</title>
+  <title>设计模式_UML建模（前传） | 何阳</title>
   
 
 
@@ -377,7 +381,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/23/设计模式-抽象工厂模式（三）/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/09/设计模式-UML建模（前传）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="何阳">
@@ -394,7 +398,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">设计模式_抽象工厂模式（三）
+          <h1 class="post-title" itemprop="name headline">设计模式_UML建模（前传）
 
               
             
@@ -420,24 +424,12 @@
                 
               
 
-              <time title="创建时间：2019-03-23 23:34:44" itemprop="dateCreated datePublished" datetime="2019-03-23T23:34:44+08:00">2019-03-23</time>
+              <time title="创建时间：2019-04-09 16:43:00 / 修改时间：16:43:23" itemprop="dateCreated datePublished" datetime="2019-04-09T16:43:00+08:00">2019-04-09</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-03-31 23:52:03" itemprop="dateModified" datetime="2019-03-31T23:52:03+08:00">2019-03-31</time>
               
             
           </span>
@@ -489,21 +481,28 @@
       
 
       
-        <h4 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h4><p>&emsp;&emsp;上一回怎么说了<a href="https://www.heyangjob.cn/2019/03/22/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%BA%8C%EF%BC%89/" target="_blank" rel="noopener">工厂方法模式</a>，这回咱们来讲一讲工厂模式的另外一种表现，今天的主角”抽象工厂模式”。</p>
-<h4 id="示例地址"><a href="#示例地址" class="headerlink" title="示例地址"></a>示例地址</h4><p>&emsp;&emsp;<a href="https://github.com/heyangJob/Design-Pattern/tree/master/Factory" target="_blank" rel="noopener">Demo</a></p>
-<h4 id="先上类图"><a href="#先上类图" class="headerlink" title="先上类图"></a>先上类图</h4><p><img src="https://note.youdao.com/yws/api/personal/file/WEB4a133db3035b35b5f7fbc7f4800616e5?method=download&amp;shareKey=b8c7d1b61c083986c51283ae85e194f0" alt="image"></p>
-<h4 id="看看定义"><a href="#看看定义" class="headerlink" title="看看定义"></a>看看定义</h4><p>&emsp;&emsp;为创建一组相关或者相互依赖的对象提供一个接口，而不需要指定它们的具体类。</p>
-<h4 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h4><p>&emsp;&emsp;一个对象族有相同的约束时可以使用抽象工厂模式。</p>
-<h4 id="抽象工厂中的2个概念"><a href="#抽象工厂中的2个概念" class="headerlink" title="抽象工厂中的2个概念"></a>抽象工厂中的2个概念</h4><h6 id="产品族"><a href="#产品族" class="headerlink" title="产品族"></a>产品族</h6><p>&emsp;&emsp;位于不同产品等级结构中，功能相关联的产品组成的家族。代表的是纵向结构。<br>&emsp;&emsp;举个例子,华为有华为笔记本，华为手机，华为手环等，小米也有小米手机，小米笔记本，小米手环。华为这个系列的构成了家族。称为产品族。</p>
-<h6 id="产品等级"><a href="#产品等级" class="headerlink" title="产品等级"></a>产品等级</h6><p>&emsp;&emsp;产品等级结构即产品的继承结构。代表的是横向结构。<br>&emsp;&emsp;举个列子，一个抽象类手机，下面可以生成小米手机、华为手机。</p>
-<h4 id="产品族与产品等级图"><a href="#产品族与产品等级图" class="headerlink" title="产品族与产品等级图"></a>产品族与产品等级图</h4><p><img src="https://note.youdao.com/yws/api/personal/file/WEB8a89f4d333fe9df77c247b57dc1e264f?method=download&amp;shareKey=bea25acf6c643104de09f400b1475b44" alt="image"></p>
-<h4 id="产品类"><a href="#产品类" class="headerlink" title="产品类"></a>产品类</h4><h6 id="1-手机"><a href="#1-手机" class="headerlink" title="1. 手机"></a>1. 手机</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 手机</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/9  上午10:19.</span><br><span class="line"> */</span><br><span class="line">public interface IPhone &#123;</span><br><span class="line">    void phone();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 小米手机</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/9  上午10:25.</span><br><span class="line"> */</span><br><span class="line">public class XiaomiPhone implements IPhone &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void phone() &#123;</span><br><span class="line">        System.out.println(&quot;小米手机&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 华为手机</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/9  上午10:23.</span><br><span class="line"> */</span><br><span class="line">public class HuaweiPhone implements IPhone &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void phone() &#123;</span><br><span class="line">        System.out.println(&quot;华为手机&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="2-笔记本"><a href="#2-笔记本" class="headerlink" title="2. 笔记本"></a>2. 笔记本</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 笔记本</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/9  上午10:27.</span><br><span class="line"> */</span><br><span class="line">public interface IComputer &#123;</span><br><span class="line">    void computer();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 小米笔记本</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/9  上午10:44.</span><br><span class="line"> */</span><br><span class="line">public class XiaomiComputer implements IComputer &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void computer() &#123;</span><br><span class="line">        System.out.println(&quot;小米笔记本&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 华为笔记本</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/9  上午10:37.</span><br><span class="line"> */</span><br><span class="line">public class HuaweiComputer implements IComputer &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void computer() &#123;</span><br><span class="line">        System.out.println(&quot; 华为笔记本&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="3-手环"><a href="#3-手环" class="headerlink" title="3. 手环"></a>3. 手环</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 手环</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/9  上午10:55.</span><br><span class="line"> */</span><br><span class="line">public interface IBracelet &#123;</span><br><span class="line">    void bracelet();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 小米手环</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/9  上午10:59.</span><br><span class="line"> */</span><br><span class="line">public class XiaomiBracelet implements IBracelet &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void bracelet() &#123;</span><br><span class="line">        System.out.println(&quot;小米手环&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 华为手环</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/9  上午10:57.</span><br><span class="line"> */</span><br><span class="line">public class HuaweiBracelet implements IBracelet &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void bracelet() &#123;</span><br><span class="line">        System.out.println(&quot;华为手环&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="4-工厂类"><a href="#4-工厂类" class="headerlink" title="4. 工厂类"></a>4. 工厂类</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> *  抽象工厂</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/9  上午10:16.</span><br><span class="line"> */</span><br><span class="line">public abstract class ProductFactory &#123;</span><br><span class="line">    // 创建手机</span><br><span class="line">    public abstract IPhone createPhone();</span><br><span class="line">    // 创建笔记本</span><br><span class="line">    public abstract IComputer createComputer();</span><br><span class="line">    // 创建手环</span><br><span class="line">    public  abstract IBracelet createBracelet();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 小米</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/9  上午11:09.</span><br><span class="line"> */</span><br><span class="line">public class Xiaomi extends ProductFactory &#123;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public IPhone createPhone() &#123;</span><br><span class="line">        return new XiaomiPhone();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public IComputer createComputer() &#123;</span><br><span class="line">        return new XiaomiComputer();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public IBracelet createBracelet() &#123;</span><br><span class="line">        return new XiaomiBracelet();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 华为</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/9  上午11:03.</span><br><span class="line"> */</span><br><span class="line">public class Huawei extends ProductFactory &#123;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public IPhone createPhone() &#123;</span><br><span class="line">        return new HuaweiPhone();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public IComputer createComputer() &#123;</span><br><span class="line">        return new HuaweiComputer();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public IBracelet createBracelet() &#123;</span><br><span class="line">        return new HuaweiBracelet();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="5-Client测试"><a href="#5-Client测试" class="headerlink" title="5. Client测试"></a>5. Client测试</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//华为系列</span><br><span class="line">System.out.println(&quot;华为&quot;);</span><br><span class="line">ProductFactory huawei = new Huawei();</span><br><span class="line">huawei.createPhone().phone();</span><br><span class="line">huawei.createComputer().computer();</span><br><span class="line">huawei.createBracelet().bracelet();</span><br><span class="line"></span><br><span class="line">//小米系列</span><br><span class="line">System.out.println(&quot;小米&quot;);</span><br><span class="line">ProductFactory xiaomi=new Xiaomi();</span><br><span class="line">xiaomi.createPhone().phone();</span><br><span class="line">xiaomi.createComputer().computer();</span><br><span class="line">xiaomi.createBracelet().bracelet();</span><br></pre></td></tr></table></figure>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>&emsp;&emsp;抽象工厂模式是某一系列的产品的工厂。可以创建多个不同类型的产品。例如上面所说的 华为是一个产品工厂，能够创建手机 、笔记本、手机等多个类型的产品。</p>
-<h4 id="抽象工厂-与工厂方法的区别"><a href="#抽象工厂-与工厂方法的区别" class="headerlink" title="抽象工厂 与工厂方法的区别"></a>抽象工厂 与工厂方法的区别</h4><p>&emsp;&emsp;工厂方法模式针对的是一个产品等级结构；而抽象工厂模式则需要面对多个产品等级结构。     </p>
+        <h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><ul>
+<li>表示方法：用实线空心三角箭头表示。<br><img src="https://note.youdao.com/yws/api/personal/file/WEB3128d7c85991e61762c6466d60a22966?method=download&amp;shareKey=38669bd59726dab7ed79c52ddc561c6c" alt="image"></li>
+</ul>
+<h3 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h3><ul>
+<li>表示方法：空心三角形箭头的虚线，实现类指向接口<br><img src="https://note.youdao.com/yws/api/personal/file/WEB2578830d9f09013ca09c2b0452d2e64a?method=download&amp;shareKey=1e689c7dbabb898f4d98d8d929af0591" alt="image"></li>
+</ul>
+<h3 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h3><ul>
+<li>概念：是一种使用的关系，即一个类的实现需要另一个类的协助。java中，方法参数需要传入另一个类的对象，就表示依赖这个类。  </li>
+<li>表示方法：虚线箭头，类A指向类B。<br><img src="https://note.youdao.com/yws/api/personal/file/WEBd86dd2a255b5da52d1010355ac467c04?method=download&amp;shareKey=22a497310ac563e63f7779ad302a7736" alt="image"></li>
+</ul>
+<h3 id="关联"><a href="#关联" class="headerlink" title="关联"></a>关联</h3><ul>
+<li>概念：表示类与类之间的联接,它使一个类知道另一个类的属性和方法，这种关系比依赖更强、不存在依赖关系的偶然性、关系也不是临时性的，一般是长期性的。java中一个类的全局变量引用了另一个类，就表示关联了这个类  </li>
+<li>表示方法：实线箭头，类A指向类B<br><img src="https://note.youdao.com/yws/api/personal/file/WEB3a40d739dcac96572e820d3e86a73741?method=download&amp;shareKey=d7d91b5fb645fe3974592aba6e32e365" alt="image"></li>
+</ul>
+<h3 id="聚合"><a href="#聚合" class="headerlink" title="聚合"></a>聚合</h3><ul>
+<li>概念：聚合关联关系的一种特例，是强的关联关系。聚合是整体和个体之间的关系，即has-a的关系，整体与个体可以具有各自的生命周期，部分可以属于多个整体对象，也可以为多个整体对象共享。程序中聚合和关联关系是一致的，只能从语义级别来区分；</li>
+<li>表示方法：尾部为空心菱形的实线箭头（也可以没箭头），类A指向类B<br><img src="https://note.youdao.com/yws/api/personal/file/WEB1f437ac6338baac921edf28f96d250f0?method=download&amp;shareKey=b385f63cacca0b77400af7cd6ff2797a" alt="image"></li>
+</ul>
+<h3 id="组合"><a href="#组合" class="headerlink" title="组合"></a>组合</h3><ul>
+<li>概念：组合也是关联关系的一种特例。组合是一种整体与部分的关系，即contains-a的关系，比聚合更强。部分与整体的生命周期一致，整体的生命周期结束也就意味着部分的生命周期结束，组合关系不能共享。程序中组合和关联关系是一致的，只能从语义级别来区分。</li>
+<li>表示方法：尾部为实心菱形的实现箭头（也可以没箭头），类A指向类B<br><img src="https://note.youdao.com/yws/api/personal/file/WEB16f19c9feb0fd9e2196038c6232502e2?method=download&amp;shareKey=0ab56680762fd521125d3f71169b9608" alt="image"></li>
+</ul>
 
       
     </div>
@@ -534,8 +533,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/22/设计模式-工厂方法模式（二）/" rel="next" title="设计模式_工厂方法模式（二）">
-                <i class="fa fa-chevron-left"></i> 设计模式_工厂方法模式（二）
+              <a href="/2019/04/09/Android-Handler源码分析/" rel="next" title="Android_Handler源码分析">
+                <i class="fa fa-chevron-left"></i> Android_Handler源码分析
               </a>
             
           </div>
@@ -543,10 +542,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/03/24/设计模式-模板方法模式（四）/" rel="prev" title="设计模式_模板方法模式（四）">
-                设计模式_模板方法模式（四） <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -672,7 +667,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#示例地址"><span class="nav-number">2.</span> <span class="nav-text">示例地址</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#先上类图"><span class="nav-number">3.</span> <span class="nav-text">先上类图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#看看定义"><span class="nav-number">4.</span> <span class="nav-text">看看定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用场景"><span class="nav-number">5.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#抽象工厂中的2个概念"><span class="nav-number">6.</span> <span class="nav-text">抽象工厂中的2个概念</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#产品族"><span class="nav-number">6.0.1.</span> <span class="nav-text">产品族</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#产品等级"><span class="nav-number">6.0.2.</span> <span class="nav-text">产品等级</span></a></li></ol></li></ol><li class="nav-item nav-level-4"><a class="nav-link" href="#产品族与产品等级图"><span class="nav-number">7.</span> <span class="nav-text">产品族与产品等级图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#产品类"><span class="nav-number">8.</span> <span class="nav-text">产品类</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-手机"><span class="nav-number">8.0.1.</span> <span class="nav-text">1. 手机</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-笔记本"><span class="nav-number">8.0.2.</span> <span class="nav-text">2. 笔记本</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-手环"><span class="nav-number">8.0.3.</span> <span class="nav-text">3. 手环</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-工厂类"><span class="nav-number">8.0.4.</span> <span class="nav-text">4. 工厂类</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-Client测试"><span class="nav-number">8.0.5.</span> <span class="nav-text">5. Client测试</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">9.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#抽象工厂-与工厂方法的区别"><span class="nav-number">10.</span> <span class="nav-text">抽象工厂 与工厂方法的区别</span></a></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#继承"><span class="nav-number">1.</span> <span class="nav-text">继承</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接口"><span class="nav-number">2.</span> <span class="nav-text">接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#依赖"><span class="nav-number">3.</span> <span class="nav-text">依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关联"><span class="nav-number">4.</span> <span class="nav-text">关联</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#聚合"><span class="nav-number">5.</span> <span class="nav-text">聚合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组合"><span class="nav-number">6.</span> <span class="nav-text">组合</span></a></li></ol></div>
             
 
           </div>

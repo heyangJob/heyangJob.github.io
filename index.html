@@ -371,6 +371,371 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/09/设计模式-UML建模（前传）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="何阳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/icon.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何阳">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/04/09/设计模式-UML建模（前传）/" class="post-title-link" itemprop="url">设计模式_UML建模（前传）</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-09 16:43:00 / 修改时间：16:43:23" itemprop="dateCreated datePublished" datetime="2019-04-09T16:43:00+08:00">2019-04-09</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/设计模式/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><ul>
+<li>表示方法：用实线空心三角箭头表示。<br><img src="https://note.youdao.com/yws/api/personal/file/WEB3128d7c85991e61762c6466d60a22966?method=download&amp;shareKey=38669bd59726dab7ed79c52ddc561c6c" alt="image"></li>
+</ul>
+<h3 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h3><ul>
+<li>表示方法：空心三角形箭头的虚线，实现类指向接口<br><img src="https://note.youdao.com/yws/api/personal/file/WEB2578830d9f09013ca09c2b0452d2e64a?method=download&amp;shareKey=1e689c7dbabb898f4d98d8d929af0591" alt="image"></li>
+</ul>
+<h3 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h3><ul>
+<li>概念：是一种使用的关系，即一个类的实现需要另一个类的协助。java中，方法参数需要传入另一个类的对象，就表示依赖这个类。  </li>
+<li>表示方法：虚线箭头，类A指向类B。<br><img src="https://note.youdao.com/yws/api/personal/file/WEBd86dd2a255b5da52d1010355ac467c04?method=download&amp;shareKey=22a497310ac563e63f7779ad302a7736" alt="image"></li>
+</ul>
+<h3 id="关联"><a href="#关联" class="headerlink" title="关联"></a>关联</h3><ul>
+<li>概念：表示类与类之间的联接,它使一个类知道另一个类的属性和方法，这种关系比依赖更强、不存在依赖关系的偶然性、关系也不是临时性的，一般是长期性的。java中一个类的全局变量引用了另一个类，就表示关联了这个类  </li>
+<li>表示方法：实线箭头，类A指向类B<br><img src="https://note.youdao.com/yws/api/personal/file/WEB3a40d739dcac96572e820d3e86a73741?method=download&amp;shareKey=d7d91b5fb645fe3974592aba6e32e365" alt="image"></li>
+</ul>
+<h3 id="聚合"><a href="#聚合" class="headerlink" title="聚合"></a>聚合</h3><ul>
+<li>概念：聚合关联关系的一种特例，是强的关联关系。聚合是整体和个体之间的关系，即has-a的关系，整体与个体可以具有各自的生命周期，部分可以属于多个整体对象，也可以为多个整体对象共享。程序中聚合和关联关系是一致的，只能从语义级别来区分；</li>
+<li>表示方法：尾部为空心菱形的实线箭头（也可以没箭头），类A指向类B<br><img src="https://note.youdao.com/yws/api/personal/file/WEB1f437ac6338baac921edf28f96d250f0?method=download&amp;shareKey=b385f63cacca0b77400af7cd6ff2797a" alt="image"></li>
+</ul>
+<h3 id="组合"><a href="#组合" class="headerlink" title="组合"></a>组合</h3><ul>
+<li>概念：组合也是关联关系的一种特例。组合是一种整体与部分的关系，即contains-a的关系，比聚合更强。部分与整体的生命周期一致，整体的生命周期结束也就意味着部分的生命周期结束，组合关系不能共享。程序中组合和关联关系是一致的，只能从语义级别来区分。</li>
+<li>表示方法：尾部为实心菱形的实现箭头（也可以没箭头），类A指向类B<br><img src="https://note.youdao.com/yws/api/personal/file/WEB16f19c9feb0fd9e2196038c6232502e2?method=download&amp;shareKey=0ab56680762fd521125d3f71169b9608" alt="image"></li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/09/Android-Handler源码分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="何阳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/icon.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何阳">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/04/09/Android-Handler源码分析/" class="post-title-link" itemprop="url">Android_Handler源码分析</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-09 16:39:22 / 修改时间：16:40:24" itemprop="dateCreated datePublished" datetime="2019-04-09T16:39:22+08:00">2019-04-09</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="一、源码分析"><a href="#一、源码分析" class="headerlink" title="一、源码分析"></a>一、源码分析</h4><h5 id="1-一般调用"><a href="#1-一般调用" class="headerlink" title="1. 一般调用"></a>1. 一般调用</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mHandler.sendEmptyMessage(100);</span><br></pre></td></tr></table></figure>
+<h5 id="2-Handler-java"><a href="#2-Handler-java" class="headerlink" title="2. Handler.java"></a>2. Handler.java</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">public final boolean sendEmptyMessage(int what)</span><br><span class="line">&#123;</span><br><span class="line">       return sendEmptyMessageDelayed(what, 0);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public final boolean sendEmptyMessageDelayed(int what, long delayMillis) &#123;</span><br><span class="line">       Message msg = Message.obtain();</span><br><span class="line">       msg.what = what;</span><br><span class="line">       return sendMessageDelayed(msg, delayMillis);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public final boolean sendMessageDelayed(Message msg, long delayMillis)</span><br><span class="line"> &#123;</span><br><span class="line">       if (delayMillis &lt; 0) &#123;</span><br><span class="line">           delayMillis = 0;</span><br><span class="line">       &#125;</span><br><span class="line">       return sendMessageAtTime(msg, SystemClock.uptimeMillis() + delayMillis);</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line">public boolean sendMessageAtTime(Message msg, long uptimeMillis) &#123;</span><br><span class="line">       MessageQueue queue = mQueue;</span><br><span class="line">       if (queue == null) &#123;</span><br><span class="line">           RuntimeException e = new RuntimeException(</span><br><span class="line">                   this + &quot; sendMessageAtTime() called with no mQueue&quot;);</span><br><span class="line">           Log.w(&quot;Looper&quot;, e.getMessage(), e);</span><br><span class="line">           return false;</span><br><span class="line">       &#125;</span><br><span class="line">       return enqueueMessage(queue, msg, uptimeMillis);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">private boolean enqueueMessage(MessageQueue queue, Message msg, long uptimeMillis) &#123;</span><br><span class="line">       msg.target = this;</span><br><span class="line">       if (mAsynchronous) &#123;</span><br><span class="line">           msg.setAsynchronous(true);</span><br><span class="line">       &#125;</span><br><span class="line">       return queue.enqueueMessage(msg, uptimeMillis);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="3-MessageQueue-java"><a href="#3-MessageQueue-java" class="headerlink" title="3. MessageQueue.java"></a>3. MessageQueue.java</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">boolean enqueueMessage(Message msg, long when) &#123;</span><br><span class="line">      if (msg.target == null) &#123;</span><br><span class="line">          throw new IllegalArgumentException(&quot;Message must have a target.&quot;);</span><br><span class="line">      &#125;</span><br><span class="line">      if (msg.isInUse()) &#123;</span><br><span class="line">          throw new IllegalStateException(msg + &quot; This message is already in use.&quot;);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      synchronized (this) &#123;</span><br><span class="line">          if (mQuitting) &#123;</span><br><span class="line">              IllegalStateException e = new IllegalStateException(</span><br><span class="line">                      msg.target + &quot; sending message to a Handler on a dead thread&quot;);</span><br><span class="line">              Log.w(TAG, e.getMessage(), e);</span><br><span class="line">              msg.recycle();</span><br><span class="line">              return false;</span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">          msg.markInUse();</span><br><span class="line">          msg.when = when;</span><br><span class="line">          Message p = mMessages;</span><br><span class="line">          boolean needWake;</span><br><span class="line">          if (p == null || when == 0 || when &lt; p.when) &#123;</span><br><span class="line">              // New head, wake up the event queue if blocked.</span><br><span class="line">              msg.next = p;</span><br><span class="line">              mMessages = msg;</span><br><span class="line">              needWake = mBlocked;</span><br><span class="line">          &#125; else &#123;</span><br><span class="line">              // Inserted within the middle of the queue.  Usually we don&apos;t have to wake</span><br><span class="line">              // up the event queue unless there is a barrier at the head of the queue</span><br><span class="line">              // and the message is the earliest asynchronous message in the queue.</span><br><span class="line">              needWake = mBlocked &amp;&amp; p.target == null &amp;&amp; msg.isAsynchronous();</span><br><span class="line">              Message prev;</span><br><span class="line">              for (;;) &#123;</span><br><span class="line">                  prev = p;</span><br><span class="line">                  p = p.next;</span><br><span class="line">                  if (p == null || when &lt; p.when) &#123;</span><br><span class="line">                      break;</span><br><span class="line">                  &#125;</span><br><span class="line">                  if (needWake &amp;&amp; p.isAsynchronous()) &#123;</span><br><span class="line">                      needWake = false;</span><br><span class="line">                  &#125;</span><br><span class="line">              &#125;</span><br><span class="line">              msg.next = p; // invariant: p == prev.next</span><br><span class="line">              prev.next = msg;</span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">          // We can assume mPtr != 0 because mQuitting is false.</span><br><span class="line">          if (needWake) &#123;</span><br><span class="line">              nativeWake(mPtr);</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      return true;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h5><p>&emsp;&emsp;目前为止我们没有看到 handler 去调用 handleMessage() 方法 ，目前也只是看到了 MessageQueue , 把消息给了 mMessage ，<br>总结：handler.sendMessage 其实只是把我们的 Message 加入了消息队列，队列采用的是链表的方式，按照 when 也就是时间排序，然后再也没干其他。</p>
+<h4 id="二、自己手写"><a href="#二、自己手写" class="headerlink" title="二、自己手写"></a>二、自己手写</h4><h5 id="1-Handler"><a href="#1-Handler" class="headerlink" title="1. Handler"></a>1. Handler</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">public class Handler &#123;</span><br><span class="line">    // 包含一个消息队列</span><br><span class="line">	MessageQueue mQueue;</span><br><span class="line">	</span><br><span class="line">	public Handler() &#123;</span><br><span class="line">	//获取looper 轮训器。在Activity启动的时候创建</span><br><span class="line">		Looper looper = Looper.myLooper();</span><br><span class="line">		</span><br><span class="line">		if(looper == null)&#123;</span><br><span class="line">			throw new RuntimeException(</span><br><span class="line">	                &quot;Can&apos;t create handler inside thread that has not called Looper.prepare()&quot;);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		mQueue= looper.mQueue;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	public void sendMessage(Message message) &#123;</span><br><span class="line">		sendMessageDelayed(message,0);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	public final boolean sendMessageDelayed(Message msg, long delayMillis)</span><br><span class="line">    &#123;</span><br><span class="line">        if (delayMillis &lt; 0) &#123;</span><br><span class="line">            delayMillis = 0;</span><br><span class="line">        &#125;</span><br><span class="line">        return sendMessageAtTime(msg, System.currentTimeMillis() + delayMillis);</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">	public boolean sendMessageAtTime(Message msg, long uptimeMillis) &#123;</span><br><span class="line">        MessageQueue queue = mQueue;</span><br><span class="line">        return enqueueMessage(queue, msg, uptimeMillis);</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">	private boolean enqueueMessage(MessageQueue queue, Message msg, long uptimeMillis) &#123;</span><br><span class="line">        msg.target = this;</span><br><span class="line">        return queue.enqueueMessage(msg, uptimeMillis);</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">	// 空方法并没具体的实现</span><br><span class="line">	public void handleMessage(Message msg) &#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="2-Looper"><a href="#2-Looper" class="headerlink" title="2. Looper"></a>2. Looper</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">public class Looper &#123;</span><br><span class="line">	// sThreadLocal.get() will return null unless you&apos;ve called prepare().</span><br><span class="line">    static final ThreadLocal&lt;Looper&gt; sThreadLocal = new ThreadLocal&lt;Looper&gt;();</span><br><span class="line">    </span><br><span class="line">	public static void prepare() &#123;</span><br><span class="line">        sThreadLocal.set(new Looper());</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	MessageQueue mQueue;</span><br><span class="line">	</span><br><span class="line">	public Looper() &#123;</span><br><span class="line">		mQueue = new MessageQueue();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public static void loop() &#123;</span><br><span class="line">	//无限轮训 获取队列里面的消息</span><br><span class="line">		Looper looper = myLooper();</span><br><span class="line">		for(;;)&#123;</span><br><span class="line">			MessageQueue queue = looper.mQueue;</span><br><span class="line">			</span><br><span class="line">			Message message = queue.next();</span><br><span class="line">			</span><br><span class="line">			if(message == null)&#123;</span><br><span class="line">				return;</span><br><span class="line">			&#125;</span><br><span class="line">			</span><br><span class="line">			message.target.handleMessage(message);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	static Looper myLooper() &#123;</span><br><span class="line">		return sThreadLocal.get();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="3-MessageQueue"><a href="#3-MessageQueue" class="headerlink" title="3. MessageQueue"></a>3. MessageQueue</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line">public class MessageQueue &#123;</span><br><span class="line">	private Message mMessages;</span><br><span class="line"></span><br><span class="line">    // 按照时间排序插入</span><br><span class="line">	public boolean enqueueMessage(Message msg, long when) &#123;</span><br><span class="line">		synchronized (this) &#123;</span><br><span class="line">			msg.when = when;</span><br><span class="line">			Message p = mMessages;</span><br><span class="line">			//按照when 的时间进行排序插入</span><br><span class="line">			if (p == null || when == 0 || when &lt; p.when) &#123;</span><br><span class="line">				// New head, wake up the event queue if blocked.</span><br><span class="line">				msg.next = p;</span><br><span class="line">				mMessages = msg;</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				Message prev;</span><br><span class="line">				for (;;) &#123;</span><br><span class="line">					prev = p;</span><br><span class="line">					p = p.next;</span><br><span class="line">					if (p == null || when &lt; p.when) &#123;</span><br><span class="line">						break;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">				msg.next = p; // invariant: p == prev.next</span><br><span class="line">				prev.next = msg;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		return true;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">   // 无限轮训 获取下一个消息</span><br><span class="line">	public Message next() &#123;</span><br><span class="line">		int pendingIdleHandlerCount = -1; // -1 only during first iteration</span><br><span class="line">		for (;;) &#123;</span><br><span class="line"></span><br><span class="line">			synchronized (this) &#123;</span><br><span class="line">				// Try to retrieve the next message. Return if found.</span><br><span class="line">				final long now = System.currentTimeMillis();</span><br><span class="line">				Message prevMsg = null;</span><br><span class="line">				Message msg = mMessages;</span><br><span class="line">				if (msg != null &amp;&amp; msg.target == null) &#123;</span><br><span class="line">					// Stalled by a barrier. Find the next asynchronous message</span><br><span class="line">					// in the queue.</span><br><span class="line">					do &#123;</span><br><span class="line">						prevMsg = msg;</span><br><span class="line">						msg = msg.next;</span><br><span class="line">					&#125; while (msg != null);</span><br><span class="line">				&#125;</span><br><span class="line">				if (msg != null) &#123;</span><br><span class="line">					if (now &lt; msg.when) &#123;</span><br><span class="line">						// Next message is not ready. Set a timeout to wake up</span><br><span class="line">						// when it is ready.</span><br><span class="line">					&#125; else &#123;</span><br><span class="line">						if (prevMsg != null) &#123;</span><br><span class="line">							prevMsg.next = msg.next;</span><br><span class="line">						&#125; else &#123;</span><br><span class="line">							mMessages = msg.next;</span><br><span class="line">						&#125;</span><br><span class="line">						msg.next = null;</span><br><span class="line">						return msg;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125; else &#123;</span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line">				if (pendingIdleHandlerCount &lt;= 0) &#123;</span><br><span class="line">					continue;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="4-Message"><a href="#4-Message" class="headerlink" title="4. Message"></a>4. Message</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class Message &#123;</span><br><span class="line"></span><br><span class="line">	public Object obj;</span><br><span class="line">	public Handler target;</span><br><span class="line">	public long when;</span><br><span class="line">	public Message next;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="5-因为Looper是在主线程中执行的，我们来写一个ActivityThread"><a href="#5-因为Looper是在主线程中执行的，我们来写一个ActivityThread" class="headerlink" title="5. 因为Looper是在主线程中执行的，我们来写一个ActivityThread"></a>5. 因为Looper是在主线程中执行的，我们来写一个ActivityThread</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">public class ActivityThread &#123;</span><br><span class="line">	final H mH = new H();</span><br><span class="line">	</span><br><span class="line">	public void attach(boolean b) &#123;</span><br><span class="line">		Activity mainActivity = new TestActivity();</span><br><span class="line">		mainActivity.onCreate();</span><br><span class="line"></span><br><span class="line">		// 通过 Handler 去执行Activity的生命周期</span><br><span class="line">		Message message = new Message();</span><br><span class="line">		message.obj = mainActivity;</span><br><span class="line">		mH.sendMessage(message);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	private class H extends Handler &#123;</span><br><span class="line">		public void handleMessage(Message msg) &#123;</span><br><span class="line">			Activity mainActivity = (Activity) msg.obj;</span><br><span class="line">			mainActivity.onResume();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="6-模拟Activity"><a href="#6-模拟Activity" class="headerlink" title="6. 模拟Activity"></a>6. 模拟Activity</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public class Activity &#123;</span><br><span class="line"></span><br><span class="line">	public void onCreate()&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	public void onResume()&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	public TextView findViewById(int id)&#123;</span><br><span class="line">		return new TextView();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="7-TestActivity"><a href="#7-TestActivity" class="headerlink" title="7. TestActivity"></a>7. TestActivity</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/8/23  下午7:08.</span><br><span class="line"> */</span><br><span class="line">public class TestActivity extends Activity &#123;</span><br><span class="line">    private static final String TAG = &quot;TestActivity&quot;;</span><br><span class="line">    private TextView mHTextView;</span><br><span class="line"></span><br><span class="line">    private Handler mHHandler = new Handler() &#123;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public void handleMessage(Message message) &#123;</span><br><span class="line">            Log.e(TAG, &quot;当前线程名称====&quot;+Thread.currentThread().getName());</span><br><span class="line">            mHTextView.setText((CharSequence) message.obj);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onCreate() &#123;</span><br><span class="line">        super.onCreate();</span><br><span class="line"></span><br><span class="line">        Log.e(TAG, &quot;onCreate&quot;);</span><br><span class="line">        mHTextView = findViewById(0x111111);</span><br><span class="line">        new Thread(new Runnable() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void run() &#123;</span><br><span class="line"></span><br><span class="line">//                mHTextView.setText(&quot;I  will be  update !!!&quot;);</span><br><span class="line"></span><br><span class="line">                Log.e(TAG, &quot;当前线程名称===&quot;+Thread.currentThread().getName());</span><br><span class="line"></span><br><span class="line">                try &#123;</span><br><span class="line">                    Thread.sleep(100);</span><br><span class="line">                    Message msg = new Message();</span><br><span class="line">                    msg.obj = &quot;I  will be  update !!!&quot;;</span><br><span class="line">                    mHHandler.sendMessage(msg);</span><br><span class="line">                &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        ).start();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onResume() &#123;</span><br><span class="line">        super.onResume();</span><br><span class="line">        Log.e(TAG, &quot;onResume&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="8-模拟UI控件TextView"><a href="#8-模拟UI控件TextView" class="headerlink" title="8. 模拟UI控件TextView"></a>8. 模拟UI控件TextView</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public class TextView &#123;</span><br><span class="line">	private Thread mThread;</span><br><span class="line">	public TextView()&#123;</span><br><span class="line">		mThread = Thread.currentThread();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	public void setText(CharSequence text)&#123;</span><br><span class="line">		checkThread();</span><br><span class="line"></span><br><span class="line">		System.out.println(&quot;更新UI成功：&quot;+text);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	void checkThread() &#123;</span><br><span class="line">        if (mThread != Thread.currentThread()) &#123;</span><br><span class="line">            throw new RuntimeException(</span><br><span class="line">                    &quot;Only the original thread that created a view hierarchy can touch its views.&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="9-Client"><a href="#9-Client" class="headerlink" title="9. Client"></a>9. Client</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public class MainActivity extends AppCompatActivity &#123;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">        Looper.prepare();</span><br><span class="line"></span><br><span class="line">        ActivityThread thread = new ActivityThread();</span><br><span class="line">        thread.attach(false);</span><br><span class="line"></span><br><span class="line">        Looper.loop();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="10-打印结果"><a href="#10-打印结果" class="headerlink" title="10 .打印结果"></a>10 .打印结果</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1945-1945/? E/TestActivity: onCreate</span><br><span class="line">1945-1945/? E/TestActivity: onResume</span><br><span class="line">1945-1957/? E/TestActivity: 当前线程名称===Thread-161</span><br><span class="line">1945-1945/demo.dhcc.com.handlerdemo E/TestActivity: 当前线程名称====main</span><br><span class="line">1945-1945/demo.dhcc.com.handlerdemo I/System.out: 更新UI成功：I  will be  update !!!</span><br></pre></td></tr></table></figure>
+<h4 id="三、面试相关问题"><a href="#三、面试相关问题" class="headerlink" title="三、面试相关问题"></a>三、面试相关问题</h4><h5 id="1-为什么不能再子线程里面创建Handler"><a href="#1-为什么不能再子线程里面创建Handler" class="headerlink" title="1. 为什么不能再子线程里面创建Handler"></a>1. 为什么不能再子线程里面创建Handler</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">new Thread(new Runnable() &#123;</span><br><span class="line">           @Override</span><br><span class="line">           public void run() &#123;</span><br><span class="line"></span><br><span class="line">               Handler  handler=new Handler();</span><br><span class="line">               handler.sendMessage(Message.obtain());</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;).start();</span><br><span class="line">       </span><br><span class="line">//</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;这个时候会报错“Can’t create handler inside thread that has not called Looper.prepare()”，查看源码发现。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public Handler(Callback callback, boolean async) &#123;</span><br><span class="line">     if (FIND_POTENTIAL_LEAKS) &#123;</span><br><span class="line">         final Class&lt;? extends Handler&gt; klass = getClass();</span><br><span class="line">         if ((klass.isAnonymousClass() || klass.isMemberClass() || klass.isLocalClass()) &amp;&amp;</span><br><span class="line">                 (klass.getModifiers() &amp; Modifier.STATIC) == 0) &#123;</span><br><span class="line">             Log.w(TAG, &quot;The following Handler class should be static or leaks might occur: &quot; +</span><br><span class="line">                 klass.getCanonicalName());</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     mLooper = Looper.myLooper();</span><br><span class="line">     if (mLooper == null) &#123;</span><br><span class="line">         throw new RuntimeException(</span><br><span class="line">             &quot;Can&apos;t create handler inside thread that has not called Looper.prepare()&quot;);</span><br><span class="line">     &#125;</span><br><span class="line">     mQueue = mLooper.mQueue;</span><br><span class="line">     mCallback = callback;</span><br><span class="line">     mAsynchronous = async;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;修改代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Looper.prepare();</span><br><span class="line">Handler  handler=new Handler();</span><br><span class="line">handler.sendMessage(Message.obtain());</span><br><span class="line">Looper.loop();</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;为什么这样有可以</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public static void prepare() &#123;</span><br><span class="line">     prepare(true);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> private static void prepare(boolean quitAllowed) &#123;</span><br><span class="line">     if (sThreadLocal.get() != null) &#123;</span><br><span class="line">         throw new RuntimeException(&quot;Only one Looper may be created per thread&quot;);</span><br><span class="line">     &#125;</span><br><span class="line">     sThreadLocal.set(new Looper(quitAllowed));</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> public void set(T value) &#123;</span><br><span class="line">     Thread t = Thread.currentThread();</span><br><span class="line">     ThreadLocalMap map = getMap(t);</span><br><span class="line">     if (map != null)</span><br><span class="line">         map.set(this, value);</span><br><span class="line">     else</span><br><span class="line">         createMap(t, value);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;为什么主线程的可以（ActivityThread.java）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">        Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, &quot;ActivityThreadMain&quot;);</span><br><span class="line">        SamplingProfilerIntegration.start();</span><br><span class="line"></span><br><span class="line">        // CloseGuard defaults to true and can be quite spammy.  We</span><br><span class="line">        // disable it here, but selectively enable it later (via</span><br><span class="line">        // StrictMode) on debug builds, but using DropBox, not logs.</span><br><span class="line">        CloseGuard.setEnabled(false);</span><br><span class="line"></span><br><span class="line">        Environment.initForCurrentUser();</span><br><span class="line"></span><br><span class="line">        // Set the reporter for event logging in libcore</span><br><span class="line">        EventLogger.setReporter(new EventLoggingReporter());</span><br><span class="line"></span><br><span class="line">        // Make sure TrustedCertificateStore looks in the right place for CA certificates</span><br><span class="line">        final File configDir = Environment.getUserConfigDirectory(UserHandle.myUserId());</span><br><span class="line">        TrustedCertificateStore.setDefaultUserDirectory(configDir);</span><br><span class="line"></span><br><span class="line">        Process.setArgV0(&quot;&lt;pre-initialized&gt;&quot;);</span><br><span class="line"></span><br><span class="line">       // 启动时已经创建了</span><br><span class="line">        Looper.prepareMainLooper();</span><br><span class="line"></span><br><span class="line">        ActivityThread thread = new ActivityThread();</span><br><span class="line">        thread.attach(false);</span><br><span class="line"></span><br><span class="line">        if (sMainThreadHandler == null) &#123;</span><br><span class="line">            sMainThreadHandler = thread.getHandler();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (false) &#123;</span><br><span class="line">            Looper.myLooper().setMessageLogging(new</span><br><span class="line">                    LogPrinter(Log.DEBUG, &quot;ActivityThread&quot;));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // End of event ActivityThreadMain.</span><br><span class="line">        Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);</span><br><span class="line">        Looper.loop();</span><br><span class="line"></span><br><span class="line">        throw new RuntimeException(&quot;Main thread loop unexpectedly exited&quot;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>&emsp;&emsp; 一个Looper对应一个线程。存放在ThreadLocal里面。Looper必须创建了才有消息队列。如果没有消息队列Message就没地方存。所以必须先创建Looper。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/08/Android-插件化hook模式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1777,418 +2142,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/02/Android-AsyncTask源码分析/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="何阳">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/icon.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="何阳">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/04/02/Android-AsyncTask源码分析/" class="post-title-link" itemprop="url">Android_AsyncTask源码分析</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-04-02 16:56:43" itemprop="dateCreated datePublished" datetime="2019-04-02T16:56:43+08:00">2019-04-02</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-04-04 21:08:55" itemprop="dateModified" datetime="2019-04-04T21:08:55+08:00">2019-04-04</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="1-基本用法"><a href="#1-基本用法" class="headerlink" title="1. 基本用法"></a>1. 基本用法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class DownloadTask extends AsyncTask&lt;Void, Integer, Boolean&gt; &#123;</span><br><span class="line">      ……</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> new DownloadTask().execute();</span><br></pre></td></tr></table></figure>
-<ul>
-<li>第一个  对应doInBackground 指定需要传入的参数，</li>
-<li>第二个  对应onProgressUpdate(Integer… values)，</li>
-<li>第三个  对应onPostExecute(Boolean result)。</li>
-</ul>
-<h4 id="2-主要使用"><a href="#2-主要使用" class="headerlink" title="2. 主要使用"></a>2. 主要使用</h4><ol>
-<li>SerialExecutor线程池，添加任务到队列。</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">private static class SerialExecutor implements Executor &#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>ThreadPoolExecutor线程池执行任务。</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// We want at least 2 threads and at most 4 threads in the core pool,</span><br><span class="line">// preferring to have 1 less than the CPU count to avoid saturating</span><br><span class="line">// the CPU with background work</span><br><span class="line">private static final int CORE_POOL_SIZE = Math.max(2, Math.min(CPU_COUNT - 1, 4));</span><br><span class="line">private static final int MAXIMUM_POOL_SIZE = CPU_COUNT * 2 + 1;</span><br><span class="line">private static final int KEEP_ALIVE_SECONDS = 30;</span><br><span class="line"></span><br><span class="line">// 是一个阻塞的线程安全的队列，底层采用链表实现。该类主要提供了两个方法put()和take()，前者将一个对象放到队列中，如果队列已经满了，就等待直到有空闲节点；后者从head取一个对象，如果没有对象，就等待直到有可取的对象。</span><br><span class="line">private static final BlockingQueue&lt;Runnable&gt; sPoolWorkQueue =</span><br><span class="line">        new LinkedBlockingQueue&lt;Runnable&gt;(128);</span><br></pre></td></tr></table></figure>
-<ol start="3">
-<li>Handler用于处理执行任务之后切换到主线程。</li>
-</ol>
-<h4 id="3-执行流程"><a href="#3-执行流程" class="headerlink" title="3. 执行流程"></a>3. 执行流程</h4><ol>
-<li>开始执行</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@MainThread</span><br><span class="line">public final AsyncTask&lt;Params, Progress, Result&gt; execute(Params... params) &#123;</span><br><span class="line">    return executeOnExecutor(sDefaultExecutor, params);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>executeOnExecutor方法里面主要做了以下操作</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public final AsyncTask&lt;Params, Progress, Result&gt; executeOnExecutor(Executor exec,</span><br><span class="line">        Params... params) &#123;</span><br><span class="line">    onPreExecute();</span><br><span class="line">    mWorker.mParams = params;</span><br><span class="line">    exec.execute(mFuture);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol start="3">
-<li>看看sDefaultExecutor这个是什么（线程池）</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">private static class SerialExecutor implements Executor &#123;</span><br><span class="line">    //ArrayDeque 可以作为栈来使用，效率要高于 Stack；ArrayDeque 也可以作为队列来使用，效率相较于基于双向链表的 LinkedList 也要更好一些。注意，ArrayDeque 不支持为 null 的元素。先进先出 不安全。</span><br><span class="line">    final ArrayDeque&lt;Runnable&gt; mTasks = new ArrayDeque&lt;Runnable&gt;();</span><br><span class="line">    Runnable mActive;</span><br><span class="line"></span><br><span class="line">    public synchronized void execute(final Runnable r) &#123;</span><br><span class="line">    //  将任务添加到队列</span><br><span class="line">        mTasks.offer(new Runnable() &#123;</span><br><span class="line">            public void run() &#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    r.run();</span><br><span class="line">                &#125; finally &#123;</span><br><span class="line">                    scheduleNext();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        if (mActive == null) &#123;</span><br><span class="line">            scheduleNext();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 开启线程池 执行</span><br><span class="line">    protected synchronized void scheduleNext() &#123;</span><br><span class="line">        if ((mActive = mTasks.poll()) != null) &#123;</span><br><span class="line">            THREAD_POOL_EXECUTOR.execute(mActive);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol start="4">
-<li>再来看看FutureTask（ implements RunnableFuture ————&gt; extends Runnable, Future）</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mFuture = new FutureTask&lt;Result&gt;(mWorker) &#123;</span><br><span class="line">        @Override</span><br><span class="line">        protected void done() &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                postResultIfNotInvoked(get());</span><br><span class="line">            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                android.util.Log.w(LOG_TAG, e);</span><br><span class="line">            &#125; catch (ExecutionException e) &#123;</span><br><span class="line">                throw new RuntimeException(&quot;An error occurred while executing doInBackground()&quot;,</span><br><span class="line">                        e.getCause());</span><br><span class="line">            &#125; catch (CancellationException e) &#123;</span><br><span class="line">                postResultIfNotInvoked(null);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<ol start="5">
-<li>FutureTask是Runnable的子类，那我们来看看他的run方法</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">public void run() &#123;</span><br><span class="line">    </span><br><span class="line">         // 主要看这里 其中this.callable = callable;;</span><br><span class="line">         // runnable是我们传递的mWorker</span><br><span class="line">        Callable&lt;V&gt; c = callable;</span><br><span class="line">        if (c != null &amp;&amp; state == NEW) &#123;</span><br><span class="line">            V result;</span><br><span class="line">            boolean ran;</span><br><span class="line">            try &#123;</span><br><span class="line">                result = c.call();</span><br><span class="line">                ran = true;</span><br><span class="line">            &#125; catch (Throwable ex) &#123;</span><br><span class="line">                result = null;</span><br><span class="line">                ran = false;</span><br><span class="line">                setException(ex);</span><br><span class="line">            &#125;</span><br><span class="line">            if (ran)</span><br><span class="line">                set(result);</span><br><span class="line">        &#125;</span><br><span class="line">   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol start="6">
-<li>我们再来看看mWorker，调用call（）。</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">mWorker = new WorkerRunnable&lt;Params, Result&gt;() &#123;</span><br><span class="line">        public Result call() throws Exception &#123;</span><br><span class="line">            mTaskInvoked.set(true);</span><br><span class="line">            Result result = null;</span><br><span class="line">            try &#123;</span><br><span class="line">                Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);</span><br><span class="line">                //noinspection unchecked</span><br><span class="line">                result = doInBackground(mParams);</span><br><span class="line">                Binder.flushPendingCommands();</span><br><span class="line">            &#125; catch (Throwable tr) &#123;</span><br><span class="line">                mCancelled.set(true);</span><br><span class="line">                throw tr;</span><br><span class="line">            &#125; finally &#123;</span><br><span class="line">                postResult(result);</span><br><span class="line">            &#125;</span><br><span class="line">            return result;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br></pre></td></tr></table></figure>
-<ol start="7">
-<li>调用doInBackground,最终调用postResult。切换到主线程，更新结果。</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">private Result postResult(Result result) &#123;</span><br><span class="line">    @SuppressWarnings(&quot;unchecked&quot;)</span><br><span class="line">    Message message = getHandler().obtainMessage(MESSAGE_POST_RESULT,</span><br><span class="line">            new AsyncTaskResult&lt;Result&gt;(this, result));</span><br><span class="line">    message.sendToTarget();</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol start="8">
-<li>看看mHandler</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">private static class InternalHandler extends Handler &#123;</span><br><span class="line">    public InternalHandler(Looper looper) &#123;</span><br><span class="line">        super(looper);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @SuppressWarnings(&#123;&quot;unchecked&quot;, &quot;RawUseOfParameterizedType&quot;&#125;)</span><br><span class="line">    @Override</span><br><span class="line">    public void handleMessage(Message msg) &#123;</span><br><span class="line">        AsyncTaskResult&lt;?&gt; result = (AsyncTaskResult&lt;?&gt;) msg.obj;</span><br><span class="line">        switch (msg.what) &#123;</span><br><span class="line">            case MESSAGE_POST_RESULT:</span><br><span class="line">                // There is only one result</span><br><span class="line">                result.mTask.finish(result.mData[0]);</span><br><span class="line">                break;</span><br><span class="line">            case MESSAGE_POST_PROGRESS:</span><br><span class="line">                result.mTask.onProgressUpdate(result.mData);</span><br><span class="line">                break;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol start="9">
-<li>看看最后的finish<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">private void finish(Result result) &#123;</span><br><span class="line">    if (isCancelled()) &#123;</span><br><span class="line">        onCancelled(result);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        onPostExecute(result);</span><br><span class="line">    &#125;</span><br><span class="line">    mStatus = Status.FINISHED;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h4 id="4-注意事项"><a href="#4-注意事项" class="headerlink" title="4. 注意事项"></a>4. 注意事项</h4><ol>
-<li><p>SerialExecutor是使用ArrayDeque这个队列来管理Runnable对象的，调用ArrayDeque的offer()方法将传入的Runnable对象添加到队列的尾部，调用scheduleNext()方法。在这个方法中会从队列的头部取值。每次当一个任务执行完毕后，下一个任务才会得到执行，SerialExecutor模仿的是单一线程池的效果，如果我们快速地启动了很多任务，同一时刻只会有一个线程正在执行，其余的均处于等待状态。</p>
-</li>
-<li><p>在Android 3.0之前是并没有SerialExecutor这个类的，那个时候是直接在AsyncTask中构建了一个sExecutor常量。</p>
-<blockquote>
-<ol>
-<li>规定同一时刻能够运行的线程数为5个，线程池总大小为128。也就是说当我们启动了10个任务时，只有5个任务能够立刻执行，另外的5个任务则需要等待，当有一个任务执行完毕后，第6个任务才会启动，以此类推。而线程池中最大能存放的线程数是128个，当我们尝试去添加第129个任务时，程序就会崩溃。</li>
-<li>在3.0版本中AsyncTask的改动还是挺大的，在3.0之前的AsyncTask可以同时有5个任务在执行，而3.0之后的AsyncTask同时只能有1个任务在执行。为什么升级之后可以同时执行的任务数反而变少了呢？这是因为更新后的AsyncTask已变得更加灵活，如果不想使用默认的线程池，还可以自由地进行配置</li>
-</ol>
-</blockquote>
-</li>
-<li><p>创建线程池以及初始化</p>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Executor exec = new ThreadPoolExecutor(15, 200, 10,</span><br><span class="line">    TimeUnit.SECONDS, new LinkedBlockingQueue&lt;Runnable&gt;());</span><br><span class="line">new DownloadTask().executeOnExecutor(exec);</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/01/设计模式-责任链模式（十一）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="何阳">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/icon.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="何阳">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/04/01/设计模式-责任链模式（十一）/" class="post-title-link" itemprop="url">设计模式_责任链模式（十一）</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-04-01 22:00:07 / 修改时间：22:11:23" itemprop="dateCreated datePublished" datetime="2019-04-01T22:00:07+08:00">2019-04-01</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/设计模式/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h4><p>&emsp;&emsp;上一章我们将了<a href="https://www.heyangjob.cn/2019/03/31/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%8D%81%EF%BC%89/" target="_blank" rel="noopener">代理模式</a>，这一节我们说说责任链模式，目前的这几种模式都是比较简单的。</p>
-<h4 id="示例地址"><a href="#示例地址" class="headerlink" title="示例地址"></a>示例地址</h4><p> &emsp;&emsp;<a href="https://github.com/heyangJob/Design-Pattern/tree/master/Responsibility" target="_blank" rel="noopener">Demo地址</a></p>
-<h4 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h4><p><img src="https://note.youdao.com/yws/api/personal/file/WEB94b7994c0d0171ea42bf75c05ef14515?method=download&amp;shareKey=93ae56707281efa28b61100493148ffe" alt="image"></p>
-<h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>&emsp;&emsp;使多个对象都有机会处理请求,从而避免了请求的发送者和接收者之间的耦合关系。将这些对象连成一条链，并沿着这条链传递该请求，只到有对象处理它为止。</p>
-<h4 id="责任链模式使用场景"><a href="#责任链模式使用场景" class="headerlink" title="责任链模式使用场景"></a>责任链模式使用场景</h4><p>&emsp;&emsp;1. 多个对象可以处理同一请求，但具体由那个对象处理则在运行时动态决定。<br>&emsp;&emsp;2. 在请求处理者不明确的情况下向多个对象中的一个提交。<br>&emsp;&emsp;3. 需要动态指定一组对象处理请求。</p>
-<h4 id="责任链模式示例"><a href="#责任链模式示例" class="headerlink" title="责任链模式示例"></a>责任链模式示例</h4><p>&emsp;&emsp;在古代，小百姓打官司都是先到知县，不合理到知府，然后巡抚。</p>
-<h6 id="1-先定义一个当官的接口，他们有权利处理老百姓的告状"><a href="#1-先定义一个当官的接口，他们有权利处理老百姓的告状" class="headerlink" title="1. 先定义一个当官的接口，他们有权利处理老百姓的告状"></a>1. 先定义一个当官的接口，他们有权利处理老百姓的告状</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 有权利的人</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/19  下午4:11.</span><br><span class="line"> */</span><br><span class="line">public abstract class DangGuan &#123;</span><br><span class="line">    private DangGuan nextDangGuan;</span><br><span class="line"></span><br><span class="line">    public DangGuan getNextDangGuan() &#123;</span><br><span class="line">        return nextDangGuan;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setNextDangGuan(DangGuan nextDangGuan) &#123;</span><br><span class="line">        this.nextDangGuan = nextDangGuan;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //案情</span><br><span class="line">    abstract void anQing(String desc);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="2-知县"><a href="#2-知县" class="headerlink" title="2. 知县"></a>2. 知县</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 知县</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/19  下午4:39.</span><br><span class="line"> */</span><br><span class="line">public class CountyGuan extends DangGuan &#123;</span><br><span class="line">    @Override</span><br><span class="line">    void anQing(String desc) &#123;</span><br><span class="line">        if (desc.equals(&quot;知县&quot;)) &#123;</span><br><span class="line">            System.out.println(&quot;知县处理了此案情&quot;);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            System.out.println(&quot;知县：这案情我处理不了，我先上报&quot;);</span><br><span class="line">            getNextDangGuan().anQing(desc);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="3-知府"><a href="#3-知府" class="headerlink" title="3. 知府"></a>3. 知府</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 知府</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/19  下午4:43.</span><br><span class="line"> */</span><br><span class="line">public class CityGuan extends DangGuan &#123;</span><br><span class="line">    @Override</span><br><span class="line">    void anQing(String desc) &#123;</span><br><span class="line">        if (desc.equals(&quot;知府&quot;)) &#123;</span><br><span class="line">            System.out.println(&quot;知府处理了此案情&quot;);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            System.out.println(&quot;知府：这案情我处理不了，我先上报&quot;);</span><br><span class="line">            getNextDangGuan().anQing(desc);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="4-巡抚"><a href="#4-巡抚" class="headerlink" title="4. 巡抚"></a>4. 巡抚</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 巡抚</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/19  下午4:44.</span><br><span class="line"> */</span><br><span class="line">public class ProvinceGuan extends DangGuan &#123;</span><br><span class="line">    @Override</span><br><span class="line">    void anQing(String desc) &#123;</span><br><span class="line">        if (desc.equals(&quot;巡抚&quot;)) &#123;</span><br><span class="line">            System.out.println(&quot;巡抚处理了此案情&quot;);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            getNextDangGuan().anQing(desc);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="5-老百姓告状"><a href="#5-老百姓告状" class="headerlink" title="5. 老百姓告状"></a>5. 老百姓告状</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">CountyGuan countyGuan = new CountyGuan();</span><br><span class="line">CityGuan cityGuan = new CityGuan();</span><br><span class="line">ProvinceGuan provinceGuan = new ProvinceGuan();</span><br><span class="line"></span><br><span class="line">countyGuan.setNextDangGuan(cityGuan);</span><br><span class="line">cityGuan.setNextDangGuan(provinceGuan);</span><br><span class="line"></span><br><span class="line">System.out.println(&quot;老百姓开始告状了。&quot;);</span><br><span class="line">countyGuan.anQing(&quot;巡抚&quot;);</span><br></pre></td></tr></table></figure>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>&emsp;&emsp;职责链的模式链的组成：<br>&emsp;&emsp;第一步需要在处理者对象类中定义后继处理者对象，将这部分代码抽象到抽象类中实现，降低了代码重复性。<br>&emsp;&emsp;第二步就是在处理者对象类中的处理方法中如果当前处理者对象无法处理，就将其传递到后继对象去处理。<br>&emsp;&emsp;第三步就是在测试类中将这些处理者类的实例串联成链。</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2237,7 +2190,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">21</span>
+                    <span class="site-state-item-count">23</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>

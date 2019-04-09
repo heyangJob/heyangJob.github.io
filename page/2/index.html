@@ -371,6 +371,418 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/02/Android-AsyncTask源码分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="何阳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/icon.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何阳">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/04/02/Android-AsyncTask源码分析/" class="post-title-link" itemprop="url">Android_AsyncTask源码分析</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-02 16:56:43" itemprop="dateCreated datePublished" datetime="2019-04-02T16:56:43+08:00">2019-04-02</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-04 21:08:55" itemprop="dateModified" datetime="2019-04-04T21:08:55+08:00">2019-04-04</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="1-基本用法"><a href="#1-基本用法" class="headerlink" title="1. 基本用法"></a>1. 基本用法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class DownloadTask extends AsyncTask&lt;Void, Integer, Boolean&gt; &#123;</span><br><span class="line">      ……</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> new DownloadTask().execute();</span><br></pre></td></tr></table></figure>
+<ul>
+<li>第一个  对应doInBackground 指定需要传入的参数，</li>
+<li>第二个  对应onProgressUpdate(Integer… values)，</li>
+<li>第三个  对应onPostExecute(Boolean result)。</li>
+</ul>
+<h4 id="2-主要使用"><a href="#2-主要使用" class="headerlink" title="2. 主要使用"></a>2. 主要使用</h4><ol>
+<li>SerialExecutor线程池，添加任务到队列。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">private static class SerialExecutor implements Executor &#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>ThreadPoolExecutor线程池执行任务。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// We want at least 2 threads and at most 4 threads in the core pool,</span><br><span class="line">// preferring to have 1 less than the CPU count to avoid saturating</span><br><span class="line">// the CPU with background work</span><br><span class="line">private static final int CORE_POOL_SIZE = Math.max(2, Math.min(CPU_COUNT - 1, 4));</span><br><span class="line">private static final int MAXIMUM_POOL_SIZE = CPU_COUNT * 2 + 1;</span><br><span class="line">private static final int KEEP_ALIVE_SECONDS = 30;</span><br><span class="line"></span><br><span class="line">// 是一个阻塞的线程安全的队列，底层采用链表实现。该类主要提供了两个方法put()和take()，前者将一个对象放到队列中，如果队列已经满了，就等待直到有空闲节点；后者从head取一个对象，如果没有对象，就等待直到有可取的对象。</span><br><span class="line">private static final BlockingQueue&lt;Runnable&gt; sPoolWorkQueue =</span><br><span class="line">        new LinkedBlockingQueue&lt;Runnable&gt;(128);</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>Handler用于处理执行任务之后切换到主线程。</li>
+</ol>
+<h4 id="3-执行流程"><a href="#3-执行流程" class="headerlink" title="3. 执行流程"></a>3. 执行流程</h4><ol>
+<li>开始执行</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@MainThread</span><br><span class="line">public final AsyncTask&lt;Params, Progress, Result&gt; execute(Params... params) &#123;</span><br><span class="line">    return executeOnExecutor(sDefaultExecutor, params);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>executeOnExecutor方法里面主要做了以下操作</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public final AsyncTask&lt;Params, Progress, Result&gt; executeOnExecutor(Executor exec,</span><br><span class="line">        Params... params) &#123;</span><br><span class="line">    onPreExecute();</span><br><span class="line">    mWorker.mParams = params;</span><br><span class="line">    exec.execute(mFuture);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>看看sDefaultExecutor这个是什么（线程池）</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">private static class SerialExecutor implements Executor &#123;</span><br><span class="line">    //ArrayDeque 可以作为栈来使用，效率要高于 Stack；ArrayDeque 也可以作为队列来使用，效率相较于基于双向链表的 LinkedList 也要更好一些。注意，ArrayDeque 不支持为 null 的元素。先进先出 不安全。</span><br><span class="line">    final ArrayDeque&lt;Runnable&gt; mTasks = new ArrayDeque&lt;Runnable&gt;();</span><br><span class="line">    Runnable mActive;</span><br><span class="line"></span><br><span class="line">    public synchronized void execute(final Runnable r) &#123;</span><br><span class="line">    //  将任务添加到队列</span><br><span class="line">        mTasks.offer(new Runnable() &#123;</span><br><span class="line">            public void run() &#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    r.run();</span><br><span class="line">                &#125; finally &#123;</span><br><span class="line">                    scheduleNext();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        if (mActive == null) &#123;</span><br><span class="line">            scheduleNext();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 开启线程池 执行</span><br><span class="line">    protected synchronized void scheduleNext() &#123;</span><br><span class="line">        if ((mActive = mTasks.poll()) != null) &#123;</span><br><span class="line">            THREAD_POOL_EXECUTOR.execute(mActive);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>再来看看FutureTask（ implements RunnableFuture ————&gt; extends Runnable, Future）</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mFuture = new FutureTask&lt;Result&gt;(mWorker) &#123;</span><br><span class="line">        @Override</span><br><span class="line">        protected void done() &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                postResultIfNotInvoked(get());</span><br><span class="line">            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                android.util.Log.w(LOG_TAG, e);</span><br><span class="line">            &#125; catch (ExecutionException e) &#123;</span><br><span class="line">                throw new RuntimeException(&quot;An error occurred while executing doInBackground()&quot;,</span><br><span class="line">                        e.getCause());</span><br><span class="line">            &#125; catch (CancellationException e) &#123;</span><br><span class="line">                postResultIfNotInvoked(null);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>FutureTask是Runnable的子类，那我们来看看他的run方法</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">public void run() &#123;</span><br><span class="line">    </span><br><span class="line">         // 主要看这里 其中this.callable = callable;;</span><br><span class="line">         // runnable是我们传递的mWorker</span><br><span class="line">        Callable&lt;V&gt; c = callable;</span><br><span class="line">        if (c != null &amp;&amp; state == NEW) &#123;</span><br><span class="line">            V result;</span><br><span class="line">            boolean ran;</span><br><span class="line">            try &#123;</span><br><span class="line">                result = c.call();</span><br><span class="line">                ran = true;</span><br><span class="line">            &#125; catch (Throwable ex) &#123;</span><br><span class="line">                result = null;</span><br><span class="line">                ran = false;</span><br><span class="line">                setException(ex);</span><br><span class="line">            &#125;</span><br><span class="line">            if (ran)</span><br><span class="line">                set(result);</span><br><span class="line">        &#125;</span><br><span class="line">   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>我们再来看看mWorker，调用call（）。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">mWorker = new WorkerRunnable&lt;Params, Result&gt;() &#123;</span><br><span class="line">        public Result call() throws Exception &#123;</span><br><span class="line">            mTaskInvoked.set(true);</span><br><span class="line">            Result result = null;</span><br><span class="line">            try &#123;</span><br><span class="line">                Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);</span><br><span class="line">                //noinspection unchecked</span><br><span class="line">                result = doInBackground(mParams);</span><br><span class="line">                Binder.flushPendingCommands();</span><br><span class="line">            &#125; catch (Throwable tr) &#123;</span><br><span class="line">                mCancelled.set(true);</span><br><span class="line">                throw tr;</span><br><span class="line">            &#125; finally &#123;</span><br><span class="line">                postResult(result);</span><br><span class="line">            &#125;</span><br><span class="line">            return result;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br></pre></td></tr></table></figure>
+<ol start="7">
+<li>调用doInBackground,最终调用postResult。切换到主线程，更新结果。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">private Result postResult(Result result) &#123;</span><br><span class="line">    @SuppressWarnings(&quot;unchecked&quot;)</span><br><span class="line">    Message message = getHandler().obtainMessage(MESSAGE_POST_RESULT,</span><br><span class="line">            new AsyncTaskResult&lt;Result&gt;(this, result));</span><br><span class="line">    message.sendToTarget();</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="8">
+<li>看看mHandler</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">private static class InternalHandler extends Handler &#123;</span><br><span class="line">    public InternalHandler(Looper looper) &#123;</span><br><span class="line">        super(looper);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @SuppressWarnings(&#123;&quot;unchecked&quot;, &quot;RawUseOfParameterizedType&quot;&#125;)</span><br><span class="line">    @Override</span><br><span class="line">    public void handleMessage(Message msg) &#123;</span><br><span class="line">        AsyncTaskResult&lt;?&gt; result = (AsyncTaskResult&lt;?&gt;) msg.obj;</span><br><span class="line">        switch (msg.what) &#123;</span><br><span class="line">            case MESSAGE_POST_RESULT:</span><br><span class="line">                // There is only one result</span><br><span class="line">                result.mTask.finish(result.mData[0]);</span><br><span class="line">                break;</span><br><span class="line">            case MESSAGE_POST_PROGRESS:</span><br><span class="line">                result.mTask.onProgressUpdate(result.mData);</span><br><span class="line">                break;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="9">
+<li>看看最后的finish<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">private void finish(Result result) &#123;</span><br><span class="line">    if (isCancelled()) &#123;</span><br><span class="line">        onCancelled(result);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        onPostExecute(result);</span><br><span class="line">    &#125;</span><br><span class="line">    mStatus = Status.FINISHED;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="4-注意事项"><a href="#4-注意事项" class="headerlink" title="4. 注意事项"></a>4. 注意事项</h4><ol>
+<li><p>SerialExecutor是使用ArrayDeque这个队列来管理Runnable对象的，调用ArrayDeque的offer()方法将传入的Runnable对象添加到队列的尾部，调用scheduleNext()方法。在这个方法中会从队列的头部取值。每次当一个任务执行完毕后，下一个任务才会得到执行，SerialExecutor模仿的是单一线程池的效果，如果我们快速地启动了很多任务，同一时刻只会有一个线程正在执行，其余的均处于等待状态。</p>
+</li>
+<li><p>在Android 3.0之前是并没有SerialExecutor这个类的，那个时候是直接在AsyncTask中构建了一个sExecutor常量。</p>
+<blockquote>
+<ol>
+<li>规定同一时刻能够运行的线程数为5个，线程池总大小为128。也就是说当我们启动了10个任务时，只有5个任务能够立刻执行，另外的5个任务则需要等待，当有一个任务执行完毕后，第6个任务才会启动，以此类推。而线程池中最大能存放的线程数是128个，当我们尝试去添加第129个任务时，程序就会崩溃。</li>
+<li>在3.0版本中AsyncTask的改动还是挺大的，在3.0之前的AsyncTask可以同时有5个任务在执行，而3.0之后的AsyncTask同时只能有1个任务在执行。为什么升级之后可以同时执行的任务数反而变少了呢？这是因为更新后的AsyncTask已变得更加灵活，如果不想使用默认的线程池，还可以自由地进行配置</li>
+</ol>
+</blockquote>
+</li>
+<li><p>创建线程池以及初始化</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Executor exec = new ThreadPoolExecutor(15, 200, 10,</span><br><span class="line">    TimeUnit.SECONDS, new LinkedBlockingQueue&lt;Runnable&gt;());</span><br><span class="line">new DownloadTask().executeOnExecutor(exec);</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/01/设计模式-责任链模式（十一）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="何阳">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/icon.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="何阳">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/04/01/设计模式-责任链模式（十一）/" class="post-title-link" itemprop="url">设计模式_责任链模式（十一）</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-01 22:00:07 / 修改时间：22:11:23" itemprop="dateCreated datePublished" datetime="2019-04-01T22:00:07+08:00">2019-04-01</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/设计模式/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h4><p>&emsp;&emsp;上一章我们将了<a href="https://www.heyangjob.cn/2019/03/31/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%8D%81%EF%BC%89/" target="_blank" rel="noopener">代理模式</a>，这一节我们说说责任链模式，目前的这几种模式都是比较简单的。</p>
+<h4 id="示例地址"><a href="#示例地址" class="headerlink" title="示例地址"></a>示例地址</h4><p> &emsp;&emsp;<a href="https://github.com/heyangJob/Design-Pattern/tree/master/Responsibility" target="_blank" rel="noopener">Demo地址</a></p>
+<h4 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h4><p><img src="https://note.youdao.com/yws/api/personal/file/WEB94b7994c0d0171ea42bf75c05ef14515?method=download&amp;shareKey=93ae56707281efa28b61100493148ffe" alt="image"></p>
+<h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>&emsp;&emsp;使多个对象都有机会处理请求,从而避免了请求的发送者和接收者之间的耦合关系。将这些对象连成一条链，并沿着这条链传递该请求，只到有对象处理它为止。</p>
+<h4 id="责任链模式使用场景"><a href="#责任链模式使用场景" class="headerlink" title="责任链模式使用场景"></a>责任链模式使用场景</h4><p>&emsp;&emsp;1. 多个对象可以处理同一请求，但具体由那个对象处理则在运行时动态决定。<br>&emsp;&emsp;2. 在请求处理者不明确的情况下向多个对象中的一个提交。<br>&emsp;&emsp;3. 需要动态指定一组对象处理请求。</p>
+<h4 id="责任链模式示例"><a href="#责任链模式示例" class="headerlink" title="责任链模式示例"></a>责任链模式示例</h4><p>&emsp;&emsp;在古代，小百姓打官司都是先到知县，不合理到知府，然后巡抚。</p>
+<h6 id="1-先定义一个当官的接口，他们有权利处理老百姓的告状"><a href="#1-先定义一个当官的接口，他们有权利处理老百姓的告状" class="headerlink" title="1. 先定义一个当官的接口，他们有权利处理老百姓的告状"></a>1. 先定义一个当官的接口，他们有权利处理老百姓的告状</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 有权利的人</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/19  下午4:11.</span><br><span class="line"> */</span><br><span class="line">public abstract class DangGuan &#123;</span><br><span class="line">    private DangGuan nextDangGuan;</span><br><span class="line"></span><br><span class="line">    public DangGuan getNextDangGuan() &#123;</span><br><span class="line">        return nextDangGuan;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setNextDangGuan(DangGuan nextDangGuan) &#123;</span><br><span class="line">        this.nextDangGuan = nextDangGuan;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //案情</span><br><span class="line">    abstract void anQing(String desc);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="2-知县"><a href="#2-知县" class="headerlink" title="2. 知县"></a>2. 知县</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 知县</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/19  下午4:39.</span><br><span class="line"> */</span><br><span class="line">public class CountyGuan extends DangGuan &#123;</span><br><span class="line">    @Override</span><br><span class="line">    void anQing(String desc) &#123;</span><br><span class="line">        if (desc.equals(&quot;知县&quot;)) &#123;</span><br><span class="line">            System.out.println(&quot;知县处理了此案情&quot;);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            System.out.println(&quot;知县：这案情我处理不了，我先上报&quot;);</span><br><span class="line">            getNextDangGuan().anQing(desc);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="3-知府"><a href="#3-知府" class="headerlink" title="3. 知府"></a>3. 知府</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 知府</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/19  下午4:43.</span><br><span class="line"> */</span><br><span class="line">public class CityGuan extends DangGuan &#123;</span><br><span class="line">    @Override</span><br><span class="line">    void anQing(String desc) &#123;</span><br><span class="line">        if (desc.equals(&quot;知府&quot;)) &#123;</span><br><span class="line">            System.out.println(&quot;知府处理了此案情&quot;);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            System.out.println(&quot;知府：这案情我处理不了，我先上报&quot;);</span><br><span class="line">            getNextDangGuan().anQing(desc);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="4-巡抚"><a href="#4-巡抚" class="headerlink" title="4. 巡抚"></a>4. 巡抚</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 巡抚</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/19  下午4:44.</span><br><span class="line"> */</span><br><span class="line">public class ProvinceGuan extends DangGuan &#123;</span><br><span class="line">    @Override</span><br><span class="line">    void anQing(String desc) &#123;</span><br><span class="line">        if (desc.equals(&quot;巡抚&quot;)) &#123;</span><br><span class="line">            System.out.println(&quot;巡抚处理了此案情&quot;);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            getNextDangGuan().anQing(desc);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="5-老百姓告状"><a href="#5-老百姓告状" class="headerlink" title="5. 老百姓告状"></a>5. 老百姓告状</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">CountyGuan countyGuan = new CountyGuan();</span><br><span class="line">CityGuan cityGuan = new CityGuan();</span><br><span class="line">ProvinceGuan provinceGuan = new ProvinceGuan();</span><br><span class="line"></span><br><span class="line">countyGuan.setNextDangGuan(cityGuan);</span><br><span class="line">cityGuan.setNextDangGuan(provinceGuan);</span><br><span class="line"></span><br><span class="line">System.out.println(&quot;老百姓开始告状了。&quot;);</span><br><span class="line">countyGuan.anQing(&quot;巡抚&quot;);</span><br></pre></td></tr></table></figure>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>&emsp;&emsp;职责链的模式链的组成：<br>&emsp;&emsp;第一步需要在处理者对象类中定义后继处理者对象，将这部分代码抽象到抽象类中实现，降低了代码重复性。<br>&emsp;&emsp;第二步就是在处理者对象类中的处理方法中如果当前处理者对象无法处理，就将其传递到后继对象去处理。<br>&emsp;&emsp;第三步就是在测试类中将这些处理者类的实例串联成链。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/31/设计模式-代理模式（十）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1873,384 +2285,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/22/设计模式-工厂方法模式（二）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="何阳">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/icon.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="何阳">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/03/22/设计模式-工厂方法模式（二）/" class="post-title-link" itemprop="url">设计模式_工厂方法模式（二）</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-03-22 23:34:11" itemprop="dateCreated datePublished" datetime="2019-03-22T23:34:11+08:00">2019-03-22</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-03-31 23:50:49" itemprop="dateModified" datetime="2019-03-31T23:50:49+08:00">2019-03-31</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/设计模式/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h4><p>&emsp;&emsp;上一节我们说了<a href="https://www.heyangjob.cn/2019/03/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89/" target="_blank" rel="noopener">单例模式</a>，这一节我们来说说工厂方法模式。</p>
-<h4 id="示例地址"><a href="#示例地址" class="headerlink" title="示例地址"></a>示例地址</h4><p>&emsp;&emsp;<a href="https://github.com/heyangJob/Design-Pattern/tree/master/Factory" target="_blank" rel="noopener">Demo</a></p>
-<h4 id="先看类图"><a href="#先看类图" class="headerlink" title="先看类图"></a>先看类图</h4><p><img src="https://note.youdao.com/yws/api/personal/file/WEB086195d0ff2e583f2a2720daf31eb788?method=download&amp;shareKey=e48be0d40b223f27ea0e318dcb697631" alt="image"></p>
-<h4 id="工厂方法模式定义"><a href="#工厂方法模式定义" class="headerlink" title="工厂方法模式定义"></a>工厂方法模式定义</h4><p>&emsp;&emsp;定义一个用于创建对象的接口，让子类决定实例化哪一个类。</p>
-<h4 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h4><p>&emsp;&emsp;在任何需要生成复制对象的地方，都可以使用工厂方法模式。</p>
-<h4 id="工厂方法模式示例"><a href="#工厂方法模式示例" class="headerlink" title="工厂方法模式示例"></a>工厂方法模式示例</h4><p>&emsp;&emsp;举个例子，我们吃饭的时候都会点主食，主食的种类分为  米饭、面,南方人喜欢吃米饭，但是北方人喜欢吃面。</p>
-<h4 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h4><h6 id="1-我们先来设计产品"><a href="#1-我们先来设计产品" class="headerlink" title="1. 我们先来设计产品"></a>1. 我们先来设计产品</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 主食</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/6  下午2:36.</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">public interface IZhuShi &#123;</span><br><span class="line">    // 主食吃什么</span><br><span class="line">    void eat();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="2-产品一-南方人爱吃米饭"><a href="#2-产品一-南方人爱吃米饭" class="headerlink" title="2. 产品一:南方人爱吃米饭"></a>2. 产品一:南方人爱吃米饭</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> *  主食米饭</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/6  下午2:37.</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">public class Rice implements IZhuShi &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void eat() &#123;</span><br><span class="line">      System.out.println(&quot;主食米饭上来了。&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="3-产品二-北方人爱吃面食"><a href="#3-产品二-北方人爱吃面食" class="headerlink" title="3. 产品二:北方人爱吃面食"></a>3. 产品二:北方人爱吃面食</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 主食面</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/6  下午2:43.</span><br><span class="line"> */</span><br><span class="line">public class Flour implements IZhuShi &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void eat() &#123;</span><br><span class="line">        System.out.println(&quot;主食 面上来了。&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="简单（静态）工厂"><a href="#简单（静态）工厂" class="headerlink" title="简单（静态）工厂"></a>简单（静态）工厂</h4><p>&emsp;&emsp;接下来是我们怎么创建产品了,就是我们在点餐的时候要选择吃什么。</p>
-<h6 id="1-主食工厂"><a href="#1-主食工厂" class="headerlink" title="1. 主食工厂"></a>1. 主食工厂</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 主食工厂</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/6  下午2:48.</span><br><span class="line"> */</span><br><span class="line">public class FactoryZhuShi &#123;</span><br><span class="line">    //南方人</span><br><span class="line">    public static final int SOUTH = 1;</span><br><span class="line">    //北方人</span><br><span class="line">    public static final int NORTH = 2;</span><br><span class="line"></span><br><span class="line">    public  static IZhuShi createZhuShi(int type) &#123;</span><br><span class="line">        switch (type) &#123;</span><br><span class="line">            case SOUTH:</span><br><span class="line">                return new Rice();</span><br><span class="line">            case NORTH:</span><br><span class="line">                return new Flour();</span><br><span class="line">            default:</span><br><span class="line">                return new Rice();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="2-调用工厂创建产品"><a href="#2-调用工厂创建产品" class="headerlink" title="2. 调用工厂创建产品"></a>2. 调用工厂创建产品</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">IZhuShi south = FactoryZhuShi.createZhuShi(FactoryZhuShi.SOUTH);</span><br><span class="line">south.eat();</span><br><span class="line"></span><br><span class="line">IZhuShi north = FactoryZhuShi.createZhuShi(FactoryZhuShi.NORTH);</span><br><span class="line">north.eat();</span><br></pre></td></tr></table></figure>
-<h6 id="3-如果我们增加了产品三-水饺-，这个时候就需要修改工程类了，违背了设计模式的六大原则（开闭原则）。"><a href="#3-如果我们增加了产品三-水饺-，这个时候就需要修改工程类了，违背了设计模式的六大原则（开闭原则）。" class="headerlink" title="3. 如果我们增加了产品三(水饺)，这个时候就需要修改工程类了，违背了设计模式的六大原则（开闭原则）。"></a>3. 如果我们增加了产品三(水饺)，这个时候就需要修改工程类了，违背了设计模式的六大原则（开闭原则）。</h6><h4 id="简单（反射）工厂"><a href="#简单（反射）工厂" class="headerlink" title="简单（反射）工厂"></a>简单（反射）工厂</h4><p>&emsp;&emsp;Java中反射是无所不能的。那我们就反一种思路，我们通过反射实现。</p>
-<h6 id="1-反射实现工厂"><a href="#1-反射实现工厂" class="headerlink" title="1. 反射实现工厂"></a>1. 反射实现工厂</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 通过反射获取主食</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/6  下午3:11.</span><br><span class="line"> */</span><br><span class="line">public class ReflectFactoryZhuShi &#123;</span><br><span class="line"></span><br><span class="line">    public static &lt;T extends IZhuShi&gt; T createZhuShi(Class&lt;T&gt; cls) &#123;</span><br><span class="line">        T object = null;</span><br><span class="line">        try &#123;</span><br><span class="line">            object = (T) (Class.forName(cls.getName())).newInstance();</span><br><span class="line">        &#125; catch (InstantiationException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; catch (IllegalAccessException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; catch (ClassNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        return object;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="2-调用工厂创建产品-1"><a href="#2-调用工厂创建产品-1" class="headerlink" title="2. 调用工厂创建产品"></a>2. 调用工厂创建产品</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">IZhuShi south = ReflectFactoryZhuShi.createZhuShi(Rice.class);</span><br><span class="line">south.eat();</span><br><span class="line"></span><br><span class="line">IZhuShi north = ReflectFactoryZhuShi.createZhuShi(Flour.class);</span><br><span class="line">north.eat();</span><br></pre></td></tr></table></figure>
-<h6 id="3-在增加新产品的时候，我们无需修改工厂类，解决设计模式的开闭原则。但是反射影响性能，我们在来看看方法工厂模式"><a href="#3-在增加新产品的时候，我们无需修改工厂类，解决设计模式的开闭原则。但是反射影响性能，我们在来看看方法工厂模式" class="headerlink" title="3. 在增加新产品的时候，我们无需修改工厂类，解决设计模式的开闭原则。但是反射影响性能，我们在来看看方法工厂模式"></a>3. 在增加新产品的时候，我们无需修改工厂类，解决设计模式的开闭原则。但是反射影响性能，我们在来看看方法工厂模式</h6><h4 id="简单工厂"><a href="#简单工厂" class="headerlink" title="简单工厂"></a>简单工厂</h4><p>&emsp;&emsp;反射有效率问题，我们看看最常用的一种写法</p>
-<h6 id="1-日常写法"><a href="#1-日常写法" class="headerlink" title="1. 日常写法"></a>1. 日常写法</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 简单工厂</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/6  下午3:37.</span><br><span class="line"> */</span><br><span class="line">public class MethodFactoryZhuShi &#123;</span><br><span class="line"></span><br><span class="line">    public static Rice getRice() &#123;</span><br><span class="line">        return new Rice();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static Flour getFlour() &#123;</span><br><span class="line">        return new Flour();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="2-简单调用"><a href="#2-简单调用" class="headerlink" title="2. 简单调用"></a>2. 简单调用</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">IZhuShi south = MethodFactoryZhuShi.getRice();</span><br><span class="line">south.eat();</span><br><span class="line"></span><br><span class="line">IZhuShi north = MethodFactoryZhuShi.getFlour();</span><br><span class="line">north.eat();</span><br></pre></td></tr></table></figure>
-<h4 id="工厂方法模式"><a href="#工厂方法模式" class="headerlink" title="工厂方法模式"></a>工厂方法模式</h4><h6 id="1-工厂接口"><a href="#1-工厂接口" class="headerlink" title="1. 工厂接口"></a>1. 工厂接口</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 主食创建工厂</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/6  下午4:08.</span><br><span class="line"> */</span><br><span class="line">public interface IFactory&lt;T extends IZhuShi&gt; &#123;</span><br><span class="line">    T create();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="2-米饭工厂"><a href="#2-米饭工厂" class="headerlink" title="2. 米饭工厂"></a>2. 米饭工厂</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> *  米饭工厂</span><br><span class="line"> * </span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/8  下午11:11.</span><br><span class="line"> * </span><br><span class="line"> */</span><br><span class="line">public class RiceFactory implements IFactory&lt;Rice&gt; &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public Rice create() &#123;</span><br><span class="line">        return new Rice();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="3-面食工厂"><a href="#3-面食工厂" class="headerlink" title="3. 面食工厂"></a>3. 面食工厂</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> *  面食工厂</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/8  下午11:11.</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">public class FlourFactory implements IFactory&lt;Flour&gt; &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public Flour create() &#123;</span><br><span class="line">        return new Flour();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="4-简单调用"><a href="#4-简单调用" class="headerlink" title="4. 简单调用"></a>4. 简单调用</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">IFactory northFactory = new FlourFactory();</span><br><span class="line">IZhuShi north = northFactory.create();</span><br><span class="line">north.eat();</span><br><span class="line"></span><br><span class="line">IFactory southFactory = new RiceFactory();</span><br><span class="line">IZhuShi south = southFactory.create();</span><br><span class="line">south.eat();</span><br></pre></td></tr></table></figure>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>&emsp;&emsp; 当有新的产品产生时，只要按照抽象产品角色、抽象工厂角色提供的合同来生成，那么就可以被客户使用，而不必去修改任何已有的代码。（即当有新产品时，只要创建并基础抽象产品；新建具体工厂继承抽象工厂；而不用修改任何一个类）工厂方法模式是完全符合开闭原则的！</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/21/设计模式-单例模式（一）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="何阳">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/icon.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="何阳">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/03/21/设计模式-单例模式（一）/" class="post-title-link" itemprop="url">设计模式_单例模式（一）</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-03-21 23:29:17" itemprop="dateCreated datePublished" datetime="2019-03-21T23:29:17+08:00">2019-03-21</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-03-31 23:37:22" itemprop="dateModified" datetime="2019-03-31T23:37:22+08:00">2019-03-31</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/设计模式/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h4><p>&emsp;&emsp;”送人玫瑰，手有余香”。最近在看设计模式，写点笔记记录一下，第一可以巩固一下所看的知道，第二方便他人阅读参考。从最简单的入手吧，今天的主角单例模式。</p>
-<h4 id="示例地址"><a href="#示例地址" class="headerlink" title="示例地址"></a>示例地址</h4><p>&emsp;&emsp;<a href="https://github.com/heyangJob/Design-Pattern/tree/master/Singleton" target="_blank" rel="noopener">Demo</a></p>
-<h4 id="先看看单例模式的类图"><a href="#先看看单例模式的类图" class="headerlink" title="先看看单例模式的类图"></a>先看看单例模式的类图</h4><p><img src="https://note.youdao.com/yws/api/personal/file/WEB9db71e90d14c30a564186910e7578892?method=download&amp;shareKey=c6815c7f4eb20f73ae15074967e97c81" alt="image"></p>
-<h4 id="再看看单例模式的定义"><a href="#再看看单例模式的定义" class="headerlink" title="再看看单例模式的定义"></a>再看看单例模式的定义</h4><p>&emsp;&emsp;确保某一个类只有一个实例，而且自行实例化并向整个系统提供这个实例。</p>
-<h4 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h4><p>&emsp;&emsp;确保某个类有且只有一个对象的场景，避免产生多个对象消耗过多的资源。</p>
-<h4 id="单例模式主要表现"><a href="#单例模式主要表现" class="headerlink" title="单例模式主要表现"></a>单例模式主要表现</h4><pre><code>1. 构造方法私有
-2. 通过一个静态方法返回改对象
-</code></pre><h4 id="单例模式示例"><a href="#单例模式示例" class="headerlink" title="单例模式示例"></a>单例模式示例</h4><h6 id="1-饿汉式"><a href="#1-饿汉式" class="headerlink" title="1.  饿汉式"></a>1.  饿汉式</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 单例 饿汉式</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/2 下午1:59.</span><br><span class="line"> */</span><br><span class="line">public class Singleton &#123;</span><br><span class="line"></span><br><span class="line">    private static Singleton mInstance = new Singleton();</span><br><span class="line"></span><br><span class="line">    private Singleton() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static Singleton getInstance() &#123;</span><br><span class="line">        return mInstance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="2-懒汉式"><a href="#2-懒汉式" class="headerlink" title="2. 懒汉式"></a>2. 懒汉式</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 单例  懒汉式</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/2 下午1:59.</span><br><span class="line"> */</span><br><span class="line">public class Singleton &#123;</span><br><span class="line">    //synchronized虽然保证了原子性，但却没有保证指令重排序的正确性，会出现A线程执行初始化，</span><br><span class="line">    // 但可能因为构造函数里面的操作太多了，所以A线程的uniqueInstance实例还没有造出来，但已经被赋值了。</span><br><span class="line">    // 而B线程这时过来了，错以为uniqueInstance已经被实例化出来，一用才发现uniqueInstance尚未被初始化。</span><br><span class="line">    // 要知道我们的线程虽然可以保证原子性，但程序可能是在多核CPU上执行。</span><br><span class="line">    // volatile  http://www.cnblogs.com/dolphin0520/p/3920373.html</span><br><span class="line">    private static volatile Singleton mInstance = null;</span><br><span class="line"></span><br><span class="line">    private Singleton() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static Singleton getInstance() &#123;</span><br><span class="line">        if (null == mInstance) &#123;</span><br><span class="line">            // 防止 多线程并发 创建多个实例</span><br><span class="line">            synchronized (Singleton.class) &#123;</span><br><span class="line">                if (null == mInstance) &#123;</span><br><span class="line">                    mInstance = new Singleton();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return mInstance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="3-静态内部类"><a href="#3-静态内部类" class="headerlink" title="3. 静态内部类"></a>3. 静态内部类</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 单例 静态内部类</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/2 下午1:59.</span><br><span class="line"> */</span><br><span class="line">public class Singleton &#123;</span><br><span class="line"></span><br><span class="line">    private Singleton() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static  class  SingletonHolder&#123;</span><br><span class="line">        private  static volatile Singleton mInstance = new Singleton();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static Singleton getInstance() &#123;</span><br><span class="line">        return SingletonHolder.mInstance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="4-容器管理"><a href="#4-容器管理" class="headerlink" title="4. 容器管理"></a>4. 容器管理</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 单例  容器管理</span><br><span class="line"> *</span><br><span class="line"> * @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/2 下午1:59.</span><br><span class="line"> */</span><br><span class="line">public class Singleton &#123;</span><br><span class="line"></span><br><span class="line">    private static Map&lt;String, Object&gt; mSingleMap = new HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    private Singleton()&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    static &#123;</span><br><span class="line">        mSingleMap.put(&quot;service&quot;, new Singleton());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static Object getServiceForName(String name) &#123;</span><br><span class="line">        return mSingleMap.get(name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="5-其他体现形式"><a href="#5-其他体现形式" class="headerlink" title="5. 其他体现形式"></a>5. 其他体现形式</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 单例 其他体现形式</span><br><span class="line"> *</span><br><span class="line"> @author 512573717@qq.com</span><br><span class="line"> * @created 2018/7/2 下午1:59.</span><br><span class="line"> */</span><br><span class="line">public class Singleton &#123;</span><br><span class="line"></span><br><span class="line">    private static Singleton mInstance;</span><br><span class="line"></span><br><span class="line">    private Singleton() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    static &#123;</span><br><span class="line">        mInstance = new Singleton();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static Object getInstance() &#123;</span><br><span class="line">        return mInstance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2299,7 +2333,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">21</span>
+                    <span class="site-state-item-count">23</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
