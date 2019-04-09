@@ -433,7 +433,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-09 16:46:41" itemprop="dateModified" datetime="2019-04-09T16:46:41+08:00">2019-04-09</time>
+                <time title="修改时间：2019-04-09 22:05:33" itemprop="dateModified" datetime="2019-04-09T22:05:33+08:00">2019-04-09</time>
               
             
           </span>
@@ -488,27 +488,35 @@
         
           
             <h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><ul>
-<li>表示方法：用实线空心三角箭头表示。<br><img src="https://note.youdao.com/yws/api/personal/file/WEB3128d7c85991e61762c6466d60a22966?method=download&amp;shareKey=38669bd59726dab7ed79c52ddc561c6c" alt="image"></li>
+<li>表示方法：用实线空心三角箭头表示。（由子类指向父类）  </li>
 </ul>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB7b51552d57daac73670b0ed9f69a6533?method=download&amp;shareKey=547909730858dec17b868b783e6e04ee" alt="image"></p>
 <h3 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h3><ul>
-<li>表示方法：空心三角形箭头的虚线，实现类指向接口<br><img src="https://note.youdao.com/yws/api/personal/file/WEB2578830d9f09013ca09c2b0452d2e64a?method=download&amp;shareKey=1e689c7dbabb898f4d98d8d929af0591" alt="image"></li>
+<li>表示方法：空心三角形箭头的虚线。（有实现类指向接口）  </li>
 </ul>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB5d12d26a201bfe3d8c42a2ffba3dc166?method=download&amp;shareKey=0be91b8f24c78236a9bb13c0e330bf29" alt="image"></p>
 <h3 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h3><ul>
 <li>概念：是一种使用的关系，即一个类的实现需要另一个类的协助。java中，方法参数需要传入另一个类的对象，就表示依赖这个类。  </li>
-<li>表示方法：虚线箭头，类A指向类B。<br><img src="https://note.youdao.com/yws/api/personal/file/WEBd86dd2a255b5da52d1010355ac467c04?method=download&amp;shareKey=22a497310ac563e63f7779ad302a7736" alt="image"></li>
+<li>表示方法：虚线箭头，类A指向类B。(由使用者指向被使用者)   </li>
 </ul>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB4d3fc2125ec342f887b723ff8c251bd3?method=download&amp;shareKey=43ffc8ec11e0d2e5467979dd8c9e7d00" alt="image"></p>
 <h3 id="关联"><a href="#关联" class="headerlink" title="关联"></a>关联</h3><ul>
 <li>概念：表示类与类之间的联接,它使一个类知道另一个类的属性和方法，这种关系比依赖更强、不存在依赖关系的偶然性、关系也不是临时性的，一般是长期性的。java中一个类的全局变量引用了另一个类，就表示关联了这个类  </li>
-<li>表示方法：实线箭头，类A指向类B<br><img src="https://note.youdao.com/yws/api/personal/file/WEB3a40d739dcac96572e820d3e86a73741?method=download&amp;shareKey=d7d91b5fb645fe3974592aba6e32e365" alt="image"></li>
+<li>表示方法：实线箭头，类A指向类B(由拥有者指向被拥有者，如果A指向B，则说明A类中有B类的成员变量。)  </li>
 </ul>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB1560a834dfc41f207e991ddc3729e4a1?method=download&amp;shareKey=63088f913d15cea27750fd918e59f462" alt="image"></p>
 <h3 id="聚合"><a href="#聚合" class="headerlink" title="聚合"></a>聚合</h3><ul>
 <li>概念：聚合关联关系的一种特例，是强的关联关系。聚合是整体和个体之间的关系，即has-a的关系，整体与个体可以具有各自的生命周期，部分可以属于多个整体对象，也可以为多个整体对象共享。程序中聚合和关联关系是一致的，只能从语义级别来区分；</li>
-<li>表示方法：尾部为空心菱形的实线箭头（也可以没箭头），类A指向类B<br><img src="https://note.youdao.com/yws/api/personal/file/WEB1f437ac6338baac921edf28f96d250f0?method=download&amp;shareKey=b385f63cacca0b77400af7cd6ff2797a" alt="image"></li>
+<li>表示方法：尾部为空心菱形的实线箭头（也可以没箭头），类A指向类B  </li>
+<li>由整体指向部分。如果A指向B，则说明A类中有B类的成员变量，但是与关联关系不同，A类和B类有逻辑关系。A类是整体，B类是部分。A类由B类构成，同时B类即便不在A类中也可以单独存在。</li>
 </ul>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB2716ca5001fa75e296a02ce4b46b6d9b?method=download&amp;shareKey=6bd69cb1e5223544f6533205c87113c8" alt="image"></p>
 <h3 id="组合"><a href="#组合" class="headerlink" title="组合"></a>组合</h3><ul>
 <li>概念：组合也是关联关系的一种特例。组合是一种整体与部分的关系，即contains-a的关系，比聚合更强。部分与整体的生命周期一致，整体的生命周期结束也就意味着部分的生命周期结束，组合关系不能共享。程序中组合和关联关系是一致的，只能从语义级别来区分。</li>
-<li>表示方法：尾部为实心菱形的实现箭头（也可以没箭头），类A指向类B<br><img src="https://note.youdao.com/yws/api/personal/file/WEB16f19c9feb0fd9e2196038c6232502e2?method=download&amp;shareKey=0ab56680762fd521125d3f71169b9608" alt="image"></li>
+<li>表示方法：尾部为实心菱形的实现箭头（也可以没箭头），类A指向类B  </li>
+<li>由整体指向部分。如果A指向B，则说明A类中有B类的成员变量，但是与关联关系不同，A类和B类有逻辑关系。A类是整体，B类是部分。A类由B类构成。但与聚合关系不同，如果B类不在A类中就无法单独存在。 </li>
 </ul>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB04e5d3f1936f9fbc7dc87b9c04d05475?method=download&amp;shareKey=417c4377e550e7fc69f41ce3c9b86fe7" alt="image"></p>
 
           
         
